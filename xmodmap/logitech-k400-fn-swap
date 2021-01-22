@@ -1,0 +1,13 @@
+keycode 166 = F1 XF86Back
+keycode 180 = F2 XF86HomePage
+
+keycode 135 = F4 Menu
+keycode 225 = F5 XF86Search
+
+
+
+keycode 179 = F9 XF86Tools
+keycode 173 = F10 XF86AudioPrev
+keycode 172 = F11 XF86AudioPlay
+keycode 171 = F12 XF86AudioNext
+

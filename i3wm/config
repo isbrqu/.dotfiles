@@ -1,0 +1,134 @@
+font pango:monospace 10
+
+title_align center
+focus_follows_mouse no
+
+set $mod Mod4
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $term "st"
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86MonBrightnessUp exec brightness +
+bindsym XF86MonBrightnessDown exec brightness -
+bindsym Print exec flameshot gui
+
+bindcode 133 mode "vim"
+
+mode "brightness" {
+    bindsym 1 mode "default";\
+    exec xrandr --output HDMI-1 --gamma 1.1:0.8:0.7 --brightness 0.55\
+    && exec xrandr --output eDP-1 --gamma 1.1:0.8:0.7 --brightness 0.55\ 
+    bindsym 2 mode "default";\
+    exec xrandr --output HDMI-1 --gamma 1:1:1 --brightness 0.55\
+    && exec xrandr --output eDP-1 --gamma 1:1:1 --brightness 0.55\ 
+}
+
+mode "vim" {
+    
+    bindsym n mode "brightness"
+    # Pulse Audio controls
+    bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+    bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+    bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+    # change focus
+    bindsym h focus left
+    bindsym j focus down
+    bindsym k focus up
+    bindsym l focus right
+    bindsym u [urgent=latest] focus
+    # focus the parent container
+    bindsym p focus parent
+    # focus the child container
+    bindsym Shift+p focus child
+    # change focus between tiling / floating windows
+    bindsym ctrl+space focus mode_toggle
+
+    # move focused window
+    bindsym Shift+h move left
+    bindsym Shift+j move down
+    bindsym Shift+k move up
+    bindsym Shift+l move right
+    # toggle tiling / floating
+    bindsym Shift+space floating toggle
+
+    # split in horizontal orientation
+    bindsym z split h
+    # split in vertical orientation
+    bindsym x split v
+    # enter fullscreen mode for the focused container
+    # bindsym c fullscreen toggle
+
+    # change container layout (stacked, tabbed, toggle split)
+    bindsym q layout stacking
+    bindsym w layout tabbed
+    bindsym e layout toggle split
+
+    # start a apps
+    bindsym Return exec $term
+    bindsym Print exec flameshot gui
+    # start rofi (a program launcher)
+    bindsym colon exec dmenu_run
+
+    # switch to workspace
+    bindsym 1 workspace $ws1
+    bindsym 2 workspace $ws2
+    bindsym 3 workspace $ws3
+    bindsym 4 workspace $ws4
+
+    # move focused container to workspace
+    bindsym Shift+1 move container to workspace $ws1
+    bindsym Shift+2 move container to workspace $ws2
+    bindsym Shift+3 move container to workspace $ws3
+    bindsym Shift+4 move container to workspace $ws4
+    bindsym Shift+5 move container to workspace $ws5
+
+    # kill focused window
+    bindsym Shift+q kill
+    # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+    bindsym F5 restart
+
+    bindsym r mode "resize"
+    bindsym i mode "default"
+    bindsym Escape nop
+}
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+    bindsym $mod mode "vim"
+    bindsym Escape mode "vim"
+    bindsym i mode "default"
+}
+
+bar {
+    output eDP-1
+    position top
+    status_command i3status --config ~/.config/dotfiles/status-i3status/config1
+}
+
+bar {
+    output HDMI-1
+    position top
+    status_command i3status --config ~/.config/dotfiles/status-i3status/config2
+}
+
+exec gnome-terminal -- .config/dotfiles/script/startup
+
+assign [class="Gnome-terminal"] $ws1
+assign [class="st-256color"] $ws1
+assign [class="Google-chrome"] $ws2
+assign [class="TelegramDesktop"] $ws2
+for_window [window_role="^floating$"] floating enable focus
+for_window [window_role="^floating$"] resize set 600

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+ file="$(fzf-tmux -d 15 +m)"\
+ && vim "$file"
