@@ -19,11 +19,11 @@ bind 'set completion-ignore-case on'
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=100
 HISTFILESIZE=100
-HISTFILE=~/.config/dotfiles/shell-bash/history-private
+HISTFILE=~/.config/dot/bash/history-private
 HISTIGNORE='history:ls:pwd:'
 HISTTIMEFORMAT='%F, %T '
 PROMPT_COMMAND='history -a'
-INPUTRC=~/.config/dofiles/shell-bash/inputrc
+INPUTRC=~/.config/dot/bash/inputrc
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -104,9 +104,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# ALIAS AND FUNCTIONS
-###############################################################################
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -117,28 +114,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias less='less -r'
 fi
 
-# others
-###############################################################################
-
-ll() {
-    ls --color=always "$@" | less
-}
-
-downclip() {
-    wget --continue "$(xclip -selection clipboard -o)"
-}
-
-o() {
-    xdg-open "$*" &> /dev/null &
-}
-
 [[ -f ~/.fzf.bash ]]\
 && . ~/.fzf.bash
 
-# change directory
-###############################################################################
-
-alias cddes="cd $HOME/Escritorio"
-alias cddoc="cd $HOME/Documentos"
-alias cdimg="cd $HOME/Imágenes"
-alias cdmus="cd $HOME/Música"

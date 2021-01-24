@@ -115,16 +115,14 @@ mode "resize" {
 bar {
     output eDP-1
     position top
-    status_command i3status --config ~/.config/dotfiles/status-i3status/config1
+    status_command i3status --config ~/.config/dot/i3status/config1
 }
 
 bar {
     output HDMI-1
     position top
-    status_command i3status --config ~/.config/dotfiles/status-i3status/config2
+    status_command i3status --config ~/.config/dot/i3status/config2
 }
-
-exec gnome-terminal -- .config/dotfiles/script/startup
 
 assign [class="Gnome-terminal"] $ws1
 assign [class="st-256color"] $ws1

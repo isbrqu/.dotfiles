@@ -7,7 +7,7 @@
 	lod = log --oneline --decorate
 	co = checkout
 [core]
-	excludesfile = ~/.config/dotfiles/other-git/ignore-global
+	excludesfile = ~/.config/dot/git/ignore-global
 
 [color]
 	pager = true
