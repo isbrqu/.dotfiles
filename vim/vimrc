@@ -144,6 +144,11 @@ let g:auto_save = 1
 " do not display the auto-save notification
 let g:auto_save_silent = 1
 
+" COMMENTARY
+autocmd FileType vim setlocal commentstring=\"\ %s
+autocmd FileType python setlocal commentstring=#\ %s
+autocmd FileType tmux setlocal commentstring=#\ %s
+
 set t_Co=8
 highlight StatusLine ctermfg=238 ctermbg=white
 

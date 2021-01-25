@@ -1,3 +1,12 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "vim/pack/tpope/start/fugitive"]
+	path = vim/pack/tpope/start/fugitive
+	url = https://tpope.io/vim/fugitive.git
+[submodule "vim/pack/907th/start/vim-auto-save"]
+	path = vim/pack/907th/start/vim-auto-save
+	url = https://github.com/907th/vim-auto-save
+[submodule "vim/pack/tpope/start/commentary"]
+	path = vim/pack/tpope/start/commentary
+	url = https://tpope.io/vim/commentary.git
