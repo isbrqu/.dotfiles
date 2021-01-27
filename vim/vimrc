@@ -87,6 +87,8 @@ let mapleader=' '
 set keywordprg=''
 
 " NORMAL
+" quit
+nnoremap <leader>q <esc>:quit<cr>
 " switch command-line
 nnoremap <f4> :
 " move
