@@ -1,26 +1,26 @@
 # one of these should work:
-# set -g default-terminal tmux-256color
-# set -g default-terminal screen-256color
-set -g default-terminal xterm-256color 
+# set-option -g default-terminal tmux-256color
+# set-option -g default-terminal screen-256color
+set-option -g default-terminal xterm-256color 
 
-# Automatically set window title
+# Automatically set-option window title
 set-window-option -g automatic-rename on
 set-option -g set-titles on
 
 # Miscelaneous options
 set-option -g xterm-keys on
 # Vi
-set -g status-keys vi
-setw -g mode-keys vi
+set-option -g status-keys vi
+set-window-option -g mode-keys vi
 # Other
-set -g history-limit 10000
-setw -g monitor-activity on
+set-option -g history-limit 10000
+set-window-option -g monitor-activity on
 # No delay for escape key press
-set -sg escape-time 0
+set-option -sg escape-time 0
 
 # Count windows and panes starting at 1, not 0
-set -g base-index 1
-setw -g pane-base-index 1
+set-option -g base-index 1
+set-window-option -g pane-base-index 1
 
 # Set prefix to f12
 unbind-key C-b
@@ -71,16 +71,16 @@ bind-key -n M-o next-window
 bind-key -n M-i previous-window
 
 # Theme
-run -b '~/.tmux/plugins/tpm/tpm'
-set -g @plugin 'dracula/tmux'
-set -g @dracula-show-battery false
-set -g @dracula-show-network false
-set -g @dracula-show-weather false
-set -g @dracula-show-time false
-set -g @dracula-show-location false
-set -g @dracula-show-timezone false
-set -g @dracula-show-left-icon '.'
-set -g @dracula-show-powerline false
-set -g @dracula-show-right-sep n:
-set -g @dracula-show-timezone false
+run-shell -b '~/.tmux/plugins/tpm/tpm'
+set-option -g @plugin 'dracula/tmux'
+set-option -g @dracula-show-battery false
+set-option -g @dracula-show-network false
+set-option -g @dracula-show-weather false
+set-option -g @dracula-show-time false
+set-option -g @dracula-show-location false
+set-option -g @dracula-show-timezone false
+set-option -g @dracula-show-left-icon '.'
+set-option -g @dracula-show-powerline false
+set-option -g @dracula-show-right-sep n:
+set-option -g @dracula-show-timezone false
 
