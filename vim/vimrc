@@ -22,6 +22,8 @@ set nowrap
 set number
 set relativenumber
 set colorcolumn=80
+autocmd FileType gitcommit setlocal colorcolumn=51
+autocmd FileType fugitive setlocal colorcolumn=
 " eliminate white flicker
 set t_vb=
 autocmd InsertEnter,InsertLeave * set cul!
@@ -149,6 +151,7 @@ let g:auto_save_silent = 1
 " COMMENTARY
 autocmd FileType vim setlocal commentstring=\"\ %s
 autocmd FileType python setlocal commentstring=#\ %s
+autocmd FileType sh setlocal commentstring=#\ %s
 autocmd FileType tmux setlocal commentstring=#\ %s
 
 set t_Co=8
