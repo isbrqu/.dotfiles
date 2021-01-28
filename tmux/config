@@ -51,6 +51,8 @@ bind-key -n M-r rotate-window
 bind-key -n M-! break-pane
 # Alt+z Zoom 
 bind-key -n M-z resize-pane -Z
+# Kill
+bind-key -n M-q kill-pane
 
 # Window control
 # Alt+c Create window 
@@ -69,6 +71,9 @@ bind-key -n M-9 select-window -t 9
 # Alt+i Alt+o to switch windows
 bind-key -n M-o next-window 
 bind-key -n M-i previous-window
+
+# Clipboard
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
 
 # Theme
 run-shell -b '~/.tmux/plugins/tpm/tpm'
