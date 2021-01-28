@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-pane="$(tmux list-pane -F "#{pane_start_command} #{pane_pid}"\
-| awk '/tmux-filetree/')"
-([[ "$pane" = tmux-filetree* ]]\
-&& pid="$(echo "$pane" | awk 'NR==1 { print $2 }')"\
-&& kill "$pid"\
-&& tmux last-pane)\
-|| tmux split-window -h -l 35 -t 1 -b 'tmux-filetree'\
-&& tmux last-pane
+pane="$(tmux list-pane -F "#{pane_start_command} #{pane_pid}")"
+filetree="$(echo "$pane" | awk '/tmux-filetree/')"
+[[ "$filetree" = tmux-filetree* ]]\
+&& kill "${filetree#* }"\
+&& ( (( $(echo "$pane" | wc -l) == 2 )) || tmux last-pane )\
+|| (
+    tmux split-window -h -l 20 -t 1 -b 'tmux-filetree'\
+    && tmux last-pane
+)
 
