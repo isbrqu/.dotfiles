@@ -131,7 +131,7 @@ t() {
 
 export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
 
-FZF_HOME='.config/dot/fzf'
+FZF_HOME="$HOME/.config/dot/fzf"
 FZF_SED='s/^/"/;{:a;$!N;s/\n/","/;ta};s/$/"/'
 FZF_IGNORE="$(sed $FZF_SED "$FZF_HOME/ignore")"
 export FZF_DEFAULT_COMMAND="ag --hidden --ignore={$FZF_IGNORE} -g "'""'

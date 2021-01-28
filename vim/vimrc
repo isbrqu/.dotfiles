@@ -82,7 +82,7 @@ set splitright
 set fillchars=fold:-,vert:\│
 highlight VertSplit ctermfg=Black ctermbg=DarkGray
 
-set rtp+=~/.fzf
+set rtp+=~/.config/fzf
 
 " OTHERS
 let mapleader=' '
