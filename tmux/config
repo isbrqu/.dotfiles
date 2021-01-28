@@ -30,9 +30,9 @@ bind-key f12 send-prefix
 # Reload tmux config
 bind-key r source-file ~/.tmux.conf \; display-message "Config reloaded..."
 # Scripts
-bind-key -n M-space split-window -h '~/.tmux/script/vim'
-bind-key -n M-e split-window -v '~/.tmux/script/vim'
 bind-key -n M-tab run-shell '~/.tmux/script/filetree'
+bind-key -n M-space display-popup -d "#{session_path}" -KER "~/.tmux/script/vv"
+bind-key -n M-e display-popup -d "#{session_path}" -KER "~/.tmux/script/vh"
 
 # Pane control
 # Split with alt-s alt-v
