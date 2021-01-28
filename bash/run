@@ -1,6 +1,7 @@
+#!/usr/bin/env bash
 # ~/.bashrc: executed by bash(0) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# fo examples
 
 # If not running interactively, don't do anything
 case $- in
@@ -10,7 +11,6 @@ esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth:erasedups
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -22,9 +22,13 @@ HISTFILESIZE=100
 HISTFILE=~/.config/dot/bash/history-private
 HISTIGNORE='history:ls:pwd:'
 HISTTIMEFORMAT='%F, %T '
-PROMPT_COMMAND='history -a'
-INPUTRC=~/.config/dot/bash/inputrc
+HISTCONTROL=ignoreboth:erasedups
 
+PROMPT_COMMAND='history -a'
+
+# INPUTRC=~/.config/dot/bash/inputrc
+
+export LESSHISTFILE=-
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -37,9 +41,8 @@ shopt -s checkwinsize
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
+[[ -z "${debian_chroot:-}" && -r /etc/debian_chroot ]]\
+&& debian_chroot=$(cat /etc/debian_chroot)\
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -49,24 +52,25 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+# force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
+[[ -n "$force_color_prompt" ]] && (
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    [[ -x /usr/bin/tput ]]\
+    && tput setaf 1 >&/dev/null\
+    && color_prompt=yes\
+    || color_prompt=
+)
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
+[[ "$color_prompt" = yes ]]\
+&& PS1='${debian_chroot:+($debian_chroot)}'\
+&& PS1="$PS1"'\[\033[01;32m\]\u@\h\[\033[00m\]:'\
+&& PS1="$PS1"'\[\033[01;34m\]\w\[\033[00m\]'\
+&& PS1="$PS1"'\n\$ '\
+|| PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
+
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
@@ -78,16 +82,17 @@ xterm*|rxvt*)
     ;;
 esac
 
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.config/composer/vendor/bin"
+export PATH="$PATH:/usr/share/php"
+
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export PATH="$PATH:$HOME/.local/bin/:$HOME/.config/composer/vendor/bin:/usr/share/php"
-
-ignore_dir="'.git','.local','.cache','discord','libreoffice','google-chrome'"
-ignore_dir="$ignore_dir,'composer','vendor'"
-ignore_ext="'*.pdf','*.db','*.mp4','*.mp3','*.store'"
-ignore="$ignore_dir,$ignore_ext"
-export FZF_DEFAULT_COMMAND="ag --hidden --ignore={$ignore} -g "'""'
-
+# export GCC_COLORS="error=01;31"
+# export GCC_COLORS="$GCC_COLORS:warning=01;35"
+# export GCC_COLORS="$GCC_COLORS:note=01;36"
+# export GCC_COLORS="$GCC_COLORS:caret=01;32"
+# export GCC_COLORS="$GCC_COLORS:locus=01"
+# export GCC_COLORS="$GCC_COLORS:quote=01S"
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -97,23 +102,50 @@ export FZF_DEFAULT_COMMAND="ag --hidden --ignore={$ignore} -g "'""'
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+  ([[ -f /usr/share/bash-completion/bash_completion ]]\
+  && . /usr/share/bash-completion/bash_completion)\
+  || ([[ -f /etc/bash_completion ]]\
+  && . /etc/bash_completion)
 fi
 
+LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls -l --color=auto --almost-all --sort=extension --reverse --group-directories-first'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-    alias less='less -r'
-fi
+[[ -x /usr/bin/dircolors && -r ~/.dircolors ]]\
+&& eval "$(dircolors -b ~/.dircolors)"\
+|| eval "$(dircolors -b)"\
+&& alias l="ls -1 $LSOPTIONS"\
+&& alias ll="ls -l $LSOPTIONS"\
+&& alias v='vim'\
+&& alias vi='vim'
 
-[[ -f ~/.fzf.bash ]]\
-&& . ~/.fzf.bash
+t() {
+    local sessions
+    sessions="$(tmux list-session -F '#{session_name}' 2> /dev/null)"
+    session="$(echo "$sessions" | fzf --print-query)"
+    session="$(echo "${session//*[$'\n']}")"
+    [[ -n "$session" ]] && (
+        tmux attach-session -t "$session" 2> /dev/null\
+        || tmux new-session -s "$session"
+    )
+}
 
+export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
+
+FZF_HOME='.config/dot/fzf'
+FZF_SED='s/^/"/;{:a;$!N;s/\n/","/;ta};s/$/"/'
+FZF_IGNORE="$(sed $FZF_SED "$FZF_HOME/ignore")"
+export FZF_DEFAULT_COMMAND="ag --hidden --ignore={$FZF_IGNORE} -g "'""'
+
+# Setup fzf
+# ---------
+[[ ! "$PATH" == */home/isbrqu/.config/fzf/bin* ]]\
+&& export PATH="${PATH:+${PATH}:}/home/isbrqu/.config/fzf/bin"
+
+# Auto-completion
+# ---------------
+[[ $- == *i* ]]\
+&& . "/home/isbrqu/.config/fzf/shell/completion.bash" 2> /dev/null
+
+# Key bindings
+# ------------
+. "/home/isbrqu/.config/fzf/shell/key-bindings.bash"
