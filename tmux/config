@@ -83,4 +83,6 @@ set-option -g @dracula-show-left-icon '.'
 set-option -g @dracula-show-powerline false
 set-option -g @dracula-show-right-sep n:
 set-option -g @dracula-show-timezone false
+set-option -g @plugin 'sainnhe/tmux-fzf'
+set-option -g @plugin 'wfxr/tmux-fzf-url'
 
