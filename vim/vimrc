@@ -114,7 +114,7 @@ noremap <leader>; :%s//g<left><left>
 nnoremap <silent> <leader>gs :Gstatus<cr>
 nnoremap <silent> <leader>gl :Glog
 " fzf
-nnoremap <silent> <leader><leader> :FZF<cr>
+nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader>fg :GFiles<cr>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gl :Glog
@@ -157,3 +157,13 @@ autocmd FileType tmux setlocal commentstring=#\ %s
 set t_Co=8
 highlight StatusLine ctermfg=238 ctermbg=white
 
+" FZF
+" See `man fzf-tmux` for available options
+if exists('$TMUX')
+  let g:fzf_layout = { 'tmux': '-p90%,60%' }
+else
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+endif
+
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--preview', 'cat {}','--no-multi']}, <bang>0)
