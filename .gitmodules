@@ -10,3 +10,6 @@
 [submodule "vim/pack/tpope/start/commentary"]
 	path = vim/pack/tpope/start/commentary
 	url = https://tpope.io/vim/commentary.git
+[submodule "vim/pack/junegunn/start/fzf.vim"]
+	path = vim/pack/junegunn/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
