@@ -98,6 +98,7 @@ mode "vim" {
     bindsym Shift+q kill
     # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
     bindsym F5 restart
+    bindsym Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
     bindsym r mode "resize"
     bindsym i mode "default"
@@ -126,6 +127,8 @@ bar {
     position top
     status_command i3status --config ~/.config/dot/i3status/config2
 }
+
+exec --no-startup-id setxkbmap -layout us -variant altgr-intl
 
 assign [class="Gnome-terminal"] $ws1
 assign [class="st-256color"] $ws1
