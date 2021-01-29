@@ -104,6 +104,8 @@ noremap <silent> <down> gT
 " buffer
 noremap <silent> <left> :bn<cr>
 noremap <silent> <right> :bN<cr>
+noremap <silent> <leader>l :bn<cr>
+noremap <silent> <leader>h :bN<cr>
 " disable
 noremap <f1> <nop>
 " search
