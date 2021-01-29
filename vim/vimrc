@@ -167,4 +167,4 @@ else
 endif
 
 command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--preview', 'cat {}','--no-multi']}, <bang>0)
+    \ call fzf#vim#files(<q-args>, {'options': ['--preview', 'cat {}','--no-multi']}, <bang>0)
