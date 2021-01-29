@@ -153,6 +153,7 @@ autocmd FileType vim setlocal commentstring=\"\ %s
 autocmd FileType python setlocal commentstring=#\ %s
 autocmd FileType sh setlocal commentstring=#\ %s
 autocmd FileType tmux setlocal commentstring=#\ %s
+autocmd FileType conf setlocal commentstring=#\ %s
 
 set t_Co=8
 highlight StatusLine ctermfg=238 ctermbg=white
