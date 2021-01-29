@@ -34,8 +34,10 @@ bind-key f12 send-prefix
 bind-key r source-file ~/.tmux.conf \; display-message "Config reloaded..."
 # Scripts
 bind-key -n M-tab run-shell '~/.tmux/script/filetree'
-bind-key -n M-space display-popup -w 90% -h 60% -d "#{session_path}" -KER "~/.tmux/script/vv"
-bind-key -n M-e display-popup -w 90% -h 60% -d "#{session_path}" -KER "~/.tmux/script/vh"
+bind-key -n M-space display-popup\
+    -w 90% -h 60% -d "#{session_path}" -KER "~/.tmux/script/vim -h"
+bind-key -n M-e display-popup\
+    -w 90% -h 60% -d "#{session_path}" -KER "~/.tmux/script/vim -v"
 
 # Pane control
 # Split with alt-s alt-v

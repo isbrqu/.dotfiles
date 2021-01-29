@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-file="$(fzf --reverse --preview 'cat {}')"\
-&& tmux split-window -h vim "$file"
