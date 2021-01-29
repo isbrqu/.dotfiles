@@ -7,6 +7,9 @@ set-option -g default-terminal xterm-256color
 set-window-option -g automatic-rename on
 set-option -g set-titles on
 
+# Statusbar
+set-option -g status-position top
+
 # Miscelaneous options
 set-option -g xterm-keys on
 # Vi
