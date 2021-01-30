@@ -128,7 +128,7 @@ bar {
     status_command i3status --config ~/.config/dot/i3status/config2
 }
 
-exec --no-startup-id setxkbmap -layout us -variant altgr-intl
+exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
 
 assign [class="Gnome-terminal"] $ws1
 assign [class="st-256color"] $ws1
