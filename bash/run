@@ -153,11 +153,11 @@ export FZF_DEFAULT_OPTS='--reverse'
 # Auto-completion
 # ---------------
 [[ $- == *i* ]]\
-&& . "/home/isbrqu/.config/fzf/shell/completion.bash" 2> /dev/null
+&& . "$HOME/.config/fzf/shell/completion.bash" 2> /dev/null
 
 # Key bindings
 # ------------
-. "/home/isbrqu/.config/fzf/shell/key-bindings.bash"
+. "$HOME/.config/fzf/shell/key-bindings.bash"
 
 [[ -z "$TMUX" ]]\
 && . "$HOME/.config/dot/bash/tmux-session-private"\
