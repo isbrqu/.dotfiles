@@ -113,7 +113,7 @@ noremap <leader>/ :noh<cr>
 " replace
 noremap <leader>; :%s//g<left><left>
 " fzf
-nnoremap <silent> <leader><leader> <esc>:GFiles<cr>
+nnoremap <silent> <leader><leader> <esc>:Files<cr>
 nnoremap <silent> <leader>b <esc>:Buffers<cr>
 nnoremap <silent> <leader>g <esc>:Commits<cr>
 nnoremap <silent> <leader>fh <esc>:Helptags<cr>
