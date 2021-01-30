@@ -113,10 +113,10 @@ noremap <leader>/ :noh<cr>
 " replace
 noremap <leader>; :%s//g<left><left>
 " fzf
-nnoremap <silent> <leader><leader> :Files<cr>
-nnoremap <silent> <leader>fg :GFiles<cr>
-nnoremap <leader>gl :Glog
-nnoremap <silent> <leader>fb :Buffers<cr>
+nnoremap <silent> <leader><leader> <esc>:GFiles<cr>
+nnoremap <silent> <leader>b <esc>:Buffers<cr>
+nnoremap <silent> <leader>g <esc>:Commits<cr>
+nnoremap <silent> <leader>fh <esc>:Helptags<cr>
 " config reload
 nnoremap <silent> <f11> <esc>:source ~/.vim/vimrc<cr>
 " switch insert
@@ -170,5 +170,3 @@ else
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 endif
 
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--preview', 'cat {}','--no-multi']}, <bang>0)
