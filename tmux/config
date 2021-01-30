@@ -78,7 +78,8 @@ bind-key -n M-o next-window
 bind-key -n M-i previous-window
 
 # Clipboard
-bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
+bind-key -T copy-mode-vi y
+set -s copy-command 'xclip -selection clipboard'
 
 # Theme
 run-shell -b '~/.tmux/plugins/tpm/tpm'
