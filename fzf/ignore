@@ -14,4 +14,4 @@ vendor
 *.store
 *.png
 *.tar.*
-pack
+vim/pack
