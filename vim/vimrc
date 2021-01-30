@@ -112,13 +112,9 @@ noremap <f1> <nop>
 noremap <leader>/ :noh<cr>
 " replace
 noremap <leader>; :%s//g<left><left>
-" git
-nnoremap <silent> <leader>gs :Gstatus<cr>
-nnoremap <silent> <leader>gl :Glog
 " fzf
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader>fg :GFiles<cr>
-nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gl :Glog
 nnoremap <silent> <leader>fb :Buffers<cr>
 " config reload
@@ -127,6 +123,11 @@ nnoremap <silent> <f11> <esc>:source ~/.vim/vimrc<cr>
 nnoremap ga A
 " reload
 nnoremap <silent> <leader>e <esc>:edit<cr>
+" fugitive
+autocmd FileType fugitive
+    \ nnoremap <buffer> <leader>p <esc>:Git<space>push<cr>
+autocmd FileType fugitive
+    \ nnoremap <buffer> <leader>P <esc>:Git<space>push<space>-f<cr>
 
 " INSERT
 " disable
@@ -159,6 +160,7 @@ autocmd FileType conf setlocal commentstring=#\ %s
 
 set t_Co=8
 highlight StatusLine ctermfg=238 ctermbg=white
+highlight StatusLineNC ctermfg=237 ctermbg=white
 
 " FZF
 " See `man fzf-tmux` for available options
