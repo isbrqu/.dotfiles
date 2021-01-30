@@ -158,3 +158,8 @@ export FZF_DEFAULT_OPTS='--reverse'
 # Key bindings
 # ------------
 . "/home/isbrqu/.config/fzf/shell/key-bindings.bash"
+
+[[ -z "$TMUX" ]]\
+&& . "$HOME/.config/dot/bash/tmux-session-private"\
+&& t\
+&& exit\
