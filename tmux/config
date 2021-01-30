@@ -38,6 +38,10 @@ bind-key -n M-space display-popup\
     -w 90% -h 60% -d "#{session_path}" -KER "~/.tmux/script/vim -h"
 bind-key -n M-e display-popup\
     -w 90% -h 60% -d "#{session_path}" -KER "~/.tmux/script/vim -v"
+bind-key -n M-g display-popup\
+    -w 90% -h 80% -d "#{session_path}" -KER "~/.tmux/script/fugitive-popup"
+bind-key g display-popup\
+    -w 90% -h 80% -d "#{session_path}" -KER "~/.tmux/script/fugitive-popup"
 
 # Pane control
 # Split with alt-s alt-v
