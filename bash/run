@@ -122,7 +122,9 @@ LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
 l() {
     [[ -f "$1" ]] && (
         bat "$1" || cat "$1"
-    ) || ls -1 $LSOPTIONS
+    ) || [[ -n "$1" ]] && (
+        ls -1 $LSOPTIONS "$1"
+    )
 }
 
 v() {
