@@ -126,12 +126,25 @@ l() {
 }
 
 v() {
-    local file
-    file="$(fzf)"\
-    && vim "$file"
+    [[ -n "$1" ]] && (
+        vim "$1"
+    ) || (
+        [[ -n "$TMUX" ]] && (
+            tmux display-popup\
+                -w 90% -h 60% -d "#{session_path}" -KER "~/.tmux/script/vim -h"
+            return 0
+        ) || (
+            local file
+            file="$(fzf)"\
+            && vim "$file"
+        )
+    )
 }
 
 t() {
+    [[ -n "$TMUX" ]]\
+    && echo "qué haces capo?"\
+    && return
     local sessions
     sessions="$(tmux list-session -F '#{session_name}' 2> /dev/null)"
     session="$(echo "$sessions" | fzf --print-query)"
