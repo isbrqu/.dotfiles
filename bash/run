@@ -15,10 +15,13 @@ esac
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 
-# append to the history file, don't overwrite it
-shopt -s histappend
 bind 'set completion-ignore-case on'
 
+# HISTORY
+###############################################################################
+
+# append to the history file, don't overwrite it
+shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=100
 HISTFILESIZE=100
@@ -31,10 +34,17 @@ PROMPT_COMMAND='history -a'
 
 # INPUTRC=~/.config/dot/bash/inputrc
 
+# LESS
+###############################################################################
+
 export LESSHISTFILE=-
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+
+# COLOR
+###############################################################################
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -67,6 +77,9 @@ esac
     || color_prompt=
 )
 
+# PS1
+###############################################################################
+
 [[ "$color_prompt" = yes ]]\
 && PS1='${debian_chroot:+($debian_chroot)}'\
 && PS1="$PS1"'\[\033[01;32m\]\u@\h\[\033[00m\]:'\
@@ -77,22 +90,29 @@ esac
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/.config/composer/vendor/bin"
-export PATH="$PATH:/usr/share/php"
+[[ "$TERM" == xterm* || "$TERM" == rxvt* ]]\
+&& PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
 # XDG
 ###############################################################################
+
 export XDG_CONFIG_HOME="$HOME/.config"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+
+# PATH
+###############################################################################
+
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$XDG_CONFIG_HOME/composer/vendor/bin"
+export PATH="$PATH:/usr/share/php"
+
+# XAUTHORITY
+###############################################################################
+
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+
+# GCC_COLORS
+###############################################################################
 
 # colored GCC warnings and errors
 # export GCC_COLORS="error=01;31"
@@ -110,19 +130,23 @@ export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  ([[ -f /usr/share/bash-completion/bash_completion ]]\
-  && . /usr/share/bash-completion/bash_completion)\
-  || ([[ -f /etc/bash_completion ]]\
-  && . /etc/bash_completion)
+  [[ -f /usr/share/bash-completion/bash_completion ]] && (
+      . /usr/share/bash-completion/bash_completion
+  ) || [[ -f /etc/bash_completion ]] && (
+      . /etc/bash_completion
+  )
 fi
 
-LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
 # enable color support of ls and also add handy aliases
 [[ -x /usr/bin/dircolors && -r ~/.dircolors ]]\
 && eval "$(dircolors -b ~/.dircolors)"\
-|| eval "$(dircolors -b)"\
-&& alias ll="ls -l $LSOPTIONS"\
-&& alias vi='vim'
+|| eval "$(dircolors -b)"
+
+# ls
+###############################################################################
+
+LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
+alias ll="ls -l $LSOPTIONS"
 
 l() {
     [[ -f "$1" ]] && (
@@ -140,22 +164,8 @@ l() {
 # TMUX
 ###############################################################################
 
-export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
 export TMUX_SCRIPT="$XDG_CONFIG_HOME/tmux/script"
-
-v() {
-    [[ -n "$1" ]] && (
-        vim "$1"
-    ) || ([[ -n "$TMUX" ]] && (
-        tmux display-popup\
-            -w 90% -h 60% -d "#{session_path}" -KER "$TMUX_SCRIPT/vim -h"
-        return 0
-    ) || (
-        local file
-        file="$(fzf)"\
-        && vim "$file"
-    ))
-}
+export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
 
 t() {
     [[ -n "$TMUX" ]]\
@@ -172,29 +182,44 @@ t() {
     )
 }
 
-export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
+v() {
+    [[ -n "$1" ]] && (
+        vim "$1"
+    ) || ([[ -n "$TMUX" ]] && (
+        tmux display-popup\
+            -w 90% -h 60% -d "#{session_path}" -KER "$TMUX_SCRIPT/vim -h"
+        return 0
+    ) || (
+        local file
+        file="$(fzf)"\
+        && vim "$file"
+    ))
+}
 
-FZF_HOME="$HOME/.config/dot/fzf"
+# FZF
+###############################################################################
+
+FZF_HOME="$XDG_CONFIG_HOME/dot/fzf"
 FZF_SED='s/^/"/;{:a;$!N;s/\n/","/;ta};s/$/"/'
 FZF_IGNORE="$(sed $FZF_SED "$FZF_HOME/ignore")"
 export FZF_DEFAULT_COMMAND="ag --hidden --ignore={$FZF_IGNORE} -g "'""'
 export FZF_DEFAULT_OPTS="--reverse --preview 'bat {} --color=always'"
 
 # Setup fzf
-# ---------
-[[ ! "$PATH" == */home/isbrqu/.config/fzf/bin* ]]\
-&& export PATH="${PATH:+${PATH}:}/home/isbrqu/.config/fzf/bin"
+[[ ! "$PATH" == *"$XDG_CONFIG_HOME"/fzf/bin* ]]\
+&& export PATH="${PATH:+${PATH}:}$XDG_CONFIG_HOME/fzf/bin"
 
 # Auto-completion
-# ---------------
 [[ $- == *i* ]]\
-&& . "$HOME/.config/fzf/shell/completion.bash" 2> /dev/null
+&& . "$XDG_CONFIG_HOME/fzf/shell/completion.bash" 2> /dev/null
 
 # Key bindings
-# ------------
-. "$HOME/.config/fzf/shell/key-bindings.bash"
+. "$XDG_CONFIG_HOME/fzf/shell/key-bindings.bash"
 
-. "$HOME/.config/dot/bash/tmux-session-private"
+# STARTUP
+###############################################################################
+
+. "$XDG_CONFIG_HOME/dot/bash/tmux-session-private"
 [[ -z "$TMUX" ]]\
 && t\
 && exit
