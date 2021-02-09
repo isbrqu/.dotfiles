@@ -126,12 +126,15 @@ LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
 
 l() {
     [[ -f "$1" ]] && (
+        # read a file
         bat "$1" || cat "$1"
+    ) || ([[ -z "$1" ]] && (
+        # list all file
+        ls -1 $LSOPTIONS
     ) || (
-        [[ -z "$1" ]]\
-        && ls -1 $LSOPTIONS\
-        || ls -1 $LSOPTIONS "$1"
-    )
+        # list folder contents
+        ls -1 $LSOPTIONS "$1"
+    ))
 }
 
 v() {
