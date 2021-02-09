@@ -137,20 +137,24 @@ l() {
     ))
 }
 
+# TMUX
+###############################################################################
+
+export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
+export TMUX_SCRIPT="$XDG_CONFIG_HOME/tmux/script"
+
 v() {
     [[ -n "$1" ]] && (
         vim "$1"
+    ) || ([[ -n "$TMUX" ]] && (
+        tmux display-popup\
+            -w 90% -h 60% -d "#{session_path}" -KER "$TMUX_SCRIPT/vim -h"
+        return 0
     ) || (
-        [[ -n "$TMUX" ]] && (
-            tmux display-popup\
-                -w 90% -h 60% -d "#{session_path}" -KER "~/.config/tmux/script/vim -h"
-            return 0
-        ) || (
-            local file
-            file="$(fzf)"\
-            && vim "$file"
-        )
-    )
+        local file
+        file="$(fzf)"\
+        && vim "$file"
+    ))
 }
 
 t() {
@@ -158,6 +162,7 @@ t() {
     && echo "qué haces capo?"\
     && return
     local sessions
+    local session
     sessions="$(tmux list-session -F '#{session_name}' 2> /dev/null)"
     session="$(echo "$sessions" | fzf --print-query)"
     session="$(echo "${session//*[$'\n']}")"
