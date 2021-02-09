@@ -97,6 +97,8 @@ unset color_prompt force_color_prompt
 ###############################################################################
 
 export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 
 # PATH
@@ -105,6 +107,8 @@ export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$XDG_CONFIG_HOME/composer/vendor/bin"
 export PATH="$PATH:/usr/share/php"
+
+export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
 
 # XAUTHORITY
 ###############################################################################
@@ -132,9 +136,9 @@ export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 if ! shopt -oq posix; then
   [[ -f /usr/share/bash-completion/bash_completion ]] && (
       . /usr/share/bash-completion/bash_completion
-  ) || [[ -f /etc/bash_completion ]] && (
+  ) || ([[ -f /etc/bash_completion ]] && (
       . /etc/bash_completion
-  )
+  ))
 fi
 
 # enable color support of ls and also add handy aliases
