@@ -16,3 +16,6 @@
 [submodule "vim/pack/completor/start/completor.vim"]
 	path = vim/pack/completor/start/completor.vim
 	url = https://github.com/maralla/completor.vim.git
+[submodule "vim/pack/mg979/start/vim-visual-multi"]
+	path = vim/pack/mg979/start/vim-visual-multi
+	url = https://github.com/mg979/vim-visual-multi.git
