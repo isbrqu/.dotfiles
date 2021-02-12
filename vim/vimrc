@@ -199,3 +199,32 @@ else
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 endif
 
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :<C-u>call EscapedSearch()<CR>/<C-R>=@/<CR><CR>N
+vnoremap <silent> # :<C-u>call EscapedSearch()<CR>?<C-R>=@/<CR><CR>N
+
+" <leader>r replace one by one
+nnoremap <silent> <leader>r viw:call EscapedSearch()<CR>cgn
+vnoremap <silent> <leader>r :call EscapedSearch()<CR>cgn
+
+" <leader>R replace all
+nnoremap <silent> <leader>R viw:call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
+vnoremap <silent> <leader>R :call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
+
+function! EscapedSearch() range
+    " Backup what's in default register
+    let l:saved_reg = @"
+    " Copy selection
+    execute 'normal! vgvy'
+    " Escape special chars
+    let l:pattern = escape(@", "\\/.*'$^~[]")
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+    " Set search
+    let @/ = l:pattern
+    " Restore default register
+    let @" = l:saved_reg
+endfunction
+
+function! CmdLine(str)
+    call feedkeys(":" . a:str)
+endfunction
