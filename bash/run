@@ -221,8 +221,9 @@ export FZF_DEFAULT_OPTS="--reverse"
 # STARTUP
 ###############################################################################
 
-. "$XDG_CONFIG_HOME/dot/bash/tmux-session-private"
-[[ -z "$TMUX" ]]\
-&& t\
-&& exit
-
+[[ "$(tty)" == */pts/* ]] && (
+    . "$XDG_CONFIG_HOME/dot/bash/tmux-session-private"
+    [[ -z "$TMUX" ]]\
+    && t\
+    && exit
+)
