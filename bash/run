@@ -202,10 +202,10 @@ v() {
 ###############################################################################
 
 FZF_HOME="$XDG_CONFIG_HOME/dot/fzf"
-FZF_SED='s/^/"/;{:a;$!N;s/\n/","/;ta};s/$/"/'
-FZF_IGNORE="$(sed $FZF_SED "$FZF_HOME/ignore")"
-export FZF_DEFAULT_COMMAND="ag --hidden --ignore={$FZF_IGNORE} -g "'""'
-export FZF_DEFAULT_OPTS="--reverse --preview 'bat {} --color=always'"
+FZF_IGNORE="--path-to-ignore $FZF_HOME/ignore"
+export FZF_DEFAULT_COMMAND="ag --hidden $FZF_IGNORE -g "'""'
+export FZF_PREVIEW="--preview 'bat {} --color=always'"
+export FZF_DEFAULT_OPTS="--reverse"
 
 # Setup fzf
 [[ ! "$PATH" == *"$XDG_CONFIG_HOME"/fzf/bin* ]]\
