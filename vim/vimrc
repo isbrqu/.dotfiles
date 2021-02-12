@@ -215,8 +215,10 @@ nnoremap <silent> <leader>r viw:call EscapedSearch()<CR>cgn
 vnoremap <silent> <leader>r :call EscapedSearch()<CR>cgn
 
 " <leader>R replace all
-nnoremap <silent> <leader>R viw:call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
-vnoremap <silent> <leader>R :call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
+nnoremap <silent> <leader>R
+    \ viw:call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
+vnoremap <silent> <leader>R
+    \ :call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
 
 function! EscapedSearch() range
     " Backup what's in default register
@@ -235,3 +237,4 @@ endfunction
 function! CmdLine(str)
     call feedkeys(":" . a:str)
 endfunction
+
