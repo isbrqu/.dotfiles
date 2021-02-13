@@ -184,14 +184,12 @@ let g:auto_save = 1
 let g:auto_save_silent = 1
 
 " FILETYPE
+set commentstring=#\ %s
 autocmd FileType gitcommit setlocal colorcolumn=51
-autocmd FileType fugitive,help,netrw setlocal colorcolumn=
+autocmd FileType fugitive,help,netrw,tags setlocal colorcolumn=
 autocmd FileType help,netrw setlocal number relativenumber
 autocmd FileType vim setlocal commentstring=\"\ %s
-autocmd FileType python setlocal commentstring=#\ %s
-autocmd FileType sh setlocal commentstring=#\ %s
-autocmd FileType tmux setlocal commentstring=#\ %s
-autocmd FileType conf setlocal commentstring=#\ %s
+autocmd FileType python,sh,tmux,conf setlocal commentstring=#\ %s
 " fugitive
 autocmd FileType fugitive
     \ nnoremap <buffer> <leader>p <esc>:Git push<cr>
