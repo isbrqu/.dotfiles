@@ -15,8 +15,7 @@ esac
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 
-# HISTORY
-###############################################################################
+# -- history --
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -32,8 +31,7 @@ PROMPT_COMMAND='history -a'
 
 # INPUTRC=~/.config/dot/bash/inputrc
 
-# LESS
-###############################################################################
+# -- less --
 
 export LESSHISTFILE=-
 
@@ -41,8 +39,7 @@ export LESSHISTFILE=-
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# COLOR
-###############################################################################
+# -- color --
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -75,8 +72,7 @@ esac
     || color_prompt=
 )
 
-# PS1
-###############################################################################
+# -- ps1 --
 
 [[ "$color_prompt" = yes ]]\
 && PS1='${debian_chroot:+($debian_chroot)}'\
@@ -91,16 +87,14 @@ unset color_prompt force_color_prompt
 [[ "$TERM" == xterm* || "$TERM" == rxvt* ]]\
 && PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
-# XDG
-###############################################################################
+# -- xdg --
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 
-# PATH
-###############################################################################
+# -- path --
 
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$XDG_CONFIG_HOME/composer/vendor/bin"
@@ -108,13 +102,11 @@ export PATH="$PATH:/usr/share/php"
 
 export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
 
-# XAUTHORITY
-###############################################################################
+# -- xauthority --
 
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 
-# GCC_COLORS
-###############################################################################
+# -- gcc_colors --
 
 # colored GCC warnings and errors
 # export GCC_COLORS="error=01;31"
@@ -144,8 +136,7 @@ fi
 && eval "$(dircolors -b ~/.dircolors)"\
 || eval "$(dircolors -b)"
 
-# ls
-###############################################################################
+# -- ls --
 
 LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
 alias ll="ls -l $LSOPTIONS"
@@ -163,8 +154,7 @@ l() {
     ))
 }
 
-# TMUX
-###############################################################################
+# -- tmux --
 
 export TMUX_SCRIPT="$XDG_CONFIG_HOME/tmux/script"
 export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
@@ -198,8 +188,7 @@ v() {
     ))
 }
 
-# FZF
-###############################################################################
+# -- fzf --
 
 FZF_HOME="$XDG_CONFIG_HOME/dot/fzf"
 FZF_IGNORE="--path-to-ignore $FZF_HOME/ignore"
@@ -207,19 +196,18 @@ export FZF_DEFAULT_COMMAND="ag --hidden $FZF_IGNORE -g "'""'
 export FZF_PREVIEW="--preview 'bat {} --color=always'"
 export FZF_DEFAULT_OPTS="--reverse"
 
-# Setup fzf
+# setup fzf
 [[ ! "$PATH" == *"$XDG_CONFIG_HOME"/fzf/bin* ]]\
 && export PATH="${PATH:+${PATH}:}$XDG_CONFIG_HOME/fzf/bin"
 
-# Auto-completion
+# auto-completion
 [[ $- == *i* ]]\
 && . "$XDG_CONFIG_HOME/fzf/shell/completion.bash" 2> /dev/null
 
-# Key bindings
+# key bindings
 . "$XDG_CONFIG_HOME/fzf/shell/key-bindings.bash"
 
-# STARTUP
-###############################################################################
+# -- startup --
 
 [[ "$(tty)" == */pts/* ]] && (
     . "$XDG_CONFIG_HOME/dot/bash/tmux-session-private"
