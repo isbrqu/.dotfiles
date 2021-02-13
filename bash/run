@@ -24,7 +24,7 @@ shopt -s histappend
 HISTSIZE=100
 HISTFILESIZE=100
 HISTFILE=~/.config/dot/bash/history-private
-HISTIGNORE='history:ls:pwd:'
+HISTIGNORE='history:ls:pwd:l:'
 HISTTIMEFORMAT='%F, %T '
 HISTCONTROL=ignoreboth:erasedups
 
