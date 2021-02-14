@@ -1,9 +1,9 @@
-" GENERAL
+" -- general --
 set nocompatible
 set noswapfile
 set ttyfast
 
-" SECURITY
+" -- security --
 set nomodeline
 
 set noerrorbells
@@ -12,7 +12,7 @@ set fileformats=unix
 set fileencoding=utf-8
 set encoding=utf-8
 
-" VIEW
+" -- view --
 syntax on
 set ruler
 set showcmd
@@ -26,14 +26,14 @@ set colorcolumn=80
 set listchars=eol:↲,tab:↦\ ,extends:…,space:⋅
 highlight ColorColumn ctermbg=16 guibg=lightgrey
 
-" WINDOW
+" -- window --
 " When on, splitting a window will put the new window right of the current one.
 set splitright
 " Characters to fill the statuslines and vertical separators.
 set fillchars=fold:-,vert:\│
 highlight VertSplit ctermfg=237 ctermbg=237
 
-" TERMINAL OUTPUT CODES
+" -- terminal output codes --
 " visual bell
 set t_vb=
 " number of color
@@ -42,18 +42,18 @@ set t_Co=8
 " Highlight the text line of the cursor with CursorLine
 autocmd InsertEnter,InsertLeave * set cursorline!
 
-" TAB
+" -- tab --
 set tabstop=8
 set softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
 
-" UNDO
+" -- undo --
 set undofile
 set undodir=~/.vim/undodir
 
-" VIMINFO
+" -- viminfo --
 " maximum number of previously edited files for which the marks are remembered
 set viminfo='10
 " maximum number of lines saved for each register.
@@ -75,14 +75,14 @@ set viminfo+=n~/.vim/info-private
 " the command-lines that you enter are remembered in a history table
 set history=6
 
-" SEARCH
+" -- search --
 set hlsearch
 set incsearch
 
-" CLIPBOARD
+" -- clipboard --
 set clipboard=unnamedplus
 
-" STATUS BAR
+" -- status bar --
 set laststatus=2
 " Separate
 set statusline=\  
@@ -114,14 +114,15 @@ set statusline+=[%{&fileencoding}]
 highlight StatusLine ctermfg=238 ctermbg=white
 highlight StatusLineNC ctermfg=237 ctermbg=white
 
-" RUNTIMEPATH
+" -- runtimepath --
 set runtimepath+=~/.config/fzf
 
-" OTHERS
+" -- others --
 let mapleader=' '
+let maplocalleader='-'
 set keywordprg=''
 
-" NORMAL
+" -- normal --
 " switch command-line
 nnoremap <f4> :
 " switch insert
@@ -129,39 +130,47 @@ nnoremap ga A
 " quit
 nnoremap <leader>q <esc>:quit<cr>
 " move
-noremap <leader>j <c-d>
-noremap <leader>k <c-u>
+nnoremap <leader>j <c-d>
+nnoremap <leader>k <c-u>
 " window
 nnoremap <f2> <c-w>
 nnoremap <c-h> <c-w><left>
 nnoremap <c-l> <c-w><right>
 nnoremap <c-k> <c-w><up>
 nnoremap <c-j> <c-w><down>
+nnoremap <silent> <leader>o <esc>:only<cr>
 " tab
-noremap <silent> <up> gt
-noremap <silent> <down> gT
+nnoremap <up> gt
+nnoremap <down> gT
 " buffer
-noremap <silent> <left> :bn<cr>
-noremap <silent> <right> :bN<cr>
-noremap <silent> <leader>l :bn<cr>
-noremap <silent> <leader>h :bN<cr>
+nnoremap <silent> <left> :bn<cr>
+nnoremap <silent> <right> :bN<cr>
+nnoremap <silent> <leader>l :bn<cr>
+nnoremap <silent> <leader>h :bN<cr>
 " disable
-noremap <f1> <nop>
+nnoremap <f1> <nop>
 " search
-noremap <silent> <leader>/ :noh<cr>
+nnoremap <silent> <leader>/ :noh<cr>
 " replace
-noremap <leader>; :%s//g<left><left>
+nnoremap <leader>\ :%s//g<left><left>
 " config reload
 nnoremap <silent> <f5> <esc>:source ~/.vim/vimrc<cr>
 " reload
 nnoremap <silent> <leader>e <esc>:edit<cr>
-" fzf
-nnoremap <silent> <leader><leader> <esc>:Files<cr>
-nnoremap <silent> <leader>b <esc>:Buffers<cr>
-nnoremap <silent> <leader>g <esc>:Commits<cr>
-nnoremap <silent> <leader>fh <esc>:Helptags<cr>
 
-" INSERT
+" -- man --
+augroup filetype_man
+    autocmd!
+    " autocmd FileType man 
+    autocmd FileType man setlocal number relativenumber
+    autocmd FileType man only
+    autocmd FileType man setlocal define=^[A-Z\ ]\\+$
+    autocmd FileType man nnoremap <buffer> <leader>fs <esc>:Ag ^[A-Z ]+$<cr>
+    autocmd FileType man nnoremap <buffer> <leader>l <esc>:dli /<cr>
+    autocmd FileType man nnoremap <buffer> <leader>h <esc>:Man<space>
+augroup END
+
+" -- insert --
 " disable
 inoremap <f1> <nop>
 " autocomplete
@@ -169,7 +178,7 @@ inoremap <expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
 
-" TERMINAL
+" -- terminal --
 " general
 tnoremap <f2> <c-w>
 " switch normal
@@ -177,16 +186,16 @@ tnoremap <f1> <c-w>N
 " switch command-line
 tnoremap <f4> <c-w>:
 
-" AUTOSAVE
+" -- autosave --
 " enable AutoSave on Vim startup
 let g:auto_save = 1
 " do not display the auto-save notification
 let g:auto_save_silent = 1
 
-" FILETYPE
+" -- filetype --
 set commentstring=#\ %s
 autocmd FileType gitcommit setlocal colorcolumn=51
-autocmd FileType fugitive,help,netrw,tags setlocal colorcolumn=
+autocmd FileType fugitive,help,netrw,tags,man setlocal colorcolumn=
 autocmd FileType help,netrw setlocal number relativenumber
 autocmd FileType vim setlocal commentstring=\"\ %s
 autocmd FileType python,sh,tmux,conf setlocal commentstring=#\ %s
@@ -196,28 +205,35 @@ autocmd FileType fugitive
 autocmd FileType fugitive
     \ nnoremap <buffer> <leader>P <esc>:Git push -f<cr>
 
-" FZF
+" -- fzf --
 " See `man fzf-tmux` for available options
 if exists('$TMUX')
   let g:fzf_layout = { 'tmux': '-p90%,60%' }
 else
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 endif
+" normal
+nnoremap <leader><leader> <esc>:FZF<cr>
+nnoremap <leader>ff <esc>:Files<cr>
+nnoremap <leader>fl <esc>:BLines<space>
+nnoremap <leader>fb <esc>:Buffers<cr>
+nnoremap <leader>fw <esc>:Windows<cr>
+nnoremap <leader>fh <esc>:Helptags<cr>
+nnoremap <leader>fs <esc>:Ag ^(#\|"\|//) -+ .+ -+$<cr>
 
+" -- replace --
 " Visual mode pressing * or # searches for the current selection
 vnoremap <silent> * :<C-u>call EscapedSearch()<CR>/<C-R>=@/<CR><CR>N
 vnoremap <silent> # :<C-u>call EscapedSearch()<CR>?<C-R>=@/<CR><CR>N
-
 " <leader>r replace one by one
 nnoremap <silent> <leader>r viw:call EscapedSearch()<CR>cgn
 vnoremap <silent> <leader>r :call EscapedSearch()<CR>cgn
-
 " <leader>R replace all
 nnoremap <silent> <leader>R
     \ viw:call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
 vnoremap <silent> <leader>R
     \ :call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
-
+" function EscapedSearch
 function! EscapedSearch() range
     " Backup what's in default register
     let l:saved_reg = @"
@@ -231,7 +247,7 @@ function! EscapedSearch() range
     " Restore default register
     let @" = l:saved_reg
 endfunction
-
+" function CmdLine
 function! CmdLine(str)
     call feedkeys(":" . a:str)
 endfunction
