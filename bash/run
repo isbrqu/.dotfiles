@@ -92,6 +92,9 @@ unset color_prompt force_color_prompt
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
+
+# -- misc --
+
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 
 # -- path --
@@ -124,9 +127,9 @@ export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  [[ -f /usr/share/bash-completion/bash_completion ]] && (
+  ([[ -f /usr/share/bash-completion/bash_completion ]] && (
       . /usr/share/bash-completion/bash_completion
-  ) || ([[ -f /etc/bash_completion ]] && (
+  )) || ([[ -f /etc/bash_completion ]] && (
       . /etc/bash_completion
   ))
 fi
@@ -136,22 +139,34 @@ fi
 && eval "$(dircolors -b ~/.dircolors)"\
 || eval "$(dircolors -b)"
 
+# -- clipboard --
+
+alias cclip='xclip -selection clipboard -in'
+alias pclip='xclip -selection clipboard -out'
+
+# -- download --
+alias dwget='wget --continue "$(xclip -selection clipboard -out)"'
+
+him() {
+    vim -c "help $1" -c "only"
+}
+
 # -- ls --
 
 LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
 alias ll="ls -l $LSOPTIONS"
 
 l() {
-    [[ -f "$1" ]] && (
+    ([[ -f "$1" ]] && (
         # read a file
         bat "$1" || cat "$1"
-    ) || ([[ -z "$1" ]] && (
+    )) || ([[ -z "$1" ]] && (
         # list all file
         ls -1 $LSOPTIONS
-    ) || (
+    )) || (
         # list folder contents
         ls -1 $LSOPTIONS "$1"
-    ))
+    )
 }
 
 # -- tmux --
@@ -175,17 +190,17 @@ t() {
 }
 
 v() {
-    [[ -n "$1" ]] && (
+    ([[ -n "$1" ]] && (
         vim "$1"
-    ) || ([[ -n "$TMUX" ]] && (
+    )) || ([[ -n "$TMUX" ]] && (
         tmux display-popup\
             -w 90% -h 60% -d "#{session_path}" -KER "$TMUX_SCRIPT/vim -h"
         return 0
-    ) || (
+    )) || (
         local file
         file="$(fzf)"\
         && vim "$file"
-    ))
+    )
 }
 
 # -- fzf --
