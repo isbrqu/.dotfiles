@@ -165,6 +165,7 @@ nnoremap <leader>\ :%s//g<left><left>
 nnoremap <silent> <f5> <esc>:source ~/.vim/vimrc<cr>
 " reload
 nnoremap <silent> <leader>e <esc>:edit<cr>
+
 " -- insert --
 " disable
 inoremap <f1> <nop>
@@ -244,30 +245,6 @@ augroup filetype_common
         \ setlocal colorcolumn=
 augroup END
 
-" -- other common --
-autocmd FileType gitcommit setlocal colorcolumn=51
-
-" -- help --
-" augroup filetype_help
-"     autocmd!
-" augroup END
-
-" -- man --
-augroup filetype_man
-    autocmd!
-    " autocmd FileType man setlocal define=^[A-Z\ _]\\+$
-    autocmd FileType man nnoremap <buffer> <leader>fs <esc>:Rl ^[A-Z ]+$<cr>
-    " autocmd FileType man nnoremap <buffer> <leader>d <esc>:dlist /<cr>
-augroup END
-
-" -- fugitive --
-augroup filetype_fugitive
-    autocmd!
-    autocmd FileType fugitive nnoremap <buffer> <leader>p :Git push<cr>
-    autocmd FileType fugitive nnoremap <buffer> <leader>P :Git push -f<cr>
-augroup END
-
-" -- vim --
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal commentstring=\"\ %s
@@ -275,16 +252,34 @@ augroup filetype_vim
     autocmd FileType vim nnoremap <buffer> <leader>f1 :Rl ^augroup <cr>
 augroup END
 
-" -- sh --
+augroup filetype_python
+    autocmd!
+    autocmd FileType python nnoremap <buffer> <leader>f1 :Rl ^\s*def $<cr>
+augroup END
+
 augroup filetype_sh
     autocmd!
-    autocmd FileType sh nnoremap <buffer> <leader>fs :Rl ^" -+ .+ -+$<cr>
     autocmd FileType sh nnoremap <buffer> <leader>f1 :Rl ^.+\(\) ?\{$<cr>
 augroup END
 
-" -- python --
-augroup filetype_python
+augroup filetype_man
     autocmd!
-    autocmd FileType python nnoremap <buffer> <leader>fs :Rl ^" -+ .+ -+$<cr>
-    autocmd FileType python nnoremap <buffer> <leader>f1 :Rl ^\s*def $<cr>
+    autocmd FileType man nnoremap <buffer> <leader>fs <esc>:Rl ^[A-Z ]+$<cr>
+    autocmd FileType man nnoremap <buffer> <leader>f1 <esc>:Rl ^\s+(-\|--)(\[.+\])?.+ <cr>
 augroup END
+
+augroup filetype_fugitive
+    autocmd!
+    autocmd FileType fugitive nnoremap <buffer> <leader>p :Git push<cr>
+    autocmd FileType fugitive nnoremap <buffer> <leader>P :Git push -f<cr>
+augroup END
+
+augroup filetype_gitcommit
+    autocmd!
+    autocmd FileType gitcommit setlocal colorcolumn=51
+augroup END
+
+" augroup filetype_help
+"     autocmd!
+" augroup END
+
