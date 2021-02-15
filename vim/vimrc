@@ -121,12 +121,11 @@ set runtimepath+=~/.config/fzf
 let mapleader=' '
 let maplocalleader='-'
 set keywordprg=''
+set commentstring=#\ %s
 
 " -- normal --
 " switch command-line
 nnoremap <f4> :
-" switch insert
-nnoremap ga A
 " quit
 nnoremap <leader>q <esc>:quit<cr>
 " move
@@ -151,24 +150,18 @@ nnoremap <silent> <leader>h :bN<cr>
 nnoremap <f1> <nop>
 " search
 nnoremap <silent> <leader>/ :noh<cr>
+nnoremap <silent> <leader><leader> <esc>:FZF<cr>
+nnoremap <silent> <leader>ff <esc>:Files<cr>
+nnoremap <silent> <leader>fb <esc>:Buffers<cr>
+nnoremap <silent> <leader>fw <esc>:Windows<cr>
+nnoremap <silent> <leader>fs <esc>:Ag ^(#\|"\|//) -+ .+ -+$<cr>
+nnoremap <leader>fl <esc>:BLines<space>
 " replace
 nnoremap <leader>\ :%s//g<left><left>
 " config reload
 nnoremap <silent> <f5> <esc>:source ~/.vim/vimrc<cr>
 " reload
 nnoremap <silent> <leader>e <esc>:edit<cr>
-
-" -- man --
-augroup filetype_man
-    autocmd!
-    " autocmd FileType man 
-    autocmd FileType man setlocal number relativenumber
-    autocmd FileType man only
-    autocmd FileType man setlocal define=^[A-Z\ ]\\+$
-    autocmd FileType man nnoremap <buffer> <leader>fs <esc>:Ag ^[A-Z ]+$<cr>
-    autocmd FileType man nnoremap <buffer> <leader>l <esc>:dli /<cr>
-    autocmd FileType man nnoremap <buffer> <leader>h <esc>:Man<space>
-augroup END
 
 " -- insert --
 " disable
@@ -193,17 +186,10 @@ let g:auto_save = 1
 let g:auto_save_silent = 1
 
 " -- filetype --
-set commentstring=#\ %s
 autocmd FileType gitcommit setlocal colorcolumn=51
-autocmd FileType fugitive,help,netrw,tags,man setlocal colorcolumn=
-autocmd FileType help,netrw setlocal number relativenumber
 autocmd FileType vim setlocal commentstring=\"\ %s
-autocmd FileType python,sh,tmux,conf setlocal commentstring=#\ %s
-" fugitive
-autocmd FileType fugitive
-    \ nnoremap <buffer> <leader>p <esc>:Git push<cr>
-autocmd FileType fugitive
-    \ nnoremap <buffer> <leader>P <esc>:Git push -f<cr>
+autocmd FileType fugitive,netrw,tags,man,markdown setlocal colorcolumn=
+autocmd FileType netrw setlocal number relativenumber
 
 " -- fzf --
 " See `man fzf-tmux` for available options
@@ -212,14 +198,6 @@ if exists('$TMUX')
 else
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 endif
-" normal
-nnoremap <leader><leader> <esc>:FZF<cr>
-nnoremap <leader>ff <esc>:Files<cr>
-nnoremap <leader>fl <esc>:BLines<space>
-nnoremap <leader>fb <esc>:Buffers<cr>
-nnoremap <leader>fw <esc>:Windows<cr>
-nnoremap <leader>fh <esc>:Helptags<cr>
-nnoremap <leader>fs <esc>:Ag ^(#\|"\|//) -+ .+ -+$<cr>
 
 " -- replace --
 " Visual mode pressing * or # searches for the current selection
@@ -251,4 +229,37 @@ endfunction
 function! CmdLine(str)
     call feedkeys(":" . a:str)
 endfunction
+
+" -- help --
+augroup filetype_help
+    autocmd!
+    autocmd FileType help setlocal noerrorbells number relativenumber
+    autocmd FileType help setlocal colorcolumn=
+    autocmd FileType help runtime ftplugin/man.vim
+    autocmd FileType help nnoremap <buffer> <leader><leader> <esc>:Helptags<cr>
+    autocmd FileType help nnoremap <buffer> <leader>ft <esc>:BTags<cr>
+    autocmd FileType help nnoremap <buffer> <leader>fs <esc>:Ag ^[A-Z ]+$<cr>
+    autocmd FileType help nnoremap <buffer> <leader>m <esc>:Man<space>
+augroup END
+
+" -- man --
+augroup filetype_man
+    autocmd!
+    autocmd FileType man setlocal number relativenumber
+    autocmd FileType man setlocal colorcolumn=
+    autocmd FileType man setlocal define=^[A-Z\ _]\\+$
+    autocmd FileType man nnoremap <buffer> <leader><leader> <esc>:Helptags<cr>
+    autocmd FileType man nnoremap <buffer> <leader>fs <esc>:Ag ^[A-Z ]+$<cr>
+    autocmd FileType man nnoremap <buffer> <leader>d <esc>:dlist /<cr>
+    autocmd FileType man nnoremap <buffer> <leader>m <esc>:Man<space>
+augroup END
+
+" -- fugitive --
+augroup filetype_fugitive
+    autocmd!
+    autocmd FileType fugitive setlocal number relativenumber
+    autocmd FileType fugitive setlocal colorcolumn=
+    autocmd FileType fugitive nnoremap <buffer> <leader>p <esc>:Git push<cr>
+    autocmd FileType fugitive nnoremap <buffer> <leader>P <esc>:Git push -f<cr>
+augroup END
 
