@@ -156,6 +156,7 @@ nnoremap <silent> <leader>fb <esc>:Buffers<cr>
 nnoremap <silent> <leader>fw <esc>:Windows<cr>
 nnoremap <silent> <leader>fh <esc>:Helptags<cr>
 nnoremap <silent> <leader>ft <esc>:BTags<cr>
+nnoremap <silent> <leader>fs <esc>:Rl ^#+ -+ .+ -+$<cr>
 nnoremap <silent> <leader>fS <esc>:Rg ^(#+\|"\|//) -+ .+ -+$<cr>
 nnoremap <silent> <leader>fl <esc>:BLines<space>
 " replace
@@ -227,15 +228,14 @@ endfunction
 
 command! -bang -nargs=* Rl
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --colors "match:none" --color=always --ignore-case -g "'.expand('%').'" -- '.shellescape(<q-args>), 1,
+  \   'rg --column --line-number --no-heading --colors "match:none" --color=always --smart-case -g "'.expand('%').'" -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --colors "match:none" --color=always --ignore-case -- '.shellescape(<q-args>), 1,
+  \   'rg --column --line-number --no-heading --colors "match:none" --color=always --smart-case -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
 
-" -- common --
 augroup filetype_common
     autocmd!
     autocmd FileType help,man,fugitive,markdown,tags
