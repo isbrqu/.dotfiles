@@ -154,15 +154,16 @@ nnoremap <silent> <leader><leader> <esc>:FZF<cr>
 nnoremap <silent> <leader>ff <esc>:Files<cr>
 nnoremap <silent> <leader>fb <esc>:Buffers<cr>
 nnoremap <silent> <leader>fw <esc>:Windows<cr>
-nnoremap <silent> <leader>fs <esc>:Ag ^(#\|"\|//) -+ .+ -+$<cr>
-nnoremap <leader>fl <esc>:BLines<space>
+nnoremap <silent> <leader>fh <esc>:Helptags<cr>
+nnoremap <silent> <leader>ft <esc>:BTags<cr>
+nnoremap <silent> <leader>fS <esc>:Rg ^(#+\|"\|//) -+ .+ -+$<cr>
+nnoremap <silent> <leader>fl <esc>:BLines<space>
 " replace
 nnoremap <leader>\ :%s//g<left><left>
 " config reload
 nnoremap <silent> <f5> <esc>:source ~/.vim/vimrc<cr>
 " reload
 nnoremap <silent> <leader>e <esc>:edit<cr>
-
 " -- insert --
 " disable
 inoremap <f1> <nop>
@@ -184,12 +185,6 @@ tnoremap <f4> <c-w>:
 let g:auto_save = 1
 " do not display the auto-save notification
 let g:auto_save_silent = 1
-
-" -- filetype --
-autocmd FileType gitcommit setlocal colorcolumn=51
-autocmd FileType vim setlocal commentstring=\"\ %s
-autocmd FileType fugitive,netrw,tags,man,markdown setlocal colorcolumn=
-autocmd FileType netrw setlocal number relativenumber
 
 " -- fzf --
 " See `man fzf-tmux` for available options
@@ -230,36 +225,66 @@ function! CmdLine(str)
     call feedkeys(":" . a:str)
 endfunction
 
-" -- help --
-augroup filetype_help
+command! -bang -nargs=* Rl
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --colors "match:none" --color=always --ignore-case -g "'.expand('%').'" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --colors "match:none" --color=always --ignore-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+" -- common --
+augroup filetype_common
     autocmd!
-    autocmd FileType help setlocal noerrorbells number relativenumber
-    autocmd FileType help setlocal colorcolumn=
-    autocmd FileType help runtime ftplugin/man.vim
-    autocmd FileType help nnoremap <buffer> <leader><leader> <esc>:Helptags<cr>
-    autocmd FileType help nnoremap <buffer> <leader>ft <esc>:BTags<cr>
-    autocmd FileType help nnoremap <buffer> <leader>fs <esc>:Ag ^[A-Z ]+$<cr>
-    autocmd FileType help nnoremap <buffer> <leader>m <esc>:Man<space>
+    autocmd FileType help,man,fugitive,markdown,tags
+        \ setlocal number relativenumber
+    autocmd FileType help,man,fugitive,markdown,tags
+        \ setlocal colorcolumn=
 augroup END
+
+" -- other common --
+autocmd FileType gitcommit setlocal colorcolumn=51
+
+" -- help --
+" augroup filetype_help
+"     autocmd!
+" augroup END
 
 " -- man --
 augroup filetype_man
     autocmd!
-    autocmd FileType man setlocal number relativenumber
-    autocmd FileType man setlocal colorcolumn=
-    autocmd FileType man setlocal define=^[A-Z\ _]\\+$
-    autocmd FileType man nnoremap <buffer> <leader><leader> <esc>:Helptags<cr>
-    autocmd FileType man nnoremap <buffer> <leader>fs <esc>:Ag ^[A-Z ]+$<cr>
-    autocmd FileType man nnoremap <buffer> <leader>d <esc>:dlist /<cr>
-    autocmd FileType man nnoremap <buffer> <leader>m <esc>:Man<space>
+    " autocmd FileType man setlocal define=^[A-Z\ _]\\+$
+    autocmd FileType man nnoremap <buffer> <leader>fs <esc>:Rl ^[A-Z ]+$<cr>
+    " autocmd FileType man nnoremap <buffer> <leader>d <esc>:dlist /<cr>
 augroup END
 
 " -- fugitive --
 augroup filetype_fugitive
     autocmd!
-    autocmd FileType fugitive setlocal number relativenumber
-    autocmd FileType fugitive setlocal colorcolumn=
-    autocmd FileType fugitive nnoremap <buffer> <leader>p <esc>:Git push<cr>
-    autocmd FileType fugitive nnoremap <buffer> <leader>P <esc>:Git push -f<cr>
+    autocmd FileType fugitive nnoremap <buffer> <leader>p :Git push<cr>
+    autocmd FileType fugitive nnoremap <buffer> <leader>P :Git push -f<cr>
 augroup END
 
+" -- vim --
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal commentstring=\"\ %s
+    autocmd FileType vim nnoremap <buffer> <leader>fs :Rl ^" -+ .+ -+$<cr>
+    autocmd FileType vim nnoremap <buffer> <leader>f1 :Rl ^augroup <cr>
+augroup END
+
+" -- sh --
+augroup filetype_sh
+    autocmd!
+    autocmd FileType sh nnoremap <buffer> <leader>fs :Rl ^" -+ .+ -+$<cr>
+    autocmd FileType sh nnoremap <buffer> <leader>f1 :Rl ^.+\(\) ?\{$<cr>
+augroup END
+
+" -- python --
+augroup filetype_python
+    autocmd!
+    autocmd FileType python nnoremap <buffer> <leader>fs :Rl ^" -+ .+ -+$<cr>
+    autocmd FileType python nnoremap <buffer> <leader>f1 :Rl ^\s*def $<cr>
+augroup END
