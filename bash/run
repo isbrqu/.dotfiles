@@ -139,6 +139,8 @@ fi
 && eval "$(dircolors -b ~/.dircolors)"\
 || eval "$(dircolors -b)"
 
+alias spotdl='docker run -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
+
 # -- clipboard --
 
 alias cclip='xclip -selection clipboard -in'
