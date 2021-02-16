@@ -127,7 +127,7 @@ set commentstring=#\ %s
 " switch command-line
 nnoremap <f4> :
 " quit
-nnoremap <leader>q <esc>:quit<cr>
+nnoremap <leader>q :quit<cr>
 " move
 nnoremap <leader>j <c-d>
 nnoremap <leader>k <c-u>
@@ -137,7 +137,7 @@ nnoremap <c-h> <c-w><left>
 nnoremap <c-l> <c-w><right>
 nnoremap <c-k> <c-w><up>
 nnoremap <c-j> <c-w><down>
-nnoremap <silent> <leader>z <esc>:only<cr>
+nnoremap <silent> <leader>z :only<cr>
 " tab
 nnoremap <up> gt
 nnoremap <down> gT
@@ -149,21 +149,21 @@ nnoremap <silent> <leader>h :bN<cr>
 " disable
 nnoremap <f1> <nop>
 " search
-nnoremap <silent> <leader><leader> <esc>:FZF<cr>
-nnoremap <silent> <leader>ff <esc>:Files<cr>
-nnoremap <silent> <leader>fb <esc>:Buffers<cr>
-nnoremap <silent> <leader>fw <esc>:Windows<cr>
-nnoremap <silent> <leader>fh <esc>:Helptags<cr>
-nnoremap <silent> <leader>ft <esc>:BTags<cr>
-nnoremap <silent> <leader>fs <esc>:Rl ^#+ -+ .+ -+$<cr>
-nnoremap <silent> <leader>fS <esc>:Rg ^(#+\|"\|//) -+ .+ -+$<cr>
-nnoremap <silent> <leader>fl <esc>:BLines<esc>
+nnoremap <silent> <leader><leader> :FZF<cr>
+nnoremap <silent> <leader>ff :Files<cr>
+nnoremap <silent> <leader>fb :Buffers<cr>
+nnoremap <silent> <leader>fw :Windows<cr>
+nnoremap <silent> <leader>fh :Helptags<cr>
+nnoremap <silent> <leader>ft :BTags<cr>
+nnoremap <silent> <leader>fs :Rl ^#+ -+ .+ -+$<cr>
+nnoremap <silent> <leader>fS :Rg ^(#+\|"\|//) -+ .+ -+$<cr>
+nnoremap <silent> <leader>fl :BLines<esc>
 " settings
-nnoremap <silent> <f1> <esc>:edit ~/.vim/vimrc<cr>
-nnoremap <silent> <f5> <esc>:source ~/.vim/vimrc<cr>
+nnoremap <silent> <f1> :edit ~/.vim/vimrc<cr>
+nnoremap <silent> <f5> :source ~/.vim/vimrc<cr>
 nnoremap <silent> <leader>/ :nohlsearch<cr>
 " reload
-nnoremap <silent> <leader>e <esc>:edit<cr>
+nnoremap <silent> <leader>e :edit<cr>
 
 " -- insert --
 " disable
