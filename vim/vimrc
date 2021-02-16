@@ -137,7 +137,7 @@ nnoremap <c-h> <c-w><left>
 nnoremap <c-l> <c-w><right>
 nnoremap <c-k> <c-w><up>
 nnoremap <c-j> <c-w><down>
-nnoremap <silent> <leader>o <esc>:only<cr>
+nnoremap <silent> <leader>z <esc>:only<cr>
 " tab
 nnoremap <up> gt
 nnoremap <down> gT
@@ -157,7 +157,7 @@ nnoremap <silent> <leader>fh <esc>:Helptags<cr>
 nnoremap <silent> <leader>ft <esc>:BTags<cr>
 nnoremap <silent> <leader>fs <esc>:Rl ^#+ -+ .+ -+$<cr>
 nnoremap <silent> <leader>fS <esc>:Rg ^(#+\|"\|//) -+ .+ -+$<cr>
-nnoremap <silent> <leader>fl <esc>:BLines<space>
+nnoremap <silent> <leader>fl <esc>:BLines<esc>
 " settings
 nnoremap <silent> <f1> <esc>:edit ~/.vim/vimrc<cr>
 nnoremap <silent> <f5> <esc>:source ~/.vim/vimrc<cr>
@@ -196,13 +196,16 @@ else
 endif
 
 " -- man --
+nnoremap <leader>m :Manualbro<space>
 function! Manualbro(pagebro)
-    setlocal autochdir
-    cd ~/.local/tmp/man
-    execute "new ".a:pagebro.".man"
-    call feedkeys(":read!man ".a:pagebro."\<cr>gg")
-    call feedkeys(":setlocal readonly nomodifiable\<cr>")
-    only
+    let file = "~/.local/tmp/man/".a:pagebro.".man"
+    execute "new ".l:file
+    lchdir ~/.local/tmp/man
+    if !filereadable(expand(l:file))
+        execute "write ".l:file
+        execute "normal!:read!man ".a:pagebro."\<cr>ggdd"
+    endif
+    setlocal nomodifiable
 endfunction
 
 " -- replace --
@@ -265,6 +268,7 @@ augroup filetype_vim
     autocmd FileType vim setlocal commentstring=\"\ %s
     autocmd FileType vim nnoremap <buffer> <leader>fs :Rl ^" -+ .+ -+$<cr>
     autocmd FileType vim nnoremap <buffer> <leader>f1 :Rl ^augroup <cr>
+    autocmd FileType vim nnoremap <buffer> <leader>f2 :Rl ^fun(ction)?! <cr>
 augroup END
 
 augroup filetype_python
@@ -280,8 +284,11 @@ augroup END
 augroup filetype_man
     autocmd!
     autocmd FileType man nnoremap <buffer> <leader>fs :Rl ^[A-Z ]+$<cr>
-    autocmd FileType man nnoremap <buffer> <leader>f1 :Rl ^\s+(-\|--)(\[.+\])?.+ <cr>
-    autocmd FileType man nnoremap <buffer> <leader>m :call Manualbro('')
+    autocmd FileType man
+        \ nnoremap <buffer> <leader>f1 :Rl ^\s+(-\|--)(\[.+\])?.+ <cr>
+    autocmd FileType man
+        \ nnoremap <silent> <buffer> <leader>q
+        \ :call system("rm ~/.local/tmp/man/".expand("%"))<cr>:bdelete<cr>
 augroup END
 
 augroup filetype_fugitive
