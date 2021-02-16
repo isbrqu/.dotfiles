@@ -149,7 +149,6 @@ nnoremap <silent> <leader>h :bN<cr>
 " disable
 nnoremap <f1> <nop>
 " search
-nnoremap <silent> <leader>/ :noh<cr>
 nnoremap <silent> <leader><leader> <esc>:FZF<cr>
 nnoremap <silent> <leader>ff <esc>:Files<cr>
 nnoremap <silent> <leader>fb <esc>:Buffers<cr>
@@ -159,10 +158,10 @@ nnoremap <silent> <leader>ft <esc>:BTags<cr>
 nnoremap <silent> <leader>fs <esc>:Rl ^#+ -+ .+ -+$<cr>
 nnoremap <silent> <leader>fS <esc>:Rg ^(#+\|"\|//) -+ .+ -+$<cr>
 nnoremap <silent> <leader>fl <esc>:BLines<space>
-" replace
-nnoremap <leader>\ :%s//g<left><left>
-" config reload
+" settings
+nnoremap <silent> <f1> <esc>:edit ~/.vim/vimrc<cr>
 nnoremap <silent> <f5> <esc>:source ~/.vim/vimrc<cr>
+nnoremap <silent> <leader>/ :nohlsearch<cr>
 " reload
 nnoremap <silent> <leader>e <esc>:edit<cr>
 
@@ -196,18 +195,30 @@ else
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 endif
 
+" -- man --
+function! Manualbro(pagebro)
+    setlocal autochdir
+    cd ~/.local/tmp/man
+    execute "new ".a:pagebro.".man"
+    call feedkeys(":read!man ".a:pagebro."\<cr>gg")
+    call feedkeys(":setlocal readonly nomodifiable\<cr>")
+    only
+endfunction
+
 " -- replace --
-" Visual mode pressing * or # searches for the current selection
-vnoremap <silent> * :<C-u>call EscapedSearch()<CR>/<C-R>=@/<CR><CR>N
-vnoremap <silent> # :<C-u>call EscapedSearch()<CR>?<C-R>=@/<CR><CR>N
+" simple replace
+nnoremap <leader>\ :%s//g<left><left>
+" visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :<c-u>call EscapedSearch()<cr>/<c-r>=@/<cr><cr>N
+vnoremap <silent> # :<c-u>call EscapedSearch()<cr>?<c-r>=@/<cr><cr>N
 " <leader>r replace one by one
-nnoremap <silent> <leader>r viw:call EscapedSearch()<CR>cgn
-vnoremap <silent> <leader>r :call EscapedSearch()<CR>cgn
+nnoremap <silent> <leader>r viw:call EscapedSearch()<cr>cgn
+vnoremap <silent> <leader>r :call EscapedSearch()<cr>cgn
 " <leader>R replace all
 nnoremap <silent> <leader>R
-    \ viw:call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
+    \ viw:call EscapedSearch()<cr>:call CmdLine("%s".'/'.@/.'/'.@/)<cr>
 vnoremap <silent> <leader>R
-    \ :call EscapedSearch()<CR>:call CmdLine("%s".'/'.@/.'/'.@/)<CR>
+    \ :call EscapedSearch()<cr>:call CmdLine("%s".'/'.@/.'/'.@/)<cr>
 " function EscapedSearch
 function! EscapedSearch() range
     " Backup what's in default register
@@ -227,14 +238,18 @@ function! CmdLine(str)
     call feedkeys(":" . a:str)
 endfunction
 
+let fzf_opt_general='--smart-case  --column --line-number --no-heading'
+let fzf_opt_color='--colors "match:none" --color=always'
+let fzf_rg='rg '.fzf_opt_general.' '.fzf_opt_color
+command! -bang -nargs=* Manualbro call Manualbro(<q-args>)
 command! -bang -nargs=* Rl
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --colors "match:none" --color=always --smart-case -g "'.expand('%').'" -- '.shellescape(<q-args>), 1,
+  \   fzf_rg.' -g "'.expand('%').'" -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --colors "match:none" --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf_rg.' -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
 
 augroup filetype_common
@@ -264,8 +279,9 @@ augroup END
 
 augroup filetype_man
     autocmd!
-    autocmd FileType man nnoremap <buffer> <leader>fs <esc>:Rl ^[A-Z ]+$<cr>
-    autocmd FileType man nnoremap <buffer> <leader>f1 <esc>:Rl ^\s+(-\|--)(\[.+\])?.+ <cr>
+    autocmd FileType man nnoremap <buffer> <leader>fs :Rl ^[A-Z ]+$<cr>
+    autocmd FileType man nnoremap <buffer> <leader>f1 :Rl ^\s+(-\|--)(\[.+\])?.+ <cr>
+    autocmd FileType man nnoremap <buffer> <leader>m :call Manualbro('')
 augroup END
 
 augroup filetype_fugitive
