@@ -276,9 +276,15 @@ augroup filetype_python
     autocmd FileType python nnoremap <buffer> <leader>f1 :Rl ^\s*def $<cr>
 augroup END
 
+augroup filetype_javascript
+    autocmd!
+    autocmd FileType javascript setlocal commentstring=\//\ %s
+    autocmd FileType javascript nnoremap <buffer> <leader>fs :Rl ^// -+ .+ -+$<cr>
+augroup END
+
 augroup filetype_markdown
     autocmd!
-    autocmd FileType markdown nnoremap <buffer> <leader>f1 :Rl ^#+ <cr>
+    autocmd FileType markdown nnoremap <buffer> <leader>fs :Rl ^#+ <cr>
 augroup END
 
 augroup filetype_sh
@@ -307,7 +313,8 @@ augroup filetype_gitcommit
     autocmd FileType gitcommit setlocal colorcolumn=51
 augroup END
 
-" augroup filetype_help
-"     autocmd!
-" augroup END
+augroup filetype_help
+    autocmd!
+    autocmd FileType help nnoremap <buffer> <leader>fs :Rl ^[A-Z _]+<cr>
+augroup END
 
