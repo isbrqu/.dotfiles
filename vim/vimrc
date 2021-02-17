@@ -154,6 +154,7 @@ nnoremap <f1> <nop>
 " search
 nnoremap <silent> <leader><leader> :FZF<cr>
 nnoremap <silent> <leader>ff :Files<cr>
+nnoremap <silent> <leader>fc :Commits<cr>
 nnoremap <silent> <leader>fb :Buffers<cr>
 nnoremap <silent> <leader>fw :Windows<cr>
 nnoremap <silent> <leader>fh :Helptags<cr>
