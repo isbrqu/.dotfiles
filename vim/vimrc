@@ -285,10 +285,10 @@ augroup filetype_python
     autocmd FileType python nnoremap <buffer> <leader>f1 :Rl ^\s*def $<cr>
 augroup END
 
-augroup filetype_javascript
+augroup filetype_javascript_cpp
     autocmd!
-    autocmd FileType javascript setlocal commentstring=\//\ %s
-    autocmd FileType javascript nnoremap <buffer> <leader>fs :Rl ^// -+ .+ -+$<cr>
+    autocmd FileType javascript,cpp setlocal commentstring=\//\ %s
+    autocmd FileType javascript,cpp nnoremap <buffer> <leader>fs :Rl ^// -+ .+ -+$<cr>
 augroup END
 
 augroup filetype_markdown
@@ -315,6 +315,8 @@ augroup filetype_man
     autocmd FileType man
         \ nnoremap <silent> <buffer> <leader>q
         \ :call system("rm ~/.local/tmp/man/".expand("%"))<cr>:bdelete<cr>
+    autocmd FileType man
+        \ nnoremap <buffer> <leader>f3 :Rl ^\s{5}[a-z]+-[a-z]+<cr>
 augroup END
 
 augroup filetype_fugitive
