@@ -87,6 +87,10 @@ unset color_prompt force_color_prompt
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
+openx() {
+    xdg-open $1 &> /dev/null &
+    (( $? == 0 )) && disown
+}
 
 # -- misc --
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
