@@ -26,6 +26,9 @@ set colorcolumn=80
 set listchars=eol:↲,tab:↦\ ,extends:…,space:⋅
 highlight ColorColumn ctermbg=16 guibg=lightgrey
 
+" -- delete --
+set backspace=indent,eol,start
+
 " -- window --
 " When on, splitting a window will put the new window right of the current one.
 set splitright
@@ -164,6 +167,12 @@ nnoremap <silent> <f5> :source ~/.vim/vimrc<cr>
 nnoremap <silent> <leader>/ :nohlsearch<cr>
 " reload
 nnoremap <silent> <leader>e :edit<cr>
+
+" -- netrw --
+nnoremap <silent> <leader>- :Vexplore<cr>
+
+" -- browser --
+nnoremap <silent> <leader>x "uyiW:call system('xdg-open <c-r>u &')<cr>
 
 " -- insert --
 " disable
