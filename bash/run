@@ -168,6 +168,11 @@ l() {
     )
 }
 
+# -- cd --
+alias ..='cd ..'
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+
 # -- tmux --
 export TMUX_SCRIPT="$XDG_CONFIG_HOME/tmux/script"
 export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
