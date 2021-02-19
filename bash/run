@@ -146,7 +146,11 @@ docker_search() {
 }
 
 # -- youtube-dl --
-alias dmp3='youtube-dl -x --audio-format mp3 "$(xclip -selection clipboard -out)"'
+alias dmp3='youtube-dl\
+    "$(xclip -selection clipboard -out)"\
+    --extract-audio\
+    --audio-format mp3\
+    --output "~/vid/yt/%(title)s.%(ext)s"'
 
 # -- googler --
 alias goo='googler -n 3'
