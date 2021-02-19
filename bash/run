@@ -152,6 +152,9 @@ alias dmp3='youtube-dl\
     --audio-format mp3\
     --output "~/vid/yt/%(title)s.%(ext)s"'
 
+# -- mpv --
+alias mpv-chill='mpv ~/vid/yt/*'
+
 # -- googler --
 alias goo='googler -n 3'
 
