@@ -141,6 +141,9 @@ alias pclip='xclip -selection clipboard -out'
 
 # -- docker --
 alias spotdl='docker run -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
+docker_search() {
+    openx "https://hub.docker.com/search?q=$1&type=image"
+}
 
 # -- youtube-dl --
 alias dmp3='youtube-dl -x --audio-format mp3 "$(xclip -selection clipboard -out)"'
