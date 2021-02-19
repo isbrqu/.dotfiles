@@ -283,7 +283,7 @@ augroup END
 
 augroup filetype_python
     autocmd!
-    autocmd FileType python nnoremap <buffer> <leader>f1 :Rl ^\s*def $<cr>
+    autocmd FileType python nnoremap <buffer> <leader>f1 :Rl ^\s*def <cr>
 augroup END
 
 augroup filetype_javascript_cpp
