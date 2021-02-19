@@ -206,8 +206,9 @@ v() {
     ([[ -n "$1" ]] && (
         vim "$1"
     )) || ([[ -n "$TMUX" ]] && (
-        tmux display-popup\
-            -w 90% -h 60% -d "#{session_path}" -KER "$TMUX_SCRIPT/vim -h"
+        local file
+        file="$(fzf-tmux -p)"\
+        && vim "$file"
         return 0
     )) || (
         local file
