@@ -277,7 +277,7 @@ augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal commentstring=\"\ %s
     autocmd FileType vim nnoremap <buffer> <leader>fs :Rl ^" -+ .+ -+$<cr>
-    autocmd FileType vim nnoremap <buffer> <leader>f1 :Rl ^augroup <cr>
+    autocmd FileType vim nnoremap <buffer> <leader>f1 :Rl ^augroup [^A-Z]<cr>
     autocmd FileType vim nnoremap <buffer> <leader>f2 :Rl ^fun(ction)?! <cr>
 augroup END
 
@@ -324,6 +324,7 @@ augroup filetype_fugitive
     autocmd!
     autocmd FileType fugitive nnoremap <buffer> <leader>p :Git push<cr>
     autocmd FileType fugitive nnoremap <buffer> <leader>P :Git push -f<cr>
+    autocmd FileType fugitive nnoremap <buffer> q <nop>
 augroup END
 
 augroup filetype_gitcommit
