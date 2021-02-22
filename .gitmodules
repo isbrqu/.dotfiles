@@ -19,3 +19,6 @@
 [submodule "vim/pack/mg979/start/vim-visual-multi"]
 	path = vim/pack/mg979/start/vim-visual-multi
 	url = https://github.com/mg979/vim-visual-multi.git
+[submodule "vim/pack/tpope/start/eunuch"]
+	path = vim/pack/tpope/start/eunuch
+	url = https://tpope.io/vim/eunuch.git
