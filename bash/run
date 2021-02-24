@@ -139,6 +139,9 @@ fi
 alias cclip='xclip -selection clipboard -in'
 alias pclip='xclip -selection clipboard -out'
 
+# -- date --
+alias mydate='date "+%T-%x" | tr ":/" "--"'
+
 # -- docker --
 alias spotdl='docker run -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
 alias d='docker'
