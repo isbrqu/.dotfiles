@@ -9,6 +9,14 @@ case $- in
       *) return;;
 esac
 
+# -- path --
+export PATH="$PATH:$HOME/.local/bin"
+# export PATH="$PATH:$XDG_CONFIG_HOME/composer/vendor/bin"
+# export PATH="$PATH:/usr/share/php"
+
+# -- keyboard --
+setxkbmap -layout us -variant altgr-intl
+
 [[ "$(tty)" = /dev/tty1 ]]\
 && startx
 
@@ -94,11 +102,6 @@ openx() {
 
 # -- misc --
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-
-# -- path --
-export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$XDG_CONFIG_HOME/composer/vendor/bin"
-export PATH="$PATH:/usr/share/php"
 
 # -- mysql --
 export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
