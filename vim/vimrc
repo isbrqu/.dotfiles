@@ -337,3 +337,7 @@ augroup filetype_help
     autocmd FileType help nnoremap <buffer> <leader>fs :Rl ^[A-Z _]+<cr>
 augroup END
 
+augroup i3config_ft_detection
+  autocmd!
+  autocmd BufNewFile,BufRead ~/.config/dot/i3wm/config setlocal filetype=i3config
+augroup END

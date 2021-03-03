@@ -22,3 +22,6 @@
 [submodule "vim/pack/tpope/start/eunuch"]
 	path = vim/pack/tpope/start/eunuch
 	url = https://tpope.io/vim/eunuch.git
+[submodule "vim/pack/mboughaba/start/i3config.vim"]
+	path = vim/pack/mboughaba/start/i3config.vim
+	url = https://github.com/mboughaba/i3config.vim.git
