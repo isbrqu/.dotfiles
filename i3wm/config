@@ -1,152 +1,155 @@
+# -- font --
 font pango:monospace 10
-
+# -- title --
 title_align center
+# -- mouse --
 focus_follows_mouse no
-
 set $mod Mod4
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-
+# -- workspace --
 set $ws1 "1: ter"
 set $ws3 "3: aux"
 set $ws2 "2: app"
 set $ws4 "4: doc"
+set $ws5 "5: rec"
 set $term "st"
-
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
-bindsym XF86MonBrightnessUp exec brightness +
+# -- move --
+set $left h
+set $right l
+set $up k
+set $down j
+# -- preferred key --
+set $special 133
+# -- audio --
+bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86MonBrightnessUp   exec brightness +
 bindsym XF86MonBrightnessDown exec brightness -
-bindsym Print exec flameshot gui
-
-bindcode 133 mode "vim"
-
+bindsym Print                 exec flameshot gui
+# -- other --
+bindcode $special mode "vim"
+# -- brightness --
 mode "brightness" {
-
-    bindsym 1 mode "default";\
-    exec xrandr --output eDP-1 --gamma 1.1:0.8:0.7 --brightness 0.55\
-    && exec xrandr --output HDMI-1 --gamma 1.1:0.8:0.7 --brightness 0.55
-
-    bindsym 2 mode "default";\
-    exec xrandr --output eDP-1 --gamma 1:1:1 --brightness 0.55\
-    && exec xrandr --output HDMI-1 --gamma 1:1:1 --brightness 0.55
-
-    bindsym i mode "default"
-
+bindsym 1 mode "default";\
+exec xrandr --output eDP-1 --gamma 1.1:0.8:0.7 --brightness 0.55\
+&& exec xrandr --output HDMI-1 --gamma 1.1:0.8:0.7 --brightness 0.55
+bindsym 2 mode "default";\
+exec xrandr --output eDP-1 --gamma 1:1:1 --brightness 0.55\
+&& exec xrandr --output HDMI-1 --gamma 1:1:1 --brightness 0.55
+# mode
+bindsym i mode "default"
 }
 
 mode "vim" {
-    
-    bindsym n mode "brightness"
-    # Pulse Audio controls
-    bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-    bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-    bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
-    bindsym b exec --no-startup-id ~/.local/bin/b
-    # change focus
-    bindsym h focus left
-    bindsym j focus down
-    bindsym k focus up
-    bindsym l focus right
-    bindsym u [urgent=latest] focus
-    # focus the parent container
-    bindsym p focus parent
-    # focus the child container
-    bindsym Shift+p focus child
-    # change focus between tiling / floating windows
-    bindsym ctrl+space focus mode_toggle
 
-    # move focused window
-    bindsym Shift+h move left
-    bindsym Shift+j move down
-    bindsym Shift+k move up
-    bindsym Shift+l move right
-    # toggle tiling / floating
-    bindsym Shift+space floating toggle
+bindsym n mode "brightness"
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym b                    exec --no-startup-id ~/.local/bin/b
+# change focus
+bindsym $left  focus left
+bindsym $down  focus down
+bindsym $up    focus up
+bindsym $right focus right
+bindsym u [urgent=latest] focus
+# focus the parent container
+bindsym p focus parent
+# focus the child container
+bindsym Shift+p focus child
+# change focus between tiling / floating windows
+bindsym ctrl+space focus mode_toggle
 
-    # split in horizontal orientation
-    bindsym z split h
-    # split in vertical orientation
-    bindsym x split v
-    # enter fullscreen mode for the focused container
-    # bindsym c fullscreen toggle
+# move focused window
+bindsym Shift+h move left
+bindsym Shift+j move down
+bindsym Shift+k move up
+bindsym Shift+l move right
+# toggle tiling / floating
+bindsym Shift+space floating toggle
 
-    # change container layout (stacked, tabbed, toggle split)
-    bindsym q layout stacking
-    bindsym w layout tabbed
-    bindsym e layout toggle split
+# split in horizontal orientation
+bindsym z split h
+# split in vertical orientation
+bindsym x split v
+# enter fullscreen mode for the focused container
+# bindsym c fullscreen toggle
 
-    # start a apps
-    bindsym Return exec $term
-    bindsym Print exec flameshot gui
-    # start rofi (a program launcher)
-    bindsym colon exec dmenu_run
+# change container layout (stacked, tabbed, toggle split)
+bindsym q layout stacking
+bindsym w layout tabbed
+bindsym e layout toggle split
 
-    # switch to workspace
-    bindsym 1 workspace $ws1
-    bindsym 2 workspace $ws2
-    bindsym 3 workspace $ws3
-    bindsym 4 workspace $ws4
+# -- start a apps --
+bindsym Return exec $term
+bindsym Print exec flameshot gui
+bindsym colon exec dmenu_run
 
-    # move focused container to workspace
-    bindsym Shift+1 move container to workspace $ws1
-    bindsym Shift+2 move container to workspace $ws2
-    bindsym Shift+3 move container to workspace $ws3
-    bindsym Shift+4 move container to workspace $ws4
-    bindsym Shift+5 move container to workspace $ws5
+# switch to workspace
+bindsym 1 workspace $ws1
+bindsym 2 workspace $ws2
+bindsym 3 workspace $ws3
+bindsym 4 workspace $ws4
+# -- vim change ws --
+# move focused container to workspace
+bindsym Shift+1 move container to workspace $ws1
+bindsym Shift+2 move container to workspace $ws2
+bindsym Shift+3 move container to workspace $ws3
+bindsym Shift+4 move container to workspace $ws4
+bindsym Shift+5 move container to workspace $ws5
 
-    # kill focused window
-    bindsym Shift+q kill
-    # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-    bindsym F5 restart
-    bindsym Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
-    bindsym r mode "resize"
-    bindsym i mode "default"
-    bindsym Escape nop
+# kill focused window
+bindsym Shift+q kill
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym F5 restart
+bindsym Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# -- change mode --
+bindsym r mode "resize"
+bindsym i mode "default"
+bindsym Escape nop
 }
 
-# resize window (you can also use the mouse for that)
+# -- resize window --
+# you can also use the mouse for that
 mode "resize" {
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
-    bindsym $mod mode "vim"
-    bindsym Escape mode "vim"
-    bindsym i mode "default"
+bindsym $left  resize shrink width  10 px or 10 ppt
+bindsym $down  resize grow   height 10 px or 10 ppt
+bindsym $up    resize shrink height 10 px or 10 ppt
+bindsym $right resize grow   width  10 px or 10 ppt
+# change mode
+bindsym $mod   mode "vim"
+bindsym Escape mode "vim"
+bindsym i      mode "default"
 }
 
 bar {
-    output eDP-1
-    position top
-    status_command i3status --config ~/.config/dot/i3status/config1
+output eDP-1
+position top
+status_command i3status --config ~/.config/dot/i3status/config1
 }
 
 bar {
-    output HDMI-1
-    position top
-    status_command i3status --config ~/.config/dot/i3status/config2
+output HDMI-1
+position top
+status_command i3status --config ~/.config/dot/i3status/config2
 }
 
 # startup
 # exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
-
 workspace $ws1 output eDP-1
 workspace $ws3 output eDP-1
 workspace $ws2 output HDMI-1
 workspace $ws4 output HDMI-1
-
-# terminal
-assign [class="Gnome-terminal"] $ws1
-assign [class="st-256color"] $ws1
-assign [class="xterm-256color"] $ws1
-# video
-assign [class="mpv"] $ws2
-# browser
-assign [class="Google-chrome"] $ws2
-# msg
+workspace $ws5 output HDMI-1
+# -- assign --
+assign [class="Gnome-terminal"]  $ws1
+assign [class="st-256color"]     $ws1
+assign [class="xterm-256color"]  $ws1
+assign [class="mpv"]             $ws2
+assign [class="Google-chrome"]   $ws2
 assign [class="TelegramDesktop"] $ws2
 for_window [window_role="^floating$"] floating enable focus
 for_window [window_role="^floating$"] resize set 600
