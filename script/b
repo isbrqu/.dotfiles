@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-url="$(grep '^http' ~/code/b/b | dmenu -l 10)"
+url="$(grep '^http' ~/doc/b | dmenu -l 10)"
 [[ -n "$url" ]] && (
-    xdg-open "${url# *}" &> /dev/null &
+    xdg-open "${url%% *}" &> /dev/null &
     (( $? == 0 )) && disown
 )
