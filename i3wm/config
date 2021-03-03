@@ -7,11 +7,10 @@ set $mod Mod4
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
+set $ws1 "1: ter"
+set $ws3 "3: aux"
+set $ws2 "2: app"
+set $ws4 "4: doc"
 set $term "st"
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
@@ -130,11 +129,23 @@ bar {
     status_command i3status --config ~/.config/dot/i3status/config2
 }
 
-exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
+# startup
+# exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
 
+workspace $ws1 output eDP-1
+workspace $ws3 output eDP-1
+workspace $ws2 output HDMI-1
+workspace $ws4 output HDMI-1
+
+# terminal
 assign [class="Gnome-terminal"] $ws1
 assign [class="st-256color"] $ws1
+assign [class="xterm-256color"] $ws1
+# video
+assign [class="mpv"] $ws2
+# browser
 assign [class="Google-chrome"] $ws2
+# msg
 assign [class="TelegramDesktop"] $ws2
 for_window [window_role="^floating$"] floating enable focus
 for_window [window_role="^floating$"] resize set 600
