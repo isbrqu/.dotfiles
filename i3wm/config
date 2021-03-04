@@ -27,6 +27,7 @@ bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym XF86MonBrightnessUp   exec brightness +
 bindsym XF86MonBrightnessDown exec brightness -
+# -- app --
 bindsym Print                 exec flameshot gui
 # -- other --
 bindcode $special mode "vim"
