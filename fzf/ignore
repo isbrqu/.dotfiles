@@ -14,5 +14,6 @@ vendor
 *.store
 *.png
 *.tar.*
+*.tmp
 vim/pack
 __pycache__
