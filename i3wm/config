@@ -94,6 +94,7 @@ bindsym 1 workspace $ws1
 bindsym 2 workspace $ws2
 bindsym 3 workspace $ws3
 bindsym 4 workspace $ws4
+bindsym 5 workspace $ws5
 # -- vim change ws --
 # move focused container to workspace
 bindsym Shift+1 move container to workspace $ws1
@@ -152,5 +153,8 @@ assign [class="xterm-256color"]  $ws1
 assign [class="mpv"]             $ws2
 assign [class="Google-chrome"]   $ws2
 assign [class="TelegramDesktop"] $ws2
+assign [class="simplescreenrecorder"] $ws3
+assign [class="Simplescreenrecorder"] $ws5
+assign [class="obs"] $ws5
 for_window [window_role="^floating$"] floating enable focus
 for_window [window_role="^floating$"] resize set 600
