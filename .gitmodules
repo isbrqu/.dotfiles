@@ -19,9 +19,9 @@
 [submodule "vim/pack/mg979/start/vim-visual-multi"]
 	path = vim/pack/mg979/start/vim-visual-multi
 	url = https://github.com/mg979/vim-visual-multi.git
-[submodule "vim/pack/tpope/start/eunuch"]
-	path = vim/pack/tpope/start/eunuch
-	url = https://tpope.io/vim/eunuch.git
 [submodule "vim/pack/mboughaba/start/i3config.vim"]
 	path = vim/pack/mboughaba/start/i3config.vim
 	url = https://github.com/mboughaba/i3config.vim.git
+[submodule "vim/pack/tpope/start/vim-eunuch"]
+	path = vim/pack/tpope/start/vim-eunuch
+	url = https://github.com/tpope/vim-eunuch.git
