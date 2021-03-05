@@ -149,6 +149,7 @@ alias mydate='date "+%T-%x" | tr ":/" "--"'
 alias spotdl='docker run -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
 alias d='docker'
 alias dc='docker-compose'
+alias ssconvert='docker run -u $(id -u):$(id -g) -v $PWD:/home/user spoonest/gnumeric_docker ssconvert'
 docker_search() {
     openx "https://hub.docker.com/search?q=$1&type=image"
 }
