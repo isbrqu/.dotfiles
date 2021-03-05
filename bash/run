@@ -213,6 +213,15 @@ t() {
     )
 }
 
+c() {
+    local request="$1"
+    request="${request//./}"
+    request="${request//,/.}"
+    result="$(awk 'BEGIN { printf "%.2f", '"$request"'; exit }')"
+    echo "$request=$result"
+    echo "$result" | xclip -sel clipboard -in
+}
+
 v() {
     ([[ -n "$1" ]] && (
         vim "$1"
