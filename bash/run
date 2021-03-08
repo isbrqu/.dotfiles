@@ -95,6 +95,8 @@ unset color_prompt force_color_prompt
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
+
+# -- util functions --
 openx() {
     xdg-open $1 &> /dev/null &
     (( $? == 0 )) && disown
@@ -146,30 +148,32 @@ alias pclip='xclip -selection clipboard -out'
 alias mydate='date "+%T-%x" | tr ":/" "--"'
 
 # -- docker --
-alias spotdl='docker run -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
 alias d='docker'
 alias dc='docker-compose'
-alias ssconvert='docker run -u $(id -u):$(id -g) -v $PWD:/home/user spoonest/gnumeric_docker ssconvert'
-docker_search() {
-    openx "https://hub.docker.com/search?q=$1&type=image"
-}
 
-# -- youtube-dl --
-alias dmp3='youtube-dl\
+# -- format2format --
+alias ssconvert='docker run -u $(id -u):$(id -g) -v $PWD:/home/user spoonest/gnumeric_docker ssconvert'
+
+# -- search --
+_docker_search() {
+    local -r URL_BASE='https://hub.docker.com/search'
+    local type="${2-image}"
+    local url="$URL_BASE?q=$1&type=$type"
+    openx "$url"
+}
+alias goo='googler -n 3'
+alias docker-search='_docker_search'
+
+# -- download --
+alias wget-clip='wget --continue "$(xclip -selection clipboard -out)"'
+alias spotify-dl='docker run -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
+alias audio-dl='youtube-dl\
     "$(xclip -selection clipboard -out)"\
     --extract-audio\
     --audio-format mp3\
     --output "~/vid/yt/%(title)s.%(ext)s"'
 
-# -- mpv --
-alias mpv-chill='mpv ~/vid/yt/*'
-
-# -- googler --
-alias goo='googler -n 3'
-
-# -- download --
-alias dwget='wget --continue "$(xclip -selection clipboard -out)"'
-
+# -- vim --
 him() {
     vim -c "help $1" -c "only"
 }
