@@ -195,9 +195,17 @@ l() {
 }
 
 # -- cd --
-alias ..='cd ..'
-alias ..2='cd ../..'
-alias ..3='cd ../../..'
+alias ..='prev_cd'
+prev_cd() {
+    [[ -n $1 ]] && {
+        local -i n=$1
+        for ((i=1; i<=n; i++));do
+            cd ..
+        done
+    } || {
+        cd ..
+    }
+}
 
 # -- tmux --
 export TMUX_SCRIPT="$XDG_CONFIG_HOME/tmux/script"
