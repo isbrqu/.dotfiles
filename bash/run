@@ -245,9 +245,10 @@ v() {
 # -- fzf --
 FZF_HOME="$XDG_CONFIG_HOME/dot/fzf"
 FZF_IGNORE="--path-to-ignore $FZF_HOME/ignore --unrestricted"
+FZF_BIND="--bind ctrl-space:accept"
 export FZF_DEFAULT_COMMAND="ag --no-color --hidden $FZF_IGNORE -g "'""'
 export FZF_PREVIEW="--preview 'bat {} --color=always'"
-export FZF_DEFAULT_OPTS="--reverse"
+export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
 
 # setup
 [[ ! "$PATH" == *"$XDG_CONFIG_HOME"/fzf/bin* ]]\
