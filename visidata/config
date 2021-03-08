@@ -1,0 +1,6 @@
+options.disp_currency_fmt = '%0.4f'
+options.disp_float_fmt = '{:.04f}'
+bindkey('q', '')
+bindkey('Q', 'quit-sheet')
+TableSheet.bindkey('i', 'edit-cell')
+
