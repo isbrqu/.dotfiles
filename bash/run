@@ -187,11 +187,19 @@ alias docker-search='_docker_search'
 alias wget-clip='wget --continue "$(xclip -selection clipboard -out)"'
 alias spotify-dl='docker run\
     -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
-alias audio-dl='youtube-dl\
-    "$(xclip -selection clipboard -out)"\
-    --extract-audio\
-    --audio-format mp3\
-    --output "~/vid/yt/%(title)s.%(ext)s"'
+mp3dl() {
+    local url
+    local path="~/m/%(title)s.%(ext)s"
+    url="${1:-$(xclip -selection clipboard -out)}"
+    youtube-dl "$url" --extract-audio --audio-format mp3 --output "$path"
+}
+
+mp4dl() {
+    local url
+    local path="~/m/%(title)s.%(ext)s"
+    url="${1:-$(xclip -selection clipboard -out)}"
+    youtube-dl "$url" --format mp4 --output "$path"
+}
 
 # -- ls --
 LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
