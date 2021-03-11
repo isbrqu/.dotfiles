@@ -186,11 +186,6 @@ alias audio-dl='youtube-dl\
     --audio-format mp3\
     --output "~/vid/yt/%(title)s.%(ext)s"'
 
-# -- vim --
-him() {
-    vim -c "help $1" -c "only"
-}
-
 # -- ls --
 LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
 alias ll="ls -l $LSOPTIONS"
