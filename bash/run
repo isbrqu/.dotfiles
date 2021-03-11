@@ -244,18 +244,17 @@ c() {
 }
 
 v() {
-    ([[ -n "$1" ]] && (
+    if [[ -n "$1" ]];then
         vim "$1"
-    )) || ([[ -n "$TMUX" ]] && (
+    elif [[ -n "$TMUX" ]];then
         local file
         file="$(fzf-tmux -p)"\
         && vim "$file"
-        return 0
-    )) || (
+    else
         local file
         file="$(fzf)"\
         && vim "$file"
-    )
+    fi
 }
 
 # -- fzf --
