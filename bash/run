@@ -172,7 +172,7 @@ _docker_search() {
     local -r URL_BASE='https://hub.docker.com/search'
     local type="${2-image}"
     local url="$URL_BASE?q=$1&type=$type"
-    openx "$url"
+    o "$url"
 }
 alias goo='googler -n 3'
 alias docker-search='_docker_search'
