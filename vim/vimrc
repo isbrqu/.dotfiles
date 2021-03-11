@@ -168,6 +168,8 @@ nnoremap <silent> <f5> :source ~/.vim/vimrc<cr>
 nnoremap <silent> <leader>/ :nohlsearch<cr>
 " reload
 nnoremap <silent> <leader>e :edit<cr>
+" yank
+nnoremap <leader>y ggyG
 
 " -- netrw --
 nnoremap <silent> <leader>- :Vexplore<cr>
