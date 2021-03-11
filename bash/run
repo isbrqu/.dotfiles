@@ -195,16 +195,16 @@ alias audio-dl='youtube-dl\
 LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
 alias ll="ls -l $LSOPTIONS"
 l() {
-    ([[ -f "$1" ]] && (
+    if [[ -f "$1" ]];then
         # read a file
         bat "$1" || cat "$1"
-    )) || ([[ -z "$1" ]] && (
+    elif [[ -z "$1" ]];then
         # list all file
         ls -1 $LSOPTIONS
-    )) || (
+    else
         # list folder contents
         ls -1 $LSOPTIONS "$1"
-    )
+    fi
 }
 
 # -- cd --
