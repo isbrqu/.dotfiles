@@ -285,9 +285,10 @@ export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
 . "$XDG_CONFIG_HOME/fzf/shell/key-bindings.bash"
 
 # -- startup --
-[[ "$(tty)" == */pts/* ]] && (
+[[ "$(tty)" == */pts/* ]] && {
     . "$XDG_CONFIG_HOME/dot/bash/tmux-session-private"
-    [[ -z "$TMUX" ]]\
-    && t\
-    && exit
-)
+    [[ -z "$TMUX" ]] {
+        t
+        exit
+    }
+}
