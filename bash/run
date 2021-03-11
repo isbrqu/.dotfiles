@@ -220,18 +220,19 @@ export TMUX_SCRIPT="$XDG_CONFIG_HOME/tmux/script"
 export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
 
 t() {
-    [[ -n "$TMUX" ]]\
-    && echo "qué haces capo?"\
-    && return
+    [[ -n "$TMUX" ]] && {
+        echo "qué haces capo?"
+        return
+    }
     local sessions
     local session
     sessions="$(tmux list-session -F '#{session_name}' 2> /dev/null)"
     session="$(echo "$sessions" | fzf --print-query)"
     session="$(echo "${session//*[$'\n']}")"
-    [[ -n "$session" ]] && (
+    [[ -n "$session" ]] && {
         tmux attach-session -t "$session" 2> /dev/null\
         || tmux new-session -s "$session" &> /dev/null
-    )
+    }
 }
 
 c() {
