@@ -4,3 +4,5 @@ todo
 todo.md
 TODO.md
 __pycache__
+*.pdf
+*.tmp
