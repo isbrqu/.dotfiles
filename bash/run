@@ -170,7 +170,8 @@ alias d='docker'
 alias dc='docker-compose'
 
 # -- format2format --
-alias ssconvert='docker run -u $(id -u):$(id -g) -v $PWD:/home/user spoonest/gnumeric_docker ssconvert'
+alias ssconvert='docker run\
+    -u $(id -u):$(id -g) -v $PWD:/home/user spoonest/gnumeric_docker ssconvert'
 
 # -- search --
 _docker_search() {
@@ -184,7 +185,8 @@ alias docker-search='_docker_search'
 
 # -- download --
 alias wget-clip='wget --continue "$(xclip -selection clipboard -out)"'
-alias spotify-dl='docker run -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
+alias spotify-dl='docker run\
+    -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
 alias audio-dl='youtube-dl\
     "$(xclip -selection clipboard -out)"\
     --extract-audio\
