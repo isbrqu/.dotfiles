@@ -5,6 +5,7 @@ general {
 
 order += "wireless _first_"
 order += "ethernet _first_"
+order += "volume master"
 order += "read_file BRI"
 order += "tztime local"
 
@@ -16,6 +17,14 @@ wireless _first_ {
 ethernet _first_ {
     format_up = " E:UP "
     format_down = " E:DOWN "
+}
+
+volume master {
+    format = " ♪: %volume "
+    format_muted = " ♪: muted (%volume) "
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
 }
 
 tztime local {
