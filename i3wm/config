@@ -1,160 +1,168 @@
-# -- font --
-font pango:monospace 10
-# -- title --
-title_align center
-# -- mouse --
-focus_follows_mouse no
+# -- variable --
 set $mod Mod4
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-# -- workspace --
+set $special 133
 set $ws1 "1: ter"
 set $ws3 "3: aux"
 set $ws2 "2: app"
 set $ws4 "4: doc"
 set $ws5 "5: rec"
-set $term "st"
-# -- move --
-set $left h
+set $monitor1 "eDP-1"
+set $monitor2 "HDMI-1"
+set $launcher "dmenu_run"
+set $screenshot "flameshot gui"
+set $terminal "st"
+set $left  h
 set $right l
-set $up k
-set $down j
-# -- preferred key --
-set $special 133
-# -- audio --
+set $up    k
+set $down  j
+set $resizenro 60
+
+# -- other --
+font pango:monospace 10
+title_align center
+focus_follows_mouse no
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# audio
 bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym XF86MonBrightnessUp   exec brightness +
 bindsym XF86MonBrightnessDown exec brightness -
-# -- app --
-bindsym Print                 exec flameshot gui
-# -- other --
+
+# modes
 bindcode $special mode "vim"
-# -- brightness --
-mode "brightness" {
-    bindsym 1 mode "default"; exec mybri night
-    bindsym 2 mode "default"; exec mybri light
-    # mode
-    bindsym i mode "default"
+
+# -- main mode --
+mode "vim" {
+
+    # audio
+    bindsym Shift+equal exec --no-startup-id pactl set-sink-volume 0 +5%
+    bindsym minus       exec --no-startup-id pactl set-sink-volume 0 -5%
+    bindsym equal       exec --no-startup-id pactl set-sink-mute   0 toggle
+    
+    # call script
+    bindsym b       mode "default"; exec --no-startup-id b
+    bindsym Shift+e mode "default"; exec --no-startup-id i3wmshutdown
+
+    # apps
+    bindsym Return exec $terminal
+    bindsym Print  exec $screenshot
+    bindsym colon  exec $launcher
+
+    # change focus
+    bindsym $left  focus left
+    bindsym $down  focus down
+    bindsym $up    focus up
+    bindsym $right focus right
+
+    # special focus
+    bindsym u [urgent=latest] focus
+    # focus the parent container
+    bindsym p           focus parent
+    # focus the child container
+    bindsym Shift+p     focus child
+    # change focus between tiling / floating windows
+    bindsym ctrl+space  focus mode_toggle
+    # toggle tiling / floating
+    bindsym Shift+space floating toggle
+
+    # move focused window
+    bindsym Shift+$left  move left
+    bindsym Shift+$down  move down
+    bindsym Shift+$up    move up
+    bindsym Shift+$right move right
+
+    # split in horizontal orientation
+    bindsym z split h
+    # split in vertical orientation
+    bindsym x split v
+    # enter fullscreen mode for the focused container
+    # bindsym c fullscreen toggle
+
+    # change container layout (stacked, tabbed, toggle split)
+    bindsym q layout stacking
+    bindsym w layout tabbed
+    bindsym e layout toggle split
+
+    # switch to workspace
+    bindsym 1 workspace $ws1
+    bindsym 2 workspace $ws2
+    bindsym 3 workspace $ws3
+    bindsym 4 workspace $ws4
+    bindsym 5 workspace $ws5
+
+    # move focused container to workspace
+    bindsym Shift+1 move container to workspace $ws1
+    bindsym Shift+2 move container to workspace $ws2
+    bindsym Shift+3 move container to workspace $ws3
+    bindsym Shift+4 move container to workspace $ws4
+    bindsym Shift+5 move container to workspace $ws5
+
+    # kill focused window
+    bindsym Shift+q kill
+
+    # restart i3 inplace
+    # (preserves your layout/session, can be used to upgrade i3)
+    bindsym F5 restart
+
+    # modes
+    bindsym r      mode "resize"
+    bindsym n      mode "brightness"
+    bindsym i      mode "default"
+    bindsym Escape nop
+}
+
+# -- extra modes --
+mode "resize" {
+    bindsym $left  resize shrink width  $resizenro px or $resizenro ppt
+    bindsym $down  resize grow   height $resizenro px or $resizenro ppt
+    bindsym $up    resize shrink height $resizenro px or $resizenro ppt
+    bindsym $right resize grow   width  $resizenro px or $resizenro ppt
+    # modes
+    bindsym i      mode "default"
     bindsym Escape mode "vim"
 }
 
-mode "vim" {
-
-bindsym n mode "brightness"
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute 0 toggle
-bindsym b                    exec --no-startup-id b
-# change focus
-bindsym $left  focus left
-bindsym $down  focus down
-bindsym $up    focus up
-bindsym $right focus right
-bindsym u [urgent=latest] focus
-# focus the parent container
-bindsym p focus parent
-# focus the child container
-bindsym Shift+p focus child
-# change focus between tiling / floating windows
-bindsym ctrl+space focus mode_toggle
-
-# move focused window
-bindsym Shift+h move left
-bindsym Shift+j move down
-bindsym Shift+k move up
-bindsym Shift+l move right
-# toggle tiling / floating
-bindsym Shift+space floating toggle
-
-# split in horizontal orientation
-bindsym z split h
-# split in vertical orientation
-bindsym x split v
-# enter fullscreen mode for the focused container
-# bindsym c fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym q layout stacking
-bindsym w layout tabbed
-bindsym e layout toggle split
-
-# -- start a apps --
-bindsym Return exec $term
-bindsym Print exec flameshot gui
-bindsym colon exec dmenu_run
-
-# switch to workspace
-bindsym 1 workspace $ws1
-bindsym 2 workspace $ws2
-bindsym 3 workspace $ws3
-bindsym 4 workspace $ws4
-bindsym 5 workspace $ws5
-# -- vim change ws --
-# move focused container to workspace
-bindsym Shift+1 move container to workspace $ws1
-bindsym Shift+2 move container to workspace $ws2
-bindsym Shift+3 move container to workspace $ws3
-bindsym Shift+4 move container to workspace $ws4
-bindsym Shift+5 move container to workspace $ws5
-
-# kill focused window
-bindsym Shift+q kill
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym F5 restart
-# bindsym Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym Shift+e exec "i3-nagbar -t warning -m 'shutdown bro?' -B 'yes bro' 'sudo shutdown now'"
-# -- mode --
-bindsym r mode "resize"
-bindsym i mode "default"
-bindsym Escape nop
+mode "brightness" {
+    bindsym 1      mode "default"; exec --no-startup-id mybri night
+    bindsym 2      mode "default"; exec --no-startup-id mybri light
+    # modes
+    bindsym i      mode "default"
+    bindsym Escape mode "vim"
 }
 
-# -- resize window --
-# you can also use the mouse for that
-mode "resize" {
-bindsym $left  resize shrink width  10 px or 10 ppt
-bindsym $down  resize grow   height 10 px or 10 ppt
-bindsym $up    resize shrink height 10 px or 10 ppt
-bindsym $right resize grow   width  10 px or 10 ppt
-# change mode
-bindsym $mod   mode "vim"
-bindsym Escape mode "vim"
-bindsym i      mode "default"
+# -- bar --
+bar {
+    output $monitor1
+    position top
+    status_command i3status --config ~/.config/dot/i3status/config1
 }
 
 bar {
-output eDP-1
-position top
-status_command i3status --config ~/.config/dot/i3status/config1
+    output $monitor2
+    position top
+    status_command i3status --config ~/.config/dot/i3status/config2
 }
 
-bar {
-output HDMI-1
-position top
-status_command i3status --config ~/.config/dot/i3status/config2
-}
+# --- workspace --
+workspace $ws1 output $monitor1
+workspace $ws3 output $monitor1
+workspace $ws2 output $monitor2
+workspace $ws4 output $monitor2
+workspace $ws5 output $monitor2
 
-# startup
-# exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
-workspace $ws1 output eDP-1
-workspace $ws3 output eDP-1
-workspace $ws2 output HDMI-1
-workspace $ws4 output HDMI-1
-workspace $ws5 output HDMI-1
 # -- assign --
-assign [class="Gnome-terminal"]  $ws1
-assign [class="st-256color"]     $ws1
-assign [class="xterm-256color"]  $ws1
-assign [class="mpv"]             $ws2
-assign [class="Google-chrome"]   $ws2
-assign [class="TelegramDesktop"] $ws2
-assign [class="simplescreenrecorder"] $ws3
+assign [class="Gnome-terminal"]       $ws1
+assign [class="st-256color"]          $ws1
+assign [class="xterm-256color"]       $ws1
+assign [class="mpv"]                  $ws2
+assign [class="Google-chrome"]        $ws2
+assign [class="TelegramDesktop"]      $ws2
 assign [class="Simplescreenrecorder"] $ws5
-assign [class="obs"] $ws5
-assign [class="Sxiv"] $ws3
-assign [class="Zathura"] $ws3
+assign [class="obs"]                  $ws5
+assign [class="Sxiv"]                 $ws3
+assign [class="Zathura"]              $ws3
 for_window [window_role="^floating$"] floating enable focus
 for_window [window_role="^floating$"] resize set 600
