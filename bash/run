@@ -196,7 +196,7 @@ mp3dl() {
 
 mp4dl() {
     local url
-    local path="~/m/%(title)s.%(ext)s"
+    local path="~/v/%(title)s.%(ext)s"
     url="${1:-$(xclip -selection clipboard -out)}"
     youtube-dl "$url" --format mp4 --output "$path"
 }
