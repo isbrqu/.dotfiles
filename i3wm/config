@@ -43,8 +43,11 @@ mode "vim" {
     bindsym equal       exec --no-startup-id pactl set-sink-mute   0 toggle
     
     # call script
-    bindsym b       mode "default"; exec --no-startup-id b
-    bindsym Shift+e mode "default"; exec --no-startup-id i3wmshutdown
+    bindsym grave       exec --no-startup-id mybrightness plus
+    bindsym Shift+grave exec --no-startup-id mybrightness minus
+    bindsym n           exec --no-startup-id mygamma
+    bindsym b           mode "default"; exec --no-startup-id b
+    bindsym Shift+e     mode "default"; exec --no-startup-id i3wmshutdown
 
     # apps
     bindsym Return exec $terminal
@@ -109,7 +112,6 @@ mode "vim" {
 
     # modes
     bindsym r      mode "resize"
-    bindsym n      mode "brightness"
     bindsym i      mode "default"
     bindsym Escape nop
 }
@@ -120,14 +122,6 @@ mode "resize" {
     bindsym $down  resize grow   height $resizenro px or $resizenro ppt
     bindsym $up    resize shrink height $resizenro px or $resizenro ppt
     bindsym $right resize grow   width  $resizenro px or $resizenro ppt
-    # modes
-    bindsym i      mode "default"
-    bindsym Escape mode "vim"
-}
-
-mode "brightness" {
-    bindsym 1      mode "default"; exec --no-startup-id mybri night
-    bindsym 2      mode "default"; exec --no-startup-id mybri light
     # modes
     bindsym i      mode "default"
     bindsym Escape mode "vim"
