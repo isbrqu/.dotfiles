@@ -33,14 +33,11 @@ bindsym Print                 exec flameshot gui
 bindcode $special mode "vim"
 # -- brightness --
 mode "brightness" {
-bindsym 1 mode "default";\
-exec xrandr --output eDP-1 --gamma 1.1:0.8:0.7 --brightness 0.55\
-&& exec xrandr --output HDMI-1 --gamma 1.1:0.8:0.7 --brightness 0.55
-bindsym 2 mode "default";\
-exec xrandr --output eDP-1 --gamma 1:1:1 --brightness 0.55\
-&& exec xrandr --output HDMI-1 --gamma 1:1:1 --brightness 0.55
-# mode
-bindsym i mode "default"
+    bindsym 1 mode "default"; exec mybri night
+    bindsym 2 mode "default"; exec mybri light
+    # mode
+    bindsym i mode "default"
+    bindsym Escape mode "vim"
 }
 
 mode "vim" {
