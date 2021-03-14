@@ -1,0 +1,1 @@
+instalooter post "$(xclip -sel clipboard -out )" /tmp && xclip -sel clipboard -t image/jpg -in /tmp/*.jpg
