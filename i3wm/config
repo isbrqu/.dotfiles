@@ -158,5 +158,6 @@ assign [class="Simplescreenrecorder"] $ws5
 assign [class="obs"]                  $ws5
 assign [class="Sxiv"]                 $ws3
 assign [class="Zathura"]              $ws3
+assign [class="FreeTube"]             $ws3
 for_window [window_role="^floating$"] floating enable focus
 for_window [window_role="^floating$"] resize set 600
