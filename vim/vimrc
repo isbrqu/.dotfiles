@@ -33,8 +33,9 @@ set backspace=indent,eol,start
 " When on, splitting a window will put the new window right of the current one.
 set splitright
 " Characters to fill the statuslines and vertical separators.
-set fillchars=fold:-,vert:\│
+set fillchars=fold:\ ,vert:\│
 highlight VertSplit ctermfg=237 ctermbg=237
+highlight Folded ctermbg=black
 
 " -- terminal output codes --
 " visual bell
