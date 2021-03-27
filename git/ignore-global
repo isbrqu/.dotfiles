@@ -1,4 +1,3 @@
-*-private
 tags
 todo
 todo.md
@@ -6,3 +5,5 @@ TODO.md
 __pycache__
 *.pdf
 *.tmp
+*.log
+*-private
