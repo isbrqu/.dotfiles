@@ -304,6 +304,7 @@ augroup filetype_sql
     autocmd!
     autocmd FileType sql setlocal commentstring=\--\ %s
     autocmd FileType sql nnoremap <buffer> <leader>fs :Rl ^-+ .+ -+$<cr>
+    autocmd FileType sql nnoremap <buffer> <leader>f1 :Rl ^\s*create <cr>
 augroup END
 
 augroup filetype_sh
