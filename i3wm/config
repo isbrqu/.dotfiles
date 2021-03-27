@@ -47,6 +47,7 @@ mode "vim" {
     bindsym Shift+grave exec --no-startup-id mybrightness minus
     bindsym n           exec --no-startup-id mygamma
     bindsym b           mode "default"; exec --no-startup-id b
+    bindsym Shift+b     mode "default"; exec --no-startup-id b out
     bindsym Shift+e     mode "default"; exec --no-startup-id i3wmshutdown
 
     # apps
