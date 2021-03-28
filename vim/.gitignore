@@ -1,4 +1,5 @@
 .netrw*
 .viminfo
 undodir
+pack
 
