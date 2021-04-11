@@ -16,6 +16,8 @@ export PATH="$PATH:$HOME/.local/bin"
 
 export EDITOR=vim
 
+xinput disable "ILITEK ILITEK Multi-Touch"
+
 # -- keyboard --
 setxkbmap -layout us -variant altgr-intl
 
