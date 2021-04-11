@@ -3,6 +3,7 @@ set nocompatible
 set noswapfile
 set ttyfast
 
+au BufRead * normal zR
 " -- security --
 set nomodeline
 
@@ -28,7 +29,8 @@ highlight ColorColumn ctermbg=16 guibg=lightgrey
 
 " -- delete --
 set backspace=indent,eol,start
-
+set foldmethod=expr
+set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
 " -- window --
 " When on, splitting a window will put the new window right of the current one.
 set splitright
