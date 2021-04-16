@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 declare url
-declare path=~/w/b/b
+declare path=~/w/bm/bm
 if [[ -n "$1" ]];then
     url="$(sudo -u isbrqu xclip -selection clipboard -out)"
     [[ "$url" == http* ]] && {
