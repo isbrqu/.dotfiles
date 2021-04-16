@@ -317,8 +317,8 @@ export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
 
 # -- startup --
 [[ "$(tty)" == */pts/* ]] && {
-    . "$XDG_CONFIG_HOME/dot/bash/tmux-session-private"
     [[ -z "$TMUX" ]] && {
+        . "$XDG_CONFIG_HOME/dot/bash/tmux-session"
         t
         exit
     }
