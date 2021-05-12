@@ -11,6 +11,7 @@ set noerrorbells
 set fileformats=unix
 set fileencoding=utf-8
 set encoding=utf-8
+set ignorecase
 
 " -- view --
 syntax on
