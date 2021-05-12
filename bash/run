@@ -120,6 +120,12 @@ o() {
     fi
 }
 
+envup() {
+    while IFS='=' read -r name value || [[ -n "$line" ]];do
+        export "$name"="$value"
+    done < ".env"
+}
+
 alias getpath="find -type f | fzf | sed 's/^..//' | tr -d '\n' | cclip"
 
 # -- misc --
