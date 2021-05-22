@@ -195,6 +195,14 @@ alias docker-search='_docker_search'
 alias wget-clip='wget --continue "$(xclip -selection clipboard -out)"'
 alias spotify-dl='docker run\
     -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
+
+m4adl() {
+    local url
+    local path="~/m/%(title)s.%(ext)s"
+    url="${1:-$(xclip -selection clipboard -out)}"
+    youtube-dl "$url" --extract-audio --audio-format m4a --output "$path"
+}
+
 mp3dl() {
     local url
     local path="~/m/%(title)s.%(ext)s"
