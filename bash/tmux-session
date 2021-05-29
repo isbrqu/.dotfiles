@@ -3,7 +3,7 @@
 for folder in ~/w/*/;do
     name="${folder%%/}"
     name="${name##*/}"
-    tmux has-session -t "$name" &> /dev/null || {
+    tmux has-session -t "$name-" &> /dev/null || {
         tmux new-session -d -c "$folder" -t "$name"
     }
 done
