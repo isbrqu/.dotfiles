@@ -297,7 +297,7 @@ tmux_start() {
 }
 
 c() {
-    local code="BEGIN { printf \"%.2f\", $request; exit }"
+    local code='BEGIN { printf "%.2f", $request; exit }'
     local request="$1"
     request="${request//./}"
     request="${request//,/.}"
