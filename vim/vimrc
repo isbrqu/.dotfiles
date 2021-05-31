@@ -121,7 +121,8 @@ highlight StatusLine ctermfg=238 ctermbg=white
 highlight StatusLineNC ctermfg=237 ctermbg=white
 
 " -- runtimepath --
-set runtimepath+=~/.config/fzf
+set runtimepath+=~/.config/dot/fzf
+set runtimepath+=~/.local/bin
 
 " -- others --
 let mapleader=' '
