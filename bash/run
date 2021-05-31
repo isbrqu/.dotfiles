@@ -221,7 +221,12 @@ mp4dl() {
 }
 
 # -- ls --
-LSOPTIONS='--color=always --almost-all --group-directories --sort=extension'
+LSOPTIONS=""
+LSOPTIONS="$LSOPTIONS --color=always"
+LSOPTIONS="$LSOPTIONS --almost-all"
+LSOPTIONS="$LSOPTIONS --group-directories"
+LSOPTIONS="$LSOPTIONS --sort=extension"
+LSOPTIONS="$LSOPTIONS --human-readable"
 alias ll="ls -l $LSOPTIONS"
 l() {
     if [[ -f "$1" ]];then
