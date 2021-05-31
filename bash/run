@@ -258,7 +258,7 @@ prev_cd() {
 export TMUX_SCRIPT="$XDG_CONFIG_HOME/tmux/script"
 export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
 
-t() {
+tmux_start() {
     if [[ -n "$TMUX" ]];then
         echo "qué haces capo?"
         return 1
@@ -345,7 +345,7 @@ fi
 if [[ "$(tty)" == */pts/* ]];then
     if [[ -z "$TMUX" ]];then
         . "$XDG_CONFIG_HOME/dot/bash/tmux-session"
-        t
+        tmux_start
     fi
 fi
 
