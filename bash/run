@@ -205,7 +205,6 @@ _docker_search() {
 }
 
 alias goo='googler -n 3'
-alias docker-search='_docker_search'
 
 # -- download --
 alias wget-clip='wget --continue "$(pclip)"'
