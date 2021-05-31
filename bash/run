@@ -333,11 +333,19 @@ extract() {
 
 # -- fzf --
 FZF_HOME="$XDG_CONFIG_HOME/dot/fzf"
-FZF_IGNORE="--path-to-ignore $FZF_HOME/ignore --unrestricted"
 FZF_BIND="--bind ctrl-space:accept"
-export FZF_DEFAULT_COMMAND="ag --no-color --hidden $FZF_IGNORE -g "'""'
+AGOPTIONS=""
+AGOPTIONS="$AGOPTIONS --no-color"
+AGOPTIONS="$AGOPTIONS --hidden"
+AGOPTIONS="$AGOPTIONS --path-to-ignore $FZF_HOME/ignore"
+AGOPTIONS="$AGOPTIONS --unrestricted"
+AGOPTIONS="$AGOPTIONS -g ''"
+export FZF_DEFAULT_COMMAND="ag $AGOPTIONS"
 export FZF_PREVIEW="--preview 'bat {} --color=always'"
 export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
+
+FZF_PATH_BIN="$XDG_CONFIG_HOME/fzf/bin"
+FZF_PATH_SHELL="$XDG_CONFIG_HOME/fzf/shell"
 
 # setup
 if [[ ! "$PATH" == *"$FZF_PATH_BIN"* ]];then
@@ -350,7 +358,7 @@ if [[ $- == *i* ]];then
 fi
 
 # key bindings
-. "$XDG_CONFIG_HOME/fzf/shell/key-bindings.bash"
+. "$FZF_PATH_SHELL/key-bindings.bash"
 
 # -- startup --
 if [[ "$(tty)" == */pts/* ]];then
