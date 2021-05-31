@@ -181,10 +181,9 @@ alias mydate='date "+%T-%x" | tr ":/" "--"'
 
 # -- docker --
 PWDD='"$PWD"'
-DKOPTIONS=''
-DKOPTIONS='-it'
-DKOPTIONS='--rm'
-DKOPTIONS='--user=$(id -u):$(id -g)'
+DKOPTIONS="-it"
+DKOPTIONS="$DKOPTIONS --rm"
+DKOPTIONS="$DKOPTIONS --user=$(id -u):$(id -g)"
 DKOPTIONSNODE="$DKOPTIONS"
 DKOPTIONSNODE="$DKOPTIONSNODE --name node-main"
 DKOPTIONSNODE="$DKOPTIONSNODE --volume $PWDD:/usr/src/app"
