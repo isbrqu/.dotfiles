@@ -180,24 +180,28 @@ alias pclip='xclip -selection clipboard -out'
 alias mydate='date "+%T-%x" | tr ":/" "--"'
 
 # -- docker --
-DKOPTIONS=""
-DKOPTIONS="-it"
-DKOPTIONS="--rm"
+PWDD='"$PWD"'
+DKOPTIONS=''
+DKOPTIONS='-it'
+DKOPTIONS='--rm'
+DKOPTIONS='--user=$(id -u):$(id -g)'
 DKOPTIONSNODE="$DKOPTIONS"
 DKOPTIONSNODE="$DKOPTIONSNODE --name node-main"
-DKOPTIONSNODE="$DKOPTIONSNODE --user node"
-DKOPTIONSNODE="$DKOPTIONSNODE --volume \"\$PWD\":/usr/src/app"
+DKOPTIONSNODE="$DKOPTIONSNODE --volume $PWDD:/usr/src/app"
 DKOPTIONSNODE="$DKOPTIONSNODE --workdir /usr/src/app"
 DKOPTIONSNODE="$DKOPTIONSNODE node"
 DKOPTIONSSPOTIFYDL="$DKOPTIONS"
-DKOPTIONSSPOTIFYDL="$DKOPTIONSSPOTIFYDL --user=\$(id -u):\$(id -g)"
-DKOPTIONSSPOTIFYDL="$DKOPTIONSSPOTIFYDL --volume \$PWD:/download"
+DKOPTIONSSPOTIFYDL="$DKOPTIONSSPOTIFYDL --volume $PWDD:/download"
+DKOPTIONSYOUTUBEDL="$DKOPTIONS"
+DKOPTIONSYOUTUBEDL="$DKOPTIONSYOUTUBEDL --volume $PWDD:/usr/src/app"
+
 alias d='docker'
 alias dc='docker-compose'
 alias docker-search='_docker_search'
 alias node="docker run $DKOPTIONSNODE node"
 alias npm="docker run $DKOPTIONSNODE npm"
 alias spotify-dl="docker run $DKOPTIONSSPOTIFYDL spotify-dl"
+alias youtube-dl="docker run $DKOPTIONSYOUTUBEDL youtube-dl"
 
 # -- search --
 _docker_search() {
@@ -212,25 +216,29 @@ alias goo='googler -n 3'
 # -- download --
 alias wget-clip='wget --continue "$(pclip)"'
 
-m4adl() {
+YTDL_OPTIONS_FORMAT="%(title)s.%(ext)s"
+yt() {
+    local option="$1"
+    local format="$2"
     local url
-    local path="~/m/%(title)s.%(ext)s"
-    url="${1:-$(xclip -selection clipboard -out)}"
-    youtube-dl "$url" --extract-audio --audio-format m4a --output "$path"
-}
-
-mp3dl() {
-    local url
-    local path="~/m/%(title)s.%(ext)s"
-    url="${1:-$(xclip -selection clipboard -out)}"
-    youtube-dl "$url" --extract-audio --audio-format mp3 --output "$path"
-}
-
-mp4dl() {
-    local url
-    local path="~/v/%(title)s.%(ext)s"
-    url="${1:-$(xclip -selection clipboard -out)}"
-    youtube-dl "$url" --format mp4 --output "$path"
+    local OPTIONS
+    url="${3:-$(pclip)}"
+    case "$option" in
+        audio)
+            OPTIONS="--extract-audio --audio-format $format"
+        ;;
+        video)
+            OPTIONS="--format $format"
+        ;;
+        img)
+            OPTIONS="--write-thumbnail --skip-download"
+        ;;
+        *)
+            echo "option not found. Use audio, video or img"
+            return 1
+        ;;
+    esac
+    youtube-dl $OPTIONS "$url"
 }
 
 # -- ls --
