@@ -280,16 +280,6 @@ if [[ "$TERM" == xterm* || "$TERM" == rxvt* ]];then
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 fi
 
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-setxkbmap -layout us -variant altgr-intl
-xinput disable "ILITEK ILITEK Multi-Touch"
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -331,3 +321,11 @@ if [[ "$(tty)" == */pts/* ]];then
     fi
 fi
 
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+setxkbmap -layout us -variant altgr-intl
+xinput disable "ILITEK ILITEK Multi-Touch"
