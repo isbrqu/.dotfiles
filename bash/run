@@ -11,8 +11,6 @@ esac
 
 # -- path --
 export PATH="$PATH:$HOME/.local/bin"
-# export PATH="$PATH:$XDG_CONFIG_HOME/composer/vendor/bin"
-# export PATH="$PATH:/usr/share/php"
 
 export EDITOR=vim
 export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/pythonstartup.py"
