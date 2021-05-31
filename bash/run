@@ -153,17 +153,20 @@ export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  ([[ -f /usr/share/bash-completion/bash_completion ]] && (
-      . /usr/share/bash-completion/bash_completion
-  )) || ([[ -f /etc/bash_completion ]] && (
-      . /etc/bash_completion
-  ))
+    if [[ -f /usr/share/bash-completion/bash_completion ]];then
+        . /usr/share/bash-completion/bash_completion
+    elif [[ -f /etc/bash_completion ]];then
+        . /etc/bash_completion
+    fi
 fi
 
 # enable color support of ls and also add handy aliases
-[[ -x /usr/bin/dircolors && -r ~/.dircolors ]]\
-&& eval "$(dircolors -b ~/.dircolors)"\
-|| eval "$(dircolors -b)"
+if [[ -x /usr/bin/dircolors && -r ~/.dircolors ]];then
+    eval "$(dircolors -b ~/.dircolors)"
+else
+    eval "$(dircolors -b)"
+fi
+
 
 # -- clipboard --
 alias cclip='xclip -selection clipboard -in'
@@ -250,19 +253,21 @@ export TMUX_SCRIPT="$XDG_CONFIG_HOME/tmux/script"
 export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
 
 t() {
-    [[ -n "$TMUX" ]] && {
+    if [[ -n "$TMUX" ]];then
         echo "qué haces capo?"
-        return
-    }
+        return 1
+    fi
     local sessions
     local session
     sessions="$(tmux list-session -F '#{session_name}' 2> /dev/null)"
     session="$(echo "$sessions" | fzf --print-query)"
     session="$(echo "${session//*[$'\n']}")"
-    [[ -n "$session" ]] && {
-        tmux attach-session -t "$session" 2> /dev/null\
-        || tmux new-session -s "$session" &> /dev/null
-    }
+    if [[ -n "$session" ]];then
+        tmux attach-session -t "$session" 2> /dev/null
+        if (( $? != 0 ));then
+            tmux new-session -s "$session" &> /dev/null
+        fi
+    fi
 }
 
 c() {
@@ -288,8 +293,8 @@ v() {
     fi
 }
 
-extract () {
-     if [ -f $1 ] ; then
+extract() {
+     if [[ -f $1 ]]; then
          case $1 in
              *.tar.bz2)   tar xvjf $1    ;;
              *.tar.gz)    tar xvzf $1    ;;
@@ -318,21 +323,23 @@ export FZF_PREVIEW="--preview 'bat {} --color=always'"
 export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
 
 # setup
-[[ ! "$PATH" == *"$XDG_CONFIG_HOME"/fzf/bin* ]]\
-&& export PATH="${PATH:+${PATH}:}$XDG_CONFIG_HOME/fzf/bin"
+if [[ ! "$PATH" == *"$FZF_PATH_BIN"* ]];then
+    export PATH="${PATH:+${PATH}:}$FZF_PATH_BIN"
+fi
 
 # auto-completion
-[[ $- == *i* ]]\
-&& . "$XDG_CONFIG_HOME/fzf/shell/completion.bash" 2> /dev/null
+if [[ $- == *i* ]];then
+    . "$FZF_PATH_SHELL/completion.bash" 2> /dev/null
+fi
 
 # key bindings
 . "$XDG_CONFIG_HOME/fzf/shell/key-bindings.bash"
 
 # -- startup --
-[[ "$(tty)" == */pts/* ]] && {
-    [[ -z "$TMUX" ]] && {
+if [[ "$(tty)" == */pts/* ]];then
+    if [[ -z "$TMUX" ]];then
         . "$XDG_CONFIG_HOME/dot/bash/tmux-session"
         t
-        exit
-    }
-}
+    fi
+fi
+
