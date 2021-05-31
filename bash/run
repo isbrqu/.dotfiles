@@ -287,12 +287,13 @@ tmux_start() {
 }
 
 c() {
+    local code="BEGIN { printf \"%.2f\", $request; exit }"
     local request="$1"
     request="${request//./}"
     request="${request//,/.}"
-    result="$(awk 'BEGIN { printf "%.2f", '"$request"'; exit }')"
+    result="$(awk "$code")"
     echo "$request=$result"
-    echo "$result" | xclip -sel clipboard -in
+    echo "$result" | xclip -selection clipboard -in
 }
 
 v() {
