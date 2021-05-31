@@ -177,8 +177,24 @@ alias pclip='xclip -selection clipboard -out'
 alias mydate='date "+%T-%x" | tr ":/" "--"'
 
 # -- docker --
+DKOPTIONS=""
+DKOPTIONS="-it"
+DKOPTIONS="--rm"
+DKOPTIONSNODE="$DKOPTIONS"
+DKOPTIONSNODE="$DKOPTIONSNODE --name node-main"
+DKOPTIONSNODE="$DKOPTIONSNODE --user node"
+DKOPTIONSNODE="$DKOPTIONSNODE --volume \"\$PWD\":/usr/src/app"
+DKOPTIONSNODE="$DKOPTIONSNODE --workdir /usr/src/app"
+DKOPTIONSNODE="$DKOPTIONSNODE node"
+DKOPTIONSSPOTIFYDL="$DKOPTIONS"
+DKOPTIONSSPOTIFYDL="$DKOPTIONSSPOTIFYDL --user=\$(id -u):\$(id -g)"
+DKOPTIONSSPOTIFYDL="$DKOPTIONSSPOTIFYDL --volume \$PWD:/download"
 alias d='docker'
 alias dc='docker-compose'
+alias docker-search='_docker_search'
+alias node="docker run $DKOPTIONSNODE node"
+alias npm="docker run $DKOPTIONSNODE npm"
+alias spotify-dl="docker run $DKOPTIONSSPOTIFYDL spotify-dl"
 
 # -- search --
 _docker_search() {
@@ -187,13 +203,12 @@ _docker_search() {
     local url="$URL_BASE?q=$1&type=$type"
     o "$url"
 }
+
 alias goo='googler -n 3'
 alias docker-search='_docker_search'
 
 # -- download --
 alias wget-clip='wget --continue "$(xclip -selection clipboard -out)"'
-alias spotify-dl='docker run\
-    -it --user=$(id -u):$(id -g) -v $(pwd):/download --rm spotify-dl'
 
 m4adl() {
     local url
