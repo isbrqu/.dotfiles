@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ~/.bashrc: executed by bash(0) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# fo examples
+# for examples
 
 # If not running interactively, don't do anything
 case $- in
@@ -9,110 +9,76 @@ case $- in
       *) return;;
 esac
 
-# -- path --
-export PATH="$PATH:$HOME/.local/bin"
-
-export EDITOR=vim
-export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/pythonstartup.py"
-
-# -- xdg --
+# -- env --
+# colored GCC warnings and errors
+# export GCC_COLORS="error=01;31"
+# export GCC_COLORS="$GCC_COLORS:warning=01;35"
+# export GCC_COLORS="$GCC_COLORS:note=01;36"
+# export GCC_COLORS="$GCC_COLORS:caret=01;32"
+# export GCC_COLORS="$GCC_COLORS:locus=01"
+# export GCC_COLORS="$GCC_COLORS:quote=01S"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
-
-xinput disable "ILITEK ILITEK Multi-Touch"
-
-# -- keyboard --
-setxkbmap -layout us -variant altgr-intl
-
-if [[ "$(tty)" = /dev/tty1 ]];then
-    startx
-fi
-
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-
-# -- history --
-# append to the history file, don't overwrite it
-shopt -s histappend
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+DOT_PATH="$XDG_CONFIG_HOME/dot"
+BASH_PATH="$DOT_PATH/bash"
+export PATH="$PATH:$HOME/.local/bin"
+export EDITOR=vim
+export PYTHONSTARTUP="$DOT_PATH/python/startup.py"
+FZF_PATH="$DOT_PATH/fzf"
+FZF_BIND="$FZF_BIND --bind ctrl-space:accept"
+AG_OPTIONS="$AG_OPTIONS --no-color"
+AG_OPTIONS="$AG_OPTIONS --hidden"
+AG_OPTIONS="$AG_OPTIONS --path-to-ignore $FZF_HOME/ignore"
+AG_OPTIONS="$AG_OPTIONS --unrestricted"
+AG_OPTIONS="$AG_OPTIONS -g ''"
+BAT_OPTIONS="$BAT_OPTIONS --color=always"
+export FZF_DEFAULT_COMMAND="ag $AG_OPTIONS"
+export FZF_PREVIEW="--preview 'bat {} $BAT_OPTIONS'"
+export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
+LSOPTIONS="$LSOPTIONS --color=always"
+LSOPTIONS="$LSOPTIONS --almost-all"
+LSOPTIONS="$LSOPTIONS --group-directories"
+LSOPTIONS="$LSOPTIONS --sort=extension"
+LSOPTIONS="$LSOPTIONS --human-readable"
+PWDD='"$PWD"'
+DKOPTIONS="-it"
+DKOPTIONS="$DKOPTIONS --rm"
+DKOPTIONS="$DKOPTIONS --user=$(id -u):$(id -g)"
+DKOPTIONSNODE="$DKOPTIONS"
+DKOPTIONSNODE="$DKOPTIONSNODE --name node-main"
+DKOPTIONSNODE="$DKOPTIONSNODE --volume $PWDD:/usr/src/app"
+DKOPTIONSNODE="$DKOPTIONSNODE --workdir /usr/src/app"
+DKOPTIONSNODE="$DKOPTIONSNODE node"
+DKOPTIONSSPOTIFYDL="$DKOPTIONS"
+DKOPTIONSSPOTIFYDL="$DKOPTIONSSPOTIFYDL --volume $PWDD:/download"
+DKOPTIONSYOUTUBEDL="$DKOPTIONS"
+DKOPTIONSYOUTUBEDL="$DKOPTIONSYOUTUBEDL --volume $PWDD:/usr/src/app"
+# DKOPTIONSGALLERYDL
+# DKOPTIONSINSTALOOTER
+export WGETRC="$DOT_PATH/wgetrc"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+# export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
+export LESSHISTFILE=-
+# INPUTRC=~/.config/dot/bash/inputrc
+export TMUX_SCRIPT="$DOT_PATH/tmux/script"
+export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
+YTDL_OPTIONS_FORMAT="%(title)s.%(ext)s"
+eval "$(cat "$XDG_CONFIG_HOME/user-dirs.dirs")"
 HISTSIZE=100
 HISTFILESIZE=100
 HISTFILE=~/.config/dot/bash/history-private
 HISTIGNORE='history:ls:pwd:l:'
 HISTTIMEFORMAT='%F, %T '
 HISTCONTROL=ignoreboth:erasedups
-
 PROMPT_COMMAND='history -a'
-
-# INPUTRC=~/.config/dot/bash/inputrc
-
-# -- less --
-export LESSHISTFILE=-
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# -- color --
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [[ -z "${debian_chroot:-}" && -r /etc/debian_chroot ]];then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-# force_color_prompt=yes
-
-if [[ -n "$force_color_prompt" ]];then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    if [[ -x /usr/bin/tput ]];then
-        tput setaf 1 >& /dev/null
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
-fi
-
-# -- ps1 --
-if [[ "$color_prompt" = yes ]];then
-    PS1='${debian_chroot:+($debian_chroot)}'
-    PS1="$PS1"'\[\033[01;32m\]\u@\h\[\033[00m\]:'
-    PS1="$PS1"'\[\033[01;34m\]\w\[\033[00m\]'
-    PS1="$PS1"'\n\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
-fi
-
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-if [[ "$TERM" == xterm* || "$TERM" == rxvt* ]];then
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-fi
-
 # -- util functions --
-o() {
-    if [[ -n "$1" ]];then
-        xdg-open "$1" &> /dev/null &
+open() {
+    local file="$1"
+    if [[ -n "$file" ]];then
+        xdg-open "$file" &> /dev/null &
         (( $? == 0 )) && disown
     else
-        local file
         file="$(find -type f | fzf --height=50%)"
         # file="$(fzf --height=50%)"
         if [[ "$file" != "" ]];then
@@ -128,100 +94,19 @@ envup() {
     done < ".env"
 }
 
-alias getpath="find -type f | fzf | sed 's/^..//' | tr -d '\n' | cclip"
-
-# -- misc --
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-
-# -- mysql --
-export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
-
-# -- xauthority --
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-
-# -- gcc_colors --
-# colored GCC warnings and errors
-# export GCC_COLORS="error=01;31"
-# export GCC_COLORS="$GCC_COLORS:warning=01;35"
-# export GCC_COLORS="$GCC_COLORS:note=01;36"
-# export GCC_COLORS="$GCC_COLORS:caret=01;32"
-# export GCC_COLORS="$GCC_COLORS:locus=01"
-# export GCC_COLORS="$GCC_COLORS:quote=01S"
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-    if [[ -f /usr/share/bash-completion/bash_completion ]];then
-        . /usr/share/bash-completion/bash_completion
-    elif [[ -f /etc/bash_completion ]];then
-        . /etc/bash_completion
-    fi
-fi
-
-# enable color support of ls and also add handy aliases
-if [[ -x /usr/bin/dircolors && -r ~/.dircolors ]];then
-    eval "$(dircolors -b ~/.dircolors)"
-else
-    eval "$(dircolors -b)"
-fi
-
-eval "$(cat "$XDG_CONFIG_HOME/user-dirs.dirs")"
-
-# -- clipboard --
-alias cclip='xclip -selection clipboard -in'
-alias pclip='xclip -selection clipboard -out'
-
-# -- date --
-alias mydate='date "+%T-%x" | tr ":/" "--"'
-
-# -- docker --
-PWDD='"$PWD"'
-DKOPTIONS="-it"
-DKOPTIONS="$DKOPTIONS --rm"
-DKOPTIONS="$DKOPTIONS --user=$(id -u):$(id -g)"
-DKOPTIONSNODE="$DKOPTIONS"
-DKOPTIONSNODE="$DKOPTIONSNODE --name node-main"
-DKOPTIONSNODE="$DKOPTIONSNODE --volume $PWDD:/usr/src/app"
-DKOPTIONSNODE="$DKOPTIONSNODE --workdir /usr/src/app"
-DKOPTIONSNODE="$DKOPTIONSNODE node"
-DKOPTIONSSPOTIFYDL="$DKOPTIONS"
-DKOPTIONSSPOTIFYDL="$DKOPTIONSSPOTIFYDL --volume $PWDD:/download"
-DKOPTIONSYOUTUBEDL="$DKOPTIONS"
-DKOPTIONSYOUTUBEDL="$DKOPTIONSYOUTUBEDL --volume $PWDD:/usr/src/app"
-
-alias d='docker'
-alias dc='docker-compose'
-alias docker-search='_docker_search'
-alias node="docker run $DKOPTIONSNODE node"
-alias npm="docker run $DKOPTIONSNODE npm"
-alias spotify-dl="docker run $DKOPTIONSSPOTIFYDL spotify-dl"
-alias youtube-dl="docker run $DKOPTIONSYOUTUBEDL youtube-dl"
-
-# -- search --
 _docker_search() {
     local -r URL_BASE='https://hub.docker.com/search'
     local type="${2-image}"
     local url="$URL_BASE?q=$1&type=$type"
-    o "$url"
+    open "$url"
 }
 
-alias goo='googler -n 3'
-
-# -- download --
-alias wget-clip='wget --continue "$(pclip)"'
-
-YTDL_OPTIONS_FORMAT="%(title)s.%(ext)s"
 yt() {
     local option="$1"
     local format="$2"
     local url
     local OPTIONS
-    url="${3:-$(pclip)}"
+    url="${3:-$(clipp)}"
     case "$option" in
         audio)
             OPTIONS="--extract-audio --audio-format $format"
@@ -240,14 +125,6 @@ yt() {
     youtube-dl $OPTIONS "$url"
 }
 
-# -- ls --
-LSOPTIONS=""
-LSOPTIONS="$LSOPTIONS --color=always"
-LSOPTIONS="$LSOPTIONS --almost-all"
-LSOPTIONS="$LSOPTIONS --group-directories"
-LSOPTIONS="$LSOPTIONS --sort=extension"
-LSOPTIONS="$LSOPTIONS --human-readable"
-alias ll="ls -l $LSOPTIONS"
 l() {
     if [[ -f "$1" ]];then
         # read a file
@@ -261,8 +138,6 @@ l() {
     fi
 }
 
-# -- cd --
-alias ..='prev_cd'
 prev_cd() {
     if [[ -n $1 ]];then
         local -i n=$1
@@ -273,10 +148,6 @@ prev_cd() {
         cd ..
     fi
 }
-
-# -- tmux --
-export TMUX_SCRIPT="$XDG_CONFIG_HOME/tmux/script"
-export TMUX_FILETREE_COMMAND="ls -1 $LSOPTIONS \"\$(readlink -e %s)\""
 
 tmux_start() {
     if [[ -n "$TMUX" ]];then
@@ -341,36 +212,118 @@ extract() {
      fi
 }
 
-# -- fzf --
-FZF_HOME="$XDG_CONFIG_HOME/dot/fzf"
-FZF_BIND="--bind ctrl-space:accept"
-AGOPTIONS=""
-AGOPTIONS="$AGOPTIONS --no-color"
-AGOPTIONS="$AGOPTIONS --hidden"
-AGOPTIONS="$AGOPTIONS --path-to-ignore $FZF_HOME/ignore"
-AGOPTIONS="$AGOPTIONS --unrestricted"
-AGOPTIONS="$AGOPTIONS -g ''"
-export FZF_DEFAULT_COMMAND="ag $AGOPTIONS"
-export FZF_PREVIEW="--preview 'bat {} --color=always'"
-export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
-
-FZF_PATH_BIN="$XDG_CONFIG_HOME/fzf/bin"
-FZF_PATH_SHELL="$XDG_CONFIG_HOME/fzf/shell"
-
-# setup
-if [[ ! "$PATH" == *"$FZF_PATH_BIN"* ]];then
-    export PATH="${PATH:+${PATH}:}$FZF_PATH_BIN"
-fi
-
-# auto-completion
-if [[ $- == *i* ]];then
-    . "$FZF_PATH_SHELL/completion.bash" 2> /dev/null
-fi
-
-# key bindings
-. "$FZF_PATH_SHELL/key-bindings.bash"
+# -- alias --
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+alias ..='prev_cd'
+alias clipc='xclip -selection clipboard -in'
+alias clipp='xclip -selection clipboard -out'
+alias d='docker'
+alias date-now='date "+%T-%x" | tr ":/" "--"'
+alias dc='docker-compose'
+alias docker-search='_docker_search'
+alias goo='googler -n 3'
+alias ll="ls -l $LSOPTIONS"
+alias node="docker run $DKOPTIONSNODE node"
+alias npm="docker run $DKOPTIONSNODE npm"
+alias pathget="find -type f | fzf | sed 's/^..//' | tr -d '\n' | clipc"
+alias spotify-dl="docker run $DKOPTIONSSPOTIFYDL spotify-dl"
+alias wget-clip='wget --continue "$(clipp)"'
+alias youtube-dl="docker run $DKOPTIONSYOUTUBEDL youtube-dl"
 
 # -- startup --
+
+# make less more friendly for non-text input files, see lesspipe(1)
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [[ -z "${debian_chroot:-}" && -r /etc/debian_chroot ]];then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+# force_color_prompt=yes
+
+if [[ -n "$force_color_prompt" ]];then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    if [[ -x /usr/bin/tput ]];then
+        tput setaf 1 >& /dev/null
+        color_prompt=yes
+    else
+        color_prompt=
+    fi
+fi
+
+if [[ "$color_prompt" = yes ]];then
+    PS1='${debian_chroot:+($debian_chroot)}'
+    PS1="$PS1"'\[\033[01;32m\]\u@\h\[\033[00m\]:'
+    PS1="$PS1"'\[\033[01;34m\]\w\[\033[00m\]'
+    PS1="$PS1"'\n\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
+fi
+
+# unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+if [[ "$TERM" == xterm* || "$TERM" == rxvt* ]];then
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+fi
+
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+setxkbmap -layout us -variant altgr-intl
+xinput disable "ILITEK ILITEK Multi-Touch"
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+    if [[ -f /usr/share/bash-completion/bash_completion ]];then
+        . /usr/share/bash-completion/bash_completion
+    elif [[ -f /etc/bash_completion ]];then
+        . /etc/bash_completion
+    fi
+fi
+
+# enable color support of ls and also add handy aliases
+if [[ -x /usr/bin/dircolors ]];then
+    if [[ -r ~/.dircolors ]];then
+        eval "$(dircolors --bourne-shell ~/.dircolors)"
+    else
+        eval "$(dircolors --bourne-shell)"
+    fi
+fi
+
+if [[ $- == *i* ]];then
+    for file in "$BASH_PATH/completion-"*;do
+        . "$file"
+    done
+fi
+
+for file in "$BASH_PATH/key-bindings-"*;do
+    . "$file"
+done
+
+if [[ "$(tty)" = /dev/tty1 ]];then
+    startx
+fi
+
 if [[ "$(tty)" == */pts/* ]];then
     if [[ -z "$TMUX" ]];then
         . "$XDG_CONFIG_HOME/dot/bash/tmux-session"
