@@ -167,6 +167,7 @@ else
     eval "$(dircolors -b)"
 fi
 
+eval "$(cat "$XDG_CONFIG_HOME/user-dirs.dirs")"
 
 # -- clipboard --
 alias cclip='xclip -selection clipboard -in'
