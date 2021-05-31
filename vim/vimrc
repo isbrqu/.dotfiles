@@ -291,10 +291,17 @@ augroup filetype_python
     autocmd FileType python nnoremap <buffer> <leader>f1 :Rl ^\s*def <cr>
 augroup END
 
-augroup filetype_javascript_cpp
+augroup filetype_cpp
     autocmd!
-    autocmd FileType javascript,cpp setlocal commentstring=\//\ %s
-    autocmd FileType javascript,cpp nnoremap <buffer> <leader>fs :Rl ^// -+ .+ -+$<cr>
+    autocmd FileType cpp setlocal commentstring=\//\ %s
+    autocmd FileType cpp nnoremap <buffer> <leader>fs :Rl ^// -+ .+ -+$<cr>
+augroup END
+
+augroup filetype_javascript
+    autocmd!
+    autocmd FileType javascript noreabbrev hi console.log()<left>
+    autocmd FileType javascript setlocal commentstring=\//\ %s
+    autocmd FileType javascript nnoremap <buffer> <leader>fs :Rl ^// -+ .+ -+$<cr>
 augroup END
 
 augroup filetype_markdown
