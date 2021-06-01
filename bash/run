@@ -17,13 +17,17 @@ esac
 # export GCC_COLORS="$GCC_COLORS:caret=01;32"
 # export GCC_COLORS="$GCC_COLORS:locus=01"
 # export GCC_COLORS="$GCC_COLORS:quote=01S"
+. "$XDG_CONFIG_HOME/user-dirs.dirs"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
-DOT_PATH="$XDG_CONFIG_HOME/dot"
-BASH_PATH="$DOT_PATH/bash"
-FZF_PATH="$DOT_PATH/fzf"
 export PATH="$PATH:$HOME/.local/bin"
+export DOT_PATH="$XDG_CONFIG_HOME/dot"
+export BASH_PATH="$DOT_PATH/bash"
+export FZF_PATH="$DOT_PATH/fzf"
+export TMUX_PATH="$DOT_PATH/tmux"
+export TMUX_SCRIPT="$TMUX_PATH/script"
+export WGETRC="$DOT_PATH/wgetrc"
 export EDITOR=vim
 export PYTHONSTARTUP="$DOT_PATH/python/startup.py"
 AG_OPTS="$AG_OPTS --no-color"
@@ -31,10 +35,10 @@ AG_OPTS="$AG_OPTS --hidden"
 AG_OPTS="$AG_OPTS --path-to-ignore $FZF_HOME/ignore"
 AG_OPTS="$AG_OPTS --unrestricted"
 AG_OPTS="$AG_OPTS -g ''"
-BAT_OPTIONS="$BAT_OPTIONS --color=always"
+BAT_OPTS="$BAT_OPTS --color=always"
 FZF_BIND="$FZF_BIND --bind ctrl-space:accept"
 export FZF_DEFAULT_COMMAND="ag $AG_OPTS"
-export FZF_PREVIEW="--preview 'bat {} $BAT_OPTIONS'"
+export FZF_PREVIEW="--preview 'bat {} $BAT_OPTS'"
 export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
 LS_OPTS="$LS_OPTS --color=always"
 LS_OPTS="$LS_OPTS --almost-all"
@@ -55,15 +59,11 @@ DOCKER_SPOTIFYDL_OPTS="$DOCKER_DOWNLOAD_OPTS"
 DOCKER_YOUTUBEDL_OPTS="$DOCKER_DOWNLOAD_OPTS"
 # DOCKER_OPTSGALLERYDL
 # DOCKER_OPTSINSTALOOTER
-export WGETRC="$DOT_PATH/wgetrc"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export XAUTHORITY="$XDG_RUNTIME_DIR/xauthority"
 # export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
 export LESSHISTFILE=-
 # INPUTRC=~/.config/dot/bash/inputrc
-export TMUX_SCRIPT="$DOT_PATH/tmux/script"
-export TMUX_FILETREE_COMMAND="ls -1 $LS_OPTS \"\$(readlink -e %s)\""
-YTDL_OPTIONS_FORMAT="%(title)s.%(ext)s"
-eval "$(cat "$XDG_CONFIG_HOME/user-dirs.dirs")"
+export TMUX_FILETREE_COMMAND='l "$(readlink -e %s)"'
 HISTSIZE=100
 HISTFILESIZE=100
 HISTFILE=~/.config/dot/bash/history-private
@@ -125,24 +125,24 @@ yt() {
     local option="$1"
     local format="$2"
     local url
-    local OPTIONS
+    local OPTS
     url="${3:-$(clipp)}"
     case "$option" in
         audio)
-            OPTIONS="--extract-audio --audio-format $format"
+            OPTS="--extract-audio --audio-format $format"
         ;;
         video)
-            OPTIONS="--format $format"
+            OPTS="--format $format"
         ;;
         img)
-            OPTIONS="--write-thumbnail --skip-download"
+            OPTS="--write-thumbnail --skip-download"
         ;;
         *)
             echo "option not found. Use audio, video or img"
             return 1
         ;;
     esac
-    youtube-dl $OPTIONS "$url"
+    youtube-dl $OPTS "$url"
 }
 
 l() {
@@ -232,6 +232,15 @@ extract() {
      fi
 }
 
+disable_inputs() {
+    declare name="ILITEK ILITEK Multi-Touch"
+    declare state
+    state="$(IFS=$'\n'; arr=($(xinput list-props "$name")); echo "${arr[1]}")"
+    if [[ "$state" = *1 ]];then
+        xinput disable "$name"
+    fi
+}
+
 # -- startup --
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -316,6 +325,7 @@ fi
 
 if [[ "$(tty)" == */pts/* ]];then
     if [[ -z "$TMUX" ]];then
+        mybrightness update
         . "$XDG_CONFIG_HOME/dot/bash/tmux-session"
         tmux_start
     fi
@@ -328,4 +338,4 @@ shopt -s checkwinsize
 shopt -s histappend
 
 setxkbmap -layout us -variant altgr-intl
-xinput disable "ILITEK ILITEK Multi-Touch"
+
