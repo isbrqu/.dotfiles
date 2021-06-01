@@ -5,9 +5,24 @@ if [[ -z "$1" ]];then
     exit 1
 fi
 
+update() {
+    source ~/.config/dot/script/checklog
+    declare gamma
+    declare brightness
+    gamma="$(cat $path_gamma)"
+    brightness="$(cat $path_brightness)"
+    while IFS= read -r line; do
+        xrandr --output "$line" --gamma "$gamma" --brightness "$brightness"
+    done < "$path_monitor"
+}
+
 case "$1" in
     plus) operation="+";;
     minus) operation="-";;
+    update)
+        update
+        exit
+    ;;
     *) echo "a tu casa pollo"; exit 1;;
 esac
 
