@@ -1,41 +1,51 @@
 # -- variable --
-set $mod Mod4
-set $special 133
-set $ws1 "1: ter"
-set $ws3 "3: aux"
-set $ws2 "2: app"
-set $ws4 "4: doc"
-set $ws5 "5: rec"
-set $monitor1 "eDP-1"
-set $monitor2 "HDMI-1"
-set $launcher "dmenu_run"
-set $screenshot "flameshot gui"
-set $terminal "st"
-set $left  h
-set $right l
-set $up    k
-set $down  j
-set $resizenro 60
+set  $key_mod              Mod4
+set  $key_special          133
+set  $key_left             h
+set  $key_right            l
+set  $key_up               k
+set  $key_down             j
+set  $key_volume_lower     "XF86AudioLowerVolume"
+set  $key_volume_upper     "XF86AudioRaiseVolume"
+set  $key_volume_mute      "XF86AudioMute"
+set  $key_brightness_up    "XF86MonBrightnessUp"
+set  $key_brightness_down  "XF86MonBrightnessDown"
+set  $resizenro            60
+set  $ws1                  "1:ter"
+set  $ws3                  "3:aux"
+set  $ws2                  "2:app"
+set  $ws4                  "4:doc"
+set  $ws5                  "5:rec"
+set  $monitor1             "eDP-1"
+set  $monitor2             "HDMI-1"
+set  $mode_normal          "normal"
+set  $mode_insert          "default"
+set  $mode_resize          "resize"
+set  $app_launcher         "dmenu_run"
+set  $app_terminal         "st"
+set  $app_browser          "google-chrome"
+set  $app_messenger        "telegram"
+set  $app_screenshot       "flameshot gui"
 
 # -- other --
 font pango:monospace 10
 title_align center
 focus_follows_mouse no
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+# Use Mouse+$key_mod to drag floating windows to their wanted position
+floating_modifier $key_mod
 
 # audio
-bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute 0 toggle
-bindsym XF86MonBrightnessUp   exec brightness +
-bindsym XF86MonBrightnessDown exec brightness -
+bindsym $key_volume_upper    exec pactl set-sink-volume 0 +5%
+bindsym $key_volume_lower    exec pactl set-sink-volume 0 -5%
+bindsym $key_volume_mute     exec pactl set-sink-mute   0 toggle
+bindsym $key_brightness_up   exec brightness +
+bindsym $key_brightness_down exec brightness -
 
 # modes
-bindcode $special mode "vim"
+bindcode $key_special mode $mode_normal
 
 # -- main mode --
-mode "vim" {
+mode $mode_normal {
 
     # audio
     bindsym Shift+equal exec --no-startup-id pactl set-sink-volume 0 +5%
@@ -46,20 +56,20 @@ mode "vim" {
     bindsym grave       exec --no-startup-id mybrightness plus
     bindsym Shift+grave exec --no-startup-id mybrightness minus
     bindsym n           exec --no-startup-id mygamma
-    bindsym b           mode "default"; exec --no-startup-id b
-    bindsym Shift+b     mode "default"; exec --no-startup-id b out
-    bindsym Shift+e     mode "default"; exec --no-startup-id i3wmshutdown
+    bindsym b           mode $mode_insert; exec --no-startup-id b
+    bindsym Shift+b     mode $mode_insert; exec --no-startup-id b out
+    bindsym Shift+e     mode $mode_insert; exec --no-startup-id i3wmshutdown
 
     # apps
-    bindsym Return exec $terminal
-    bindsym Print  exec $screenshot
-    bindsym colon  exec $launcher
+    bindsym Print     mode $mode_insert; exec $app_screenshot
+    bindsym Return                       exec $app_terminal
+    bindsym colon                        exec $app_launcher
 
     # change focus
-    bindsym $left  focus left
-    bindsym $down  focus down
-    bindsym $up    focus up
-    bindsym $right focus right
+    bindsym $key_left  focus left
+    bindsym $key_down  focus down
+    bindsym $key_up    focus up
+    bindsym $key_right focus right
 
     # special focus
     bindsym u [urgent=latest] focus
@@ -73,10 +83,10 @@ mode "vim" {
     bindsym Shift+space floating toggle
 
     # move focused window
-    bindsym Shift+$left  move left
-    bindsym Shift+$down  move down
-    bindsym Shift+$up    move up
-    bindsym Shift+$right move right
+    bindsym Shift+$key_left  move left
+    bindsym Shift+$key_down  move down
+    bindsym Shift+$key_up    move up
+    bindsym Shift+$key_right move right
 
     # split in horizontal orientation
     bindsym z split h
@@ -112,20 +122,20 @@ mode "vim" {
     bindsym F5 restart
 
     # modes
-    bindsym r      mode "resize"
-    bindsym i      mode "default"
+    bindsym r      mode $mode_resize
+    bindsym i      mode $mode_insert
     bindsym Escape nop
 }
 
 # -- extra modes --
-mode "resize" {
-    bindsym $left  resize shrink width  $resizenro px or $resizenro ppt
-    bindsym $down  resize grow   height $resizenro px or $resizenro ppt
-    bindsym $up    resize shrink height $resizenro px or $resizenro ppt
-    bindsym $right resize grow   width  $resizenro px or $resizenro ppt
+mode $mode_resize {
+    bindsym $key_left  resize shrink width  $resizenro px or $resizenro ppt
+    bindsym $key_down  resize grow   height $resizenro px or $resizenro ppt
+    bindsym $key_up    resize shrink height $resizenro px or $resizenro ppt
+    bindsym $key_right resize grow   width  $resizenro px or $resizenro ppt
     # modes
-    bindsym i      mode "default"
-    bindsym Escape mode "vim"
+    bindsym i      mode $mode_insert
+    bindsym Escape mode $mode_normal
 }
 
 # -- bar --
@@ -149,16 +159,16 @@ workspace $ws4 output $monitor2
 workspace $ws5 output $monitor2
 
 # -- assign --
-assign [class="Gnome-terminal"]       $ws1
-assign [class="st-256color"]          $ws1
-assign [class="xterm-256color"]       $ws1
-assign [class="mpv"]                  $ws2
-assign [class="Google-chrome"]        $ws2
-assign [class="TelegramDesktop"]      $ws2
-assign [class="Simplescreenrecorder"] $ws5
-assign [class="obs"]                  $ws5
-assign [class="Sxiv"]                 $ws3
-assign [class="Zathura"]              $ws3
-assign [class="FreeTube"]             $ws3
-for_window [window_role="^floating$"] floating enable focus
-for_window [window_role="^floating$"] resize set 600
+assign [class="(?i)freetube"]             $ws3
+assign [class="(?i)gnome-terminal"]	  $ws1
+assign [class="(?i)google-chrome"]	  $ws2
+assign [class="(?i)mpv"]		  $ws2
+assign [class="(?i)obs"]		  $ws5
+assign [class="(?i)simplescreenrecorder"] $ws5
+assign [class="(?i)st-256color"]	  $ws1
+assign [class="(?i)sxiv"]	          $ws3
+assign [class="(?i)telegramdesktop"]	  $ws2
+assign [class="(?i)xterm-256color"]	  $ws1
+assign [class="(?i)zathura"]              $ws1
+assign [title="(?i)^google chrome$"]      $ws2
+
