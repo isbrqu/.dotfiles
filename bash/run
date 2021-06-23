@@ -10,6 +10,11 @@ case $- in
 esac
 
 # -- env --
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+. "$XDG_CONFIG_HOME/user-dirs.dirs"
+export DOT_PATH="$XDG_CONFIG_HOME/dot"
 # colored GCC warnings and errors
 # export GCC_COLORS="error=01;31"
 # export GCC_COLORS="$GCC_COLORS:warning=01;35"
@@ -17,35 +22,18 @@ esac
 # export GCC_COLORS="$GCC_COLORS:caret=01;32"
 # export GCC_COLORS="$GCC_COLORS:locus=01"
 # export GCC_COLORS="$GCC_COLORS:quote=01S"
-. "$XDG_CONFIG_HOME/user-dirs.dirs"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export PATH="$PATH:$HOME/.local/bin"
-export DOT_PATH="$XDG_CONFIG_HOME/dot"
-export BASH_PATH="$DOT_PATH/bash"
-export FZF_PATH="$DOT_PATH/fzf"
-export TMUX_PATH="$DOT_PATH/tmux"
-export TMUX_SCRIPT="$TMUX_PATH/script"
-export WGETRC="$DOT_PATH/wgetrc"
-export EDITOR=vim
-export PYTHONSTARTUP="$DOT_PATH/python/startup.py"
+PWDD='"$PWD"'
 AG_OPTS="$AG_OPTS --no-color"
 AG_OPTS="$AG_OPTS --hidden"
-AG_OPTS="$AG_OPTS --path-to-ignore $FZF_HOME/ignore"
+AG_OPTS="$AG_OPTS --path-to-ignore $DOT_PATH/ag-ignore.list"
 AG_OPTS="$AG_OPTS --unrestricted"
-AG_OPTS="$AG_OPTS -g ''"
+AG_OPTS="$AG_OPTS -g \"\""
 BAT_OPTS="$BAT_OPTS --color=always"
-FZF_BIND="$FZF_BIND --bind ctrl-space:accept"
-export FZF_DEFAULT_COMMAND="ag $AG_OPTS"
-export FZF_PREVIEW="--preview 'bat {} $BAT_OPTS'"
-export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
 LS_OPTS="$LS_OPTS --color=always"
 LS_OPTS="$LS_OPTS --almost-all"
 LS_OPTS="$LS_OPTS --group-directories"
 LS_OPTS="$LS_OPTS --sort=extension"
 LS_OPTS="$LS_OPTS --human-readable"
-PWDD='"$PWD"'
 DOCKER_OPTS="$DOCKER_OPTS --interactive"
 DOCKER_OPTS="$DOCKER_OPTS --tty"
 DOCKER_OPTS="$DOCKER_OPTS --rm"
@@ -57,13 +45,6 @@ DOCKER_NODE_OPTS="$DOCKER_NODE_OPTS node"
 DOCKER_DOWNLOAD_OPTS="$DOCKER_OPTS --volume $PWDD:/download"
 DOCKER_SPOTIFYDL_OPTS="$DOCKER_DOWNLOAD_OPTS"
 DOCKER_YOUTUBEDL_OPTS="$DOCKER_DOWNLOAD_OPTS"
-# DOCKER_OPTSGALLERYDL
-# DOCKER_OPTSINSTALOOTER
-export XAUTHORITY="$XDG_RUNTIME_DIR/xauthority"
-# export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
-export LESSHISTFILE=-
-# INPUTRC=~/.config/dot/bash/inputrc
-export TMUX_FILETREE_COMMAND='l "$(readlink -e %s)"'
 HISTSIZE=100
 HISTFILESIZE=100
 HISTFILE=~/.config/dot/bash/history-private
@@ -71,7 +52,23 @@ HISTIGNORE='history:ls:pwd:l:'
 HISTTIMEFORMAT='%F, %T '
 HISTCONTROL=ignoreboth:erasedups
 PROMPT_COMMAND='history -a'
-
+# INPUTRC=~/.config/dot/bash/inputrc
+export EDITOR=vim
+export LESSHISTFILE=-
+export PATH="$PATH:$HOME/.local/bin"
+export BASH_PATH="$DOT_PATH/bash"
+export FZF_BIND="$FZF_BIND --bind ctrl-space:accept"
+export FZF_DEFAULT_COMMAND="ag $AG_OPTS"
+export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
+export FZF_PATH="$DOT_PATH/fzf"
+export FZF_PREVIEW="--preview 'bat {} $BAT_OPTS'"
+export PYTHON_PATH="$DOT_PATH/python"
+export PYTHONSTARTUP="$PYTHON_PATH/startup.py"
+export TMUX_FILETREE_COMMAND='ls -1 "$(readlink -e %s)"'
+export TMUX_PATH="$DOT_PATH/tmux"
+export TMUX_SCRIPT="$TMUX_PATH/script"
+export WGETRC="$DOT_PATH/wgetrc"
+export XAUTHORITY="$XDG_RUNTIME_DIR/xauthority"
 # -- alias --
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -322,6 +319,8 @@ done
 if [[ "$(tty)" = /dev/tty1 ]];then
     startx
 fi
+
+disable_inputs
 
 if [[ "$(tty)" == */pts/* ]];then
     if [[ -z "$TMUX" ]];then
