@@ -136,6 +136,7 @@ yt() {
         ;;
         *)
             echo "option not found. Use audio, video or img"
+            echo "usage: yt <audio|video|img> <format>"
             return 1
         ;;
     esac
