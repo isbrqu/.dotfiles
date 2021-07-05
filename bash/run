@@ -169,20 +169,10 @@ prev_cd() {
 
 tmux_start() {
     if [[ -n "$TMUX" ]];then
-        echo "qué haces capo?"
+        echo "error (1): the session is already started"
         return 1
     fi
-    local sessions
-    local session
-    sessions="$(tmux list-session -F '#{session_name}' 2> /dev/null)"
-    session="$(echo "$sessions" | fzf --print-query)"
-    session="$(echo "${session//*[$'\n']}")"
-    if [[ -n "$session" ]];then
-        tmux attach-session -t "$session" 2> /dev/null
-        if (( $? != 0 ));then
-            tmux new-session -s "$session" &> /dev/null
-        fi
-    fi
+    tmux attach-session -t "home"
 }
 
 c() {
@@ -192,7 +182,7 @@ c() {
     request="${request//,/.}"
     result="$(awk "$code")"
     echo "$request=$result"
-    echo "$result" | xclip -selection clipboard -in
+    echo "$result" | clipc
 }
 
 v() {
@@ -236,6 +226,64 @@ disable_inputs() {
     state="$(IFS=$'\n'; arr=($(xinput list-props "$name")); echo "${arr[1]}")"
     if [[ "$state" = *1 ]];then
         xinput disable "$name"
+    fi
+}
+
+load_bash_color() {
+    # enable color support of ls and also add handy aliases
+    if [[ -x /usr/bin/dircolors ]];then
+        if [[ -r ~/.dircolors ]];then
+            eval "$(dircolors --bourne-shell ~/.dircolors)"
+        else
+            eval "$(dircolors --bourne-shell)"
+        fi
+    fi
+}
+
+load_bash_completion() {
+    # enable programmable completion features (you don't need to enable
+    # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+    # sources /etc/bash.bashrc).
+    if ! shopt -oq posix; then
+        if [[ -f /usr/share/bash-completion/bash_completion ]];then
+            . /usr/share/bash-completion/bash_completion
+        elif [[ -f /etc/bash_completion ]];then
+            . /etc/bash_completion
+        fi
+    fi
+    # personal
+    if [[ $- == *i* ]];then
+        for file in "$BASH_PATH/completion-"*;do
+            . "$file"
+        done
+    fi
+}
+
+load_bash_key_bindings() {
+    for file in "$BASH_PATH/key-bindings-"*;do
+        . "$file"
+    done
+}
+
+load_startx() {
+    if [[ "$(tty)" = /dev/tty1 ]];then
+        startx
+    fi
+}
+
+load_config_hardware() {
+    if [[ "$(tty)" == */pts/* ]];then
+        mybrightness update
+        disable_inputs
+    fi
+}
+
+load_tmux() {
+    if [[ "$(tty)" == */pts/* ]];then
+        if [[ -z "$TMUX" ]];then
+            . "$XDG_CONFIG_HOME/dot/bash/tmux-session"
+            tmux_start
+        fi
     fi
 }
 
@@ -287,49 +335,12 @@ if [[ "$TERM" == xterm* || "$TERM" == rxvt* ]];then
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-    if [[ -f /usr/share/bash-completion/bash_completion ]];then
-        . /usr/share/bash-completion/bash_completion
-    elif [[ -f /etc/bash_completion ]];then
-        . /etc/bash_completion
-    fi
-fi
-
-# enable color support of ls and also add handy aliases
-if [[ -x /usr/bin/dircolors ]];then
-    if [[ -r ~/.dircolors ]];then
-        eval "$(dircolors --bourne-shell ~/.dircolors)"
-    else
-        eval "$(dircolors --bourne-shell)"
-    fi
-fi
-
-if [[ $- == *i* ]];then
-    for file in "$BASH_PATH/completion-"*;do
-        . "$file"
-    done
-fi
-
-for file in "$BASH_PATH/key-bindings-"*;do
-    . "$file"
-done
-
-if [[ "$(tty)" = /dev/tty1 ]];then
-    startx
-fi
-
-disable_inputs
-
-if [[ "$(tty)" == */pts/* ]];then
-    if [[ -z "$TMUX" ]];then
-        mybrightness update
-        . "$XDG_CONFIG_HOME/dot/bash/tmux-session"
-        tmux_start
-    fi
-fi
+load_bash_color
+load_bash_completion
+load_bash_key_bindings
+load_startx
+load_config_hardware
+load_tmux
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
