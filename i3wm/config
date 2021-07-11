@@ -172,3 +172,7 @@ assign [class="(?i)xterm-256color"]	  $ws1
 assign [class="(?i)zathura"]              $ws1
 assign [title="(?i)^google chrome$"]      $ws2
 
+exec --no-startup-id st
+exec --no-startup-id google-chrome
+
+
