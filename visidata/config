@@ -1,7 +1,7 @@
 # -- options --
 options.disp_currency_fmt = '%0.4f'
 options.disp_float_fmt = '{:.04f}'
-options.use_default_colors = True
+options.color_default = ''
 options.color_current_row = 'yellow'
 options.clipboard_copy_cmd = 'xclip -sel clip -in'
 options.clipboard_paste_cmd = 'xclip -sel clip -out'
