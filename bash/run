@@ -84,7 +84,7 @@ alias goo='googler -n 3'
 alias ll="ls -l $LS_OPTS"
 alias node="docker run $DOCKER_NODE_OPTS node"
 alias npm="docker run $DOCKER_NODE_OPTS npm"
-alias pathget="find -type f | fzf | sed 's/^..//' | tr -d '\n' | clipc"
+alias path-get="find -type f | fzf | sed 's/^..//' | tr -d '\n' | clipc"
 alias spotify-dl="docker run $DOCKER_SPOTIFYDL_OPTS spotify-dl"
 alias wget-clip='wget --tries=inf --continue "$(clipp)"'
 alias youtube-dl="docker run $DOCKER_YOUTUBEDL_OPTS youtube-dl"
