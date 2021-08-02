@@ -27,8 +27,6 @@ set colorcolumn=80
 set listchars=eol:↲,tab:↦\ ,extends:…,space:⋅
 highlight ColorColumn ctermbg=16 guibg=lightgrey
 " -- abb --
-noreabbrev ccc "$()"<left><left>
-noreabbrev aaa "$"<left>
 " -- delete --
 set backspace=indent,eol,start
 " -- window --
