@@ -227,35 +227,14 @@ endfunction
 " -- replace --
 " simple replace
 nnoremap <leader>\ :%s//g<left><left>
-" visual mode pressing * or # searches for the current selection
-vnoremap <silent> * :<c-u>call EscapedSearch()<cr>/<c-r>=@/<cr><cr>N
-vnoremap <silent> # :<c-u>call EscapedSearch()<cr>?<c-r>=@/<cr><cr>N
-" <leader>r replace one by one
-nnoremap <silent> <leader>r viw:call EscapedSearch()<cr>cgn
-vnoremap <silent> <leader>r :call EscapedSearch()<cr>cgn
+" * search selection (uses z register)
+vnoremap * "zy:set hlsearch<cr>:let @z=escape(@z,'\\/')<cr>:let @/='\V'.@z<cr>
+" <leader>r replace, repeat with .
+nmap <leader>r viw*cgn
+vmap <leader>r *cgn
 " <leader>R replace all
-nnoremap <silent> <leader>R
-    \ viw:call EscapedSearch()<cr>:call CmdLine("%s".'/'.@/.'/'.@/)<cr>
-vnoremap <silent> <leader>R
-    \ :call EscapedSearch()<cr>:call CmdLine("%s".'/'.@/.'/'.@/)<cr>
-" function EscapedSearch
-function! EscapedSearch() range
-    " Backup what's in default register
-    let l:saved_reg = @"
-    " Copy selection
-    execute 'normal! vgvy'
-    " Escape special chars
-    let l:pattern = escape(@", "\\/.*'$^~[]")
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-    " Set search
-    let @/ = l:pattern
-    " Restore default register
-    let @" = l:saved_reg
-endfunction
-" function CmdLine
-function! CmdLine(str)
-    call feedkeys(":" . a:str)
-endfunction
+nmap <leader>R viw*:%s/\V<C-r>z/<C-r>z
+vmap <leader>R *:%s/\V<C-r>z/<C-r>z
 
 let fzf_opt_general='--smart-case  --column --line-number --no-heading'
 let fzf_opt_color='--colors "match:none" --color=always'
