@@ -15,6 +15,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 . "$XDG_CONFIG_HOME/user-dirs.dirs"
 export DOT_PATH="$XDG_CONFIG_HOME/dot"
+export CMD_PATH="$DOT_PATH/cmd"
 # colored GCC warnings and errors
 # export GCC_COLORS="error=01;31"
 # export GCC_COLORS="$GCC_COLORS:warning=01;35"
@@ -23,36 +24,14 @@ export DOT_PATH="$XDG_CONFIG_HOME/dot"
 # export GCC_COLORS="$GCC_COLORS:locus=01"
 # export GCC_COLORS="$GCC_COLORS:quote=01S"
 PWDD='"$PWD"'
-AG_OPTS="$AG_OPTS --no-color"
-AG_OPTS="$AG_OPTS --hidden"
-AG_OPTS="$AG_OPTS --path-to-ignore $DOT_PATH/ag-ignore.list"
-AG_OPTS="$AG_OPTS --unrestricted"
-AG_OPTS="$AG_OPTS -g \"\""
-BAT_OPTS="$BAT_OPTS --color=always"
-LS_OPTS="$LS_OPTS --color=always"
-LS_OPTS="$LS_OPTS --almost-all"
-LS_OPTS="$LS_OPTS --group-directories"
-LS_OPTS="$LS_OPTS --sort=extension"
-LS_OPTS="$LS_OPTS --human-readable"
-DOCKER_OPTS="$DOCKER_OPTS --interactive"
-DOCKER_OPTS="$DOCKER_OPTS --tty"
-DOCKER_OPTS="$DOCKER_OPTS --rm"
-DOCKER_OPTS="$DOCKER_OPTS --user=$(id -u):$(id -g)"
-DOCKER_NODE_OPTS="$DOCKER_OPTS"
-DOCKER_NODE_OPTS="$DOCKER_NODE_OPTS --volume $PWDD:/usr/src/app"
-DOCKER_NODE_OPTS="$DOCKER_NODE_OPTS --workdir /usr/src/app"
-DOCKER_NODE_OPTS="$DOCKER_NODE_OPTS node"
-DOCKER_DOWNLOAD_OPTS="$DOCKER_OPTS --volume $PWDD:/download"
-DOCKER_SPOTIFYDL_OPTS="$DOCKER_DOWNLOAD_OPTS"
-DOCKER_YOUTUBEDL_OPTS="$DOCKER_DOWNLOAD_OPTS"
-HISTSIZE=100
-HISTFILESIZE=100
-HISTFILE=~/.config/dot/bash/history-private
-HISTIGNORE='history:ls:pwd:l:'
-HISTTIMEFORMAT='%F, %T '
-HISTCONTROL=ignoreboth:erasedups
-PROMPT_COMMAND='history -a'
-# INPUTRC=~/.config/dot/bash/inputrc
+. "$CMD_PATH/ag"
+. "$CMD_PATH/ls"
+. "$CMD_PATH/bat"
+. "$CMD_PATH/docker"
+. "$CMD_PATH/docker_node"
+. "$CMD_PATH/docker_media"
+. "$CMD_PATH/history"
+# INPUTRC="$DOT_PATH/bash/inputrc"
 export EDITOR=vim
 export LESSHISTFILE=-
 export PATH="$PATH:$HOME/.local/bin"
@@ -81,7 +60,7 @@ alias date-now='date "+%T-%x" | tr ":/" "--"'
 alias dc='docker-compose'
 alias docker-search='_docker_search'
 alias goo='googler -n 3'
-alias ll="ls -l $LS_OPTS"
+alias ll="ls -l "$LS_OPTS
 alias node="docker run $DOCKER_NODE_OPTS node"
 alias npm="docker run $DOCKER_NODE_OPTS npm"
 alias path-get="find -type f | fzf | sed 's/^..//' | tr -d '\n' | clipc"
@@ -99,12 +78,12 @@ _open() {
 open() {
     local file="$1"
     if [[ -n "$file" ]];then
-        open_xdg "$file"
+        _open "$file"
     else
         file="$(find -type f | fzf --height=50%)"
         # file="$(fzf --height=50%)"
         if [[ "$file" != "" ]];then
-            open_xdg "$file"
+            _open "$file"
         fi
     fi
 }
