@@ -1,0 +1,5 @@
+LS_OPTS="$LS_OPTS --color=always"
+LS_OPTS="$LS_OPTS --almost-all"
+LS_OPTS="$LS_OPTS --group-directories"
+LS_OPTS="$LS_OPTS --sort=extension"
+LS_OPTS="$LS_OPTS --human-readable"

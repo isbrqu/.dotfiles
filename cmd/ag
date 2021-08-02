@@ -1,0 +1,5 @@
+AG_OPTS="$AG_OPTS --no-color"
+AG_OPTS="$AG_OPTS --hidden"
+AG_OPTS="$AG_OPTS --path-to-ignore $DOT_PATH/ag-ignore.list"
+AG_OPTS="$AG_OPTS --unrestricted"
+AG_OPTS="$AG_OPTS -g \"\""
