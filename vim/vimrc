@@ -25,23 +25,25 @@ set relativenumber
 set colorcolumn=80
 " chars
 set listchars=eol:↲,tab:↦\ ,extends:…,space:⋅
-highlight ColorColumn ctermbg=16 guibg=lightgrey
-" -- abb --
+" Characters to fill the statuslines and vertical separators.
+set fillchars=fold:\ ,vert:\│
 " -- delete --
 set backspace=indent,eol,start
 " -- window --
 " When on, splitting a window will put the new window right of the current one.
 set splitright
-" Characters to fill the statuslines and vertical separators.
-set fillchars=fold:\ ,vert:\│
-highlight VertSplit ctermfg=237 ctermbg=237
-highlight Folded ctermbg=black
-
 " -- terminal output codes --
 " visual bell
 set t_vb=
 " number of color
 set t_Co=8
+
+" -- color --
+highlight StatusLine ctermfg=238 ctermbg=white
+highlight StatusLineNC ctermfg=237 ctermbg=white
+highlight VertSplit ctermfg=237 ctermbg=237
+highlight Folded ctermbg=black
+highlight ColorColumn ctermbg=16 guibg=lightgrey
 
 " Highlight the text line of the cursor with CursorLine
 autocmd InsertEnter,InsertLeave * set cursorline!
@@ -114,9 +116,6 @@ set statusline+=%y
 " work around that.
 set statusline+=[%{&fileformats}]
 set statusline+=[%{&fileencoding}]
-" colors
-highlight StatusLine ctermfg=238 ctermbg=white
-highlight StatusLineNC ctermfg=237 ctermbg=white
 
 " -- runtimepath --
 set runtimepath+=~/.config/dot/fzf
@@ -187,6 +186,18 @@ inoremap <expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
 
+" -- replace --
+" simple replace
+nnoremap <leader>\ :%s//g<left><left>
+" * search selection (uses z register)
+vnoremap * "zy:set hlsearch<cr>:let @z=escape(@z,'\\/')<cr>:let @/='\V'.@z<cr>
+" <leader>r replace, repeat with .
+nmap <leader>r viw*cgn
+vmap <leader>r *cgn
+" <leader>R replace all
+nmap <leader>R viw*:%s/\V<C-r>z/<C-r>z
+vmap <leader>R *:%s/\V<C-r>z/<C-r>z
+
 " -- terminal --
 " general
 tnoremap <f2> <c-w>
@@ -222,18 +233,6 @@ function! Manualbro(pagebro)
     setlocal nomodifiable
 endfunction
 
-" -- replace --
-" simple replace
-nnoremap <leader>\ :%s//g<left><left>
-" * search selection (uses z register)
-vnoremap * "zy:set hlsearch<cr>:let @z=escape(@z,'\\/')<cr>:let @/='\V'.@z<cr>
-" <leader>r replace, repeat with .
-nmap <leader>r viw*cgn
-vmap <leader>r *cgn
-" <leader>R replace all
-nmap <leader>R viw*:%s/\V<C-r>z/<C-r>z
-vmap <leader>R *:%s/\V<C-r>z/<C-r>z
-
 let fzf_opt_general='--smart-case  --column --line-number --no-heading'
 let fzf_opt_color='--colors "match:none" --color=always'
 let fzf_rg='rg '.fzf_opt_general.' '.fzf_opt_color
@@ -247,11 +246,6 @@ command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   fzf_rg.' -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
-
-augroup i3config_ft_detection
-  autocmd!
-  autocmd BufNewFile,BufRead ~/.config/dot/i3wm/config setlocal filetype=i3config
-augroup END
 
 function! CopyMatches(reg)
   let hits = []
