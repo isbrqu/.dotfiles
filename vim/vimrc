@@ -171,6 +171,8 @@ nnoremap <silent> <leader>/ :nohlsearch<cr>
 nnoremap <silent> <leader>e :edit<cr>
 " yank
 nnoremap <leader>y ggyG
+" manual
+nnoremap <leader>m :Manualbro<space>
 
 " -- netrw --
 nnoremap <silent> <leader>- :Vexplore<cr>
@@ -221,7 +223,6 @@ else
 endif
 
 " -- man --
-nnoremap <leader>m :Manualbro<space>
 function! Manualbro(pagebro)
     let file = "~/.local/tmp/man/".a:pagebro.".man"
     execute "new ".l:file
@@ -255,3 +256,19 @@ function! CopyMatches(reg)
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
 
+set runtimepath^=$DOT_PATH/vim
+set runtimepath+=$XDG_DATA_HOME/vim
+set runtimepath+=$DOT_PATH/vim/after
+
+set packpath^=$XDG_DATA_HOME/vim,$DOT_PATH/vim
+set packpath+=$DOT_PATH/vim/after,$XDG_DATA_HOME/vim/after
+
+let g:netrw_home = $XDG_DATA_HOME."/vim"
+call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
+set viewdir=$XDG_DATA_HOME/vim/view | call mkdir(&viewdir, 'p')
+
+set backupdir=$XDG_CACHE_HOME/vim/backup | call mkdir(&backupdir, 'p')
+set directory=$XDG_CACHE_HOME/vim/swap   | call mkdir(&directory, 'p')
+set undodir=$XDG_CACHE_HOME/vim/undo     | call mkdir(&undodir,   'p')
+
+if !has('nvim') | set viminfofile=$XDG_CACHE_HOME/vim/viminfo | endif
