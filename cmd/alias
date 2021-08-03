@@ -1,0 +1,20 @@
+# -- alias --
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+alias ..='prev_cd'
+alias clipc='xclip -selection clipboard -in'
+alias clipp='xclip -selection clipboard -out'
+alias d='docker'
+alias date-now='date "+%T-%x" | tr ":/" "--"'
+alias dc='docker-compose'
+alias docker-search='_docker_search'
+alias goo='googler -n 3'
+alias ll="ls -l "$LS_OPTS
+alias node="docker run $DOCKER_NODE_OPTS node"
+alias npm="docker run $DOCKER_NODE_OPTS npm"
+alias path-get="find -type f | fzf | sed 's/^..//' | tr -d '\n' | clipc"
+alias spotify-dl="docker run $DOCKER_SPOTIFYDL_OPTS spotify-dl"
+alias wget-clip='wget --tries=inf --continue "$(clipp)"'
+alias youtube-dl="docker run $DOCKER_YOUTUBEDL_OPTS youtube-dl --no-cache-dir"
+alias syncthing="docker run --rm --network=host --volume $HOME/s:/var/syncthing syncthing/syncthing:latest"

@@ -1,0 +1,3 @@
+export TMUX_FILETREE_COMMAND='ls -1 "$(readlink -e %s)"'
+export TMUX_PATH="$DOT_PATH/tmux"
+export TMUX_SCRIPT="$TMUX_PATH/script"
