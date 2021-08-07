@@ -1,5 +1,7 @@
 [Default Applications]
 text/html=google-chrome.desktop
+text/csv=visidata.desktop
+text/tab-separated-values=visidata.desktop
 x-scheme-handler/http=google-chrome.desktop
 x-scheme-handler/https=google-chrome.desktop
 x-scheme-handler/about=google-chrome.desktop
@@ -10,6 +12,10 @@ image/jpeg=sxiv.desktop
 image/png=sxiv.desktop
 image/gif=sxiv.desktop
 application/pdf=zathura.desktop
+application/vnd.ms-excel=visidata.desktop
+application/json=visidata.desktop
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=visidata.desktop
+application/zip=visidata.desktop
 
 [Added Associations]
 x-scheme-handler/tg=userapp-Telegram Desktop-DIUKX0.desktop;userapp-Telegram Desktop-ZB7PY0.desktop;userapp-Telegram Desktop-3HFNZ0.desktop;
