@@ -150,8 +150,6 @@ nnoremap <silent> <left> :bn<cr>
 nnoremap <silent> <right> :bN<cr>
 nnoremap <silent> <leader>l :bn<cr>
 nnoremap <silent> <leader>h :bN<cr>
-" disable
-nnoremap <f1> <nop>
 " search
 nnoremap <silent> <leader><leader> :FZF<cr>
 nnoremap <silent> <leader>ff :Files<cr>
@@ -164,8 +162,8 @@ nnoremap <silent> <leader>fs :Rl ^#+ -+ .+ -+$<cr>
 nnoremap <silent> <leader>fS :Rg ^(#+\|"\|//) -+ .+ -+$<cr>
 nnoremap <silent> <leader>fl :BLines<esc>
 " settings
-nnoremap <silent> <f1> :edit ~/.vim/vimrc<cr>
-nnoremap <silent> <f5> :source ~/.vim/vimrc<cr>
+nnoremap <silent> <f1> :edit $DOT_PATH/vim/vimrc<cr>
+nnoremap <silent> <f5> :source $DOT_PATH/vimrc<cr>
 nnoremap <silent> <leader>/ :nohlsearch<cr>
 " reload
 nnoremap <silent> <leader>e :edit<cr>
