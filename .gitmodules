@@ -1,30 +1,9 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
-[submodule "vim/pack/tpope/start/fugitive"]
-	path = vim/pack/tpope/start/fugitive
-	url = https://tpope.io/vim/fugitive.git
-[submodule "vim/pack/907th/start/vim-auto-save"]
-	path = vim/pack/907th/start/vim-auto-save
-	url = https://github.com/907th/vim-auto-save
-[submodule "vim/pack/tpope/start/commentary"]
-	path = vim/pack/tpope/start/commentary
-	url = https://tpope.io/vim/commentary.git
-[submodule "vim/pack/junegunn/start/fzf.vim"]
-	path = vim/pack/junegunn/start/fzf.vim
-	url = https://github.com/junegunn/fzf.vim.git
-[submodule "vim/pack/completor/start/completor.vim"]
-	path = vim/pack/completor/start/completor.vim
-	url = https://github.com/maralla/completor.vim.git
-[submodule "vim/pack/mg979/start/vim-visual-multi"]
-	path = vim/pack/mg979/start/vim-visual-multi
-	url = https://github.com/mg979/vim-visual-multi.git
-[submodule "vim/pack/mboughaba/start/i3config.vim"]
-	path = vim/pack/mboughaba/start/i3config.vim
-	url = https://github.com/mboughaba/i3config.vim.git
-[submodule "vim/pack/tpope/start/vim-eunuch"]
-	path = vim/pack/tpope/start/vim-eunuch
-	url = https://github.com/tpope/vim-eunuch.git
 [submodule "script"]
 	path = script
 	url = git@github.com:isbrqu/script.git
+[submodule "vim"]
+	path = vim
+	url = git@github.com:isbrqu/vim.git
