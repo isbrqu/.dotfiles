@@ -59,28 +59,7 @@ set autoindent
 
 " -- undo --
 set undofile
-set undodir=~/.vim/undodir
 
-" -- viminfo --
-" maximum number of previously edited files for which the marks are remembered
-set viminfo='10
-" maximum number of lines saved for each register.
-set viminfo+=<50
-" convert the text in the viminfo file from the 'encoding'
-set viminfo+=c
-" maximum size of an item in Kbyte.
-set viminfo+=s10
-" disable the effect of 'hlsearch' when loading the viminfo file
-set viminfo+=h
-" name of file
-set viminfo+=n~/.vim/info-private
-" maximum number of items in the search pattern history to be saved
-" set viminfo+=/10
-" maximum number of items in the command-line history to be saved
-" set viminfo+=:10
-" maximum number of items in the input-line history to be saved
-" set viminfo+=@10
-" the command-lines that you enter are remembered in a history table
 set history=6
 
 " -- search --
@@ -89,39 +68,6 @@ set incsearch
 
 " -- clipboard --
 set clipboard=unnamedplus
-
-" -- status bar --
-set laststatus=2
-" Separate
-set statusline=\  
-" Where to truncate line if too long. Default is at the start.
-" No width fields allowed.
-set statusline+=%<
-" Path to the file in the buffer, as typed or relative to current directory.
-set statusline+=%f
-" Modified flag, text is "[+]"; "[-]" if 'modifiable' is off.
-set statusline+=%m
-" Readonly flag, text is "[RO]".
-set statusline+=%r
-" Preview window flag, text is "[Preview]".
-set statusline+=%w
-" Separation point between left and right aligned items.
-" No width fields allowed.
-set statusline+=%=
-" %l Number of lines in buffer. %c Column number (byte index).
-set statusline+=[%l\,%c]
-" Type of file in the buffer, e.g., "[vim]".  See 'filetype'.
-set statusline+=%y
-" Evaluate expression between '%{' and '}' and substitute result.
-" Note that there is no '%' before the closing '}'.
-" The expression cannot contain a '}' character, call a function to
-" work around that.
-set statusline+=[%{&fileformats}]
-set statusline+=[%{&fileencoding}]
-
-" -- runtimepath --
-set runtimepath+=~/.config/dot/fzf
-set runtimepath+=~/.local/bin
 
 " -- others --
 let mapleader=' '
@@ -208,53 +154,6 @@ tnoremap <f1> <c-w>N
 " switch command-line
 tnoremap <f4> <c-w>:
 
-" -- autosave --
-" enable AutoSave on Vim startup
-let g:auto_save = 1
-" do not display the auto-save notification
-let g:auto_save_silent = 1
-
-" -- fzf --
-" See `man fzf-tmux` for available options
-if exists('$TMUX')
-  let g:fzf_layout = { 'tmux': '-p90%,60%' }
-else
-  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-endif
-
-" -- man --
-function! Manualbro(pagebro)
-    let file = "~/.local/tmp/man/".a:pagebro.".man"
-    execute "new ".l:file
-    lchdir ~/.local/tmp/man
-    if !filereadable(expand(l:file))
-        execute "write ".l:file
-        execute "normal!:read!man ".a:pagebro."\<cr>ggdd"
-    endif
-    setlocal nomodifiable
-endfunction
-
-let fzf_opt_general='--smart-case  --column --line-number --no-heading'
-let fzf_opt_color='--colors "match:none" --color=always'
-let fzf_rg='rg '.fzf_opt_general.' '.fzf_opt_color
-command! -bang -nargs=* Manualbro call Manualbro(<q-args>)
-command! -bang -nargs=* Rl
-  \ call fzf#vim#grep(
-  \   fzf_rg.' -g "'.expand('%').'" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
-
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   fzf_rg.' -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
-
-function! CopyMatches(reg)
-  let hits = []
-  %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/gne
-  let reg = empty(a:reg) ? '+' : a:reg
-  execute 'let @'.reg.' = join(hits, "\n") . "\n"'
-endfunction
-command! -register CopyMatches call CopyMatches(<q-reg>)
 
 set runtimepath^=$DOT_PATH/vim
 set runtimepath+=$XDG_DATA_HOME/vim
