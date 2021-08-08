@@ -13,6 +13,8 @@ set fileencoding=utf-8
 set encoding=utf-8
 set ignorecase
 
+filetype plugin indent on
+
 " -- view --
 syntax on
 set ruler
