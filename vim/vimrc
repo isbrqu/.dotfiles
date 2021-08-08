@@ -111,14 +111,13 @@ nnoremap <silent> <leader>fS :Rg ^(#+\|"\|//) -+ .+ -+$<cr>
 nnoremap <silent> <leader>fl :BLines<esc>
 " settings
 nnoremap <silent> <f1> :edit $DOT_PATH/vim/vimrc<cr>
-nnoremap <silent> <f5> :source $DOT_PATH/vimrc<cr>
 nnoremap <silent> <leader>/ :nohlsearch<cr>
 " reload
 nnoremap <silent> <leader>e :edit<cr>
 " yank
 nnoremap <leader>y ggyG
 " manual
-nnoremap <leader>m :Manualbro<space>
+nnoremap <leader>m :MyManual<space>
 
 " -- netrw --
 nnoremap <silent> <leader>- :Vexplore<cr>
@@ -154,20 +153,30 @@ tnoremap <f1> <c-w>N
 " switch command-line
 tnoremap <f4> <c-w>:
 
-
-set runtimepath^=$DOT_PATH/vim
+" -- runtimepath --
+set runtimepath+=$DOT_PATH/vim
 set runtimepath+=$XDG_DATA_HOME/vim
 set runtimepath+=$DOT_PATH/vim/after
+set runtimepath+=$DOT_PATH/fzf
+set runtimepath+=$HOME/.local/bin
 
-set packpath^=$XDG_DATA_HOME/vim,$DOT_PATH/vim
-set packpath+=$DOT_PATH/vim/after,$XDG_DATA_HOME/vim/after
+set packpath+=$XDG_DATA_HOME/vim
+set packpath+=$DOT_PATH/vim
+set packpath+=$DOT_PATH/vim/after
+set packpath+=$XDG_DATA_HOME/vim/after
 
-let g:netrw_home = $XDG_DATA_HOME."/vim"
+set backupdir=$XDG_CACHE_HOME/vim/backup 
+set directory=$XDG_CACHE_HOME/vim/swap   
+set undodir=$XDG_CACHE_HOME/vim/undo     
+set viewdir=$XDG_DATA_HOME/vim/view
+
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
-set viewdir=$XDG_DATA_HOME/vim/view | call mkdir(&viewdir, 'p')
+call mkdir(&backupdir, 'p')
+call mkdir(&directory, 'p')
+call mkdir(&undodir, 'p')
+call mkdir(&viewdir, 'p')
 
-set backupdir=$XDG_CACHE_HOME/vim/backup | call mkdir(&backupdir, 'p')
-set directory=$XDG_CACHE_HOME/vim/swap   | call mkdir(&directory, 'p')
-set undodir=$XDG_CACHE_HOME/vim/undo     | call mkdir(&undodir,   'p')
+if !has('nvim')
+    set viminfofile=$XDG_CACHE_HOME/vim/viminfo
+endif
 
-if !has('nvim') | set viminfofile=$XDG_CACHE_HOME/vim/viminfo | endif
