@@ -178,13 +178,13 @@ load_bash_key_bindings() {
 }
 
 load_startx() {
-    if [[ "$(tty)" = /dev/tty1 ]];then
+    if [[ "$(tty)" = /dev/tty1 && -z "$TMUX" ]];then
         startx
     fi
 }
 
 load_config_hardware() {
-    if [[ "$(tty)" == */pts/* ]];then
+    if [[ "$(tty)" == */pts/* && -z "$TMUX" ]];then
         mybrightness update
         disable_inputs
     fi
@@ -198,3 +198,4 @@ load_tmux() {
         fi
     fi
 }
+

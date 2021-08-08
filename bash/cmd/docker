@@ -2,3 +2,4 @@ DOCKER_OPTS="$DOCKER_OPTS --interactive"
 DOCKER_OPTS="$DOCKER_OPTS --tty"
 DOCKER_OPTS="$DOCKER_OPTS --rm"
 DOCKER_OPTS="$DOCKER_OPTS --user=$(id -u):$(id -g)"
+DOCKER_PWD='"$PWD"'

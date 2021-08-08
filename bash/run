@@ -15,7 +15,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 . "$XDG_CONFIG_HOME/user-dirs.dirs"
 export DOT_PATH="$XDG_CONFIG_HOME/dot"
-export CMD_PATH="$DOT_PATH/cmd"
+export CMD_PATH="$DOT_PATH/bash/cmd"
 # colored GCC warnings and errors
 # export GCC_COLORS="error=01;31"
 # export GCC_COLORS="$GCC_COLORS:warning=01;35"
@@ -23,7 +23,6 @@ export CMD_PATH="$DOT_PATH/cmd"
 # export GCC_COLORS="$GCC_COLORS:caret=01;32"
 # export GCC_COLORS="$GCC_COLORS:locus=01"
 # export GCC_COLORS="$GCC_COLORS:quote=01S"
-PWDD='"$PWD"'
 . "$CMD_PATH/ag"
 . "$CMD_PATH/ls"
 . "$CMD_PATH/bat"
@@ -33,18 +32,18 @@ PWDD='"$PWD"'
 . "$CMD_PATH/history"
 . "$CMD_PATH/vim"
 # INPUTRC="$DOT_PATH/bash/inputrc"
-export EDITOR=vim
-export LESSHISTFILE=-
 export PATH="$PATH:$HOME/.local/bin"
 export BASH_PATH="$DOT_PATH/bash"
+export TMUX_PATH="$DOT_PATH/tmux"
 . "$CMD_PATH/fzf"
 . "$CMD_PATH/python"
-. "$CMD_PATH/tmux"
+. "$CMD_PATH/alias"
+. "$CMD_PATH/functions"
 export WGETRC="$DOT_PATH/wgetrc"
 export XAUTHORITY="$XDG_RUNTIME_DIR/xauthority"
 export SSB_HOME="$XDG_DATA_HOME/zoom"
-. "$CMD_PATH/alias"
-. "$CMD_PATH/functions"
+export EDITOR=vim
+export LESSHISTFILE=-
 
 # -- startup --
 
