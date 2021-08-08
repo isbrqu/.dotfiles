@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-cd ~/.local/tmp/man
-vim -c "Manualbro $1" -c "only"
