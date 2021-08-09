@@ -193,7 +193,7 @@ load_config_hardware() {
 load_tmux() {
     if [[ "$(tty)" == */pts/* ]];then
         if [[ -z "$TMUX" ]];then
-            . "$XDG_CONFIG_HOME/dot/bash/tmux-session"
+            . "$BASH_PATH/tmux-session"
             tmux_start
         fi
     fi

@@ -142,13 +142,13 @@ mode $mode_resize {
 bar {
     output $monitor1
     position top
-    status_command i3status --config ~/.config/dot/i3status/config1
+    status_command i3status --config $DOT_PATH/i3status/config1
 }
 
 bar {
     output $monitor2
     position top
-    status_command i3status --config ~/.config/dot/i3status/config2
+    status_command i3status --config $DOT_PATH/i3status/config2
 }
 
 # --- workspace --
