@@ -17,12 +17,6 @@ open() {
     fi
 }
 
-envup() {
-    while IFS='=' read -r name value || [[ -n "$line" ]];do
-        export "$name"="$value"
-    done < ".env"
-}
-
 _docker_search() {
     local -r URL_BASE='https://hub.docker.com/search'
     local type="${2-image}"
@@ -30,29 +24,10 @@ _docker_search() {
     open "$url"
 }
 
-yt() {
-    local option="$1"
-    local format="$2"
-    local url
-    local OPTS
-    url="${3:-$(clipp)}"
-    case "$option" in
-        audio)
-            OPTS="--extract-audio --audio-format $format"
-        ;;
-        video)
-            OPTS="--format $format"
-        ;;
-        img)
-            OPTS="--write-thumbnail --skip-download"
-        ;;
-        *)
-            echo "option not found. Use audio, video or img"
-            echo "usage: yt <audio|video|img> <format>"
-            return 1
-        ;;
-    esac
-    youtube-dl $OPTS "$url"
+envup() {
+    while IFS='=' read -r name value || [[ -n "$line" ]];do
+        export "$name"="$value"
+    done < ".env"
 }
 
 l() {
@@ -79,24 +54,6 @@ prev_cd() {
     fi
 }
 
-tmux_start() {
-    if [[ -n "$TMUX" ]];then
-        echo "error (1): the session is already started"
-        return 1
-    fi
-    tmux attach-session -t "home"
-}
-
-c() {
-    local code='BEGIN { printf "%.2f", $request; exit }'
-    local request="$1"
-    request="${request//./}"
-    request="${request//,/.}"
-    result="$(awk "$code")"
-    echo "$request=$result"
-    echo "$result" | clipc
-}
-
 v() {
     if [[ -n "$1" ]];then
         vim "$1"
@@ -111,25 +68,12 @@ v() {
     fi
 }
 
-extract() {
-     if [[ -f $1 ]]; then
-         case $1 in
-             *.tar.bz2)   tar xvjf $1    ;;
-             *.tar.gz)    tar xvzf $1    ;;
-             *.bz2)       bunzip2 $1     ;;
-             *.rar)       unrar x $1     ;;
-             *.gz)        gunzip $1      ;;
-             *.tar)       tar xvf $1     ;;
-             *.tbz2)      tar xvjf $1    ;;
-             *.tgz)       tar xvzf $1    ;;
-             *.zip)       unzip $1       ;;
-             *.Z)         uncompress $1  ;;
-             *.7z)        7z x $1        ;;
-             *)           echo "'$1' cannot be extracted via >extract<" ;;
-         esac
-     else
-         echo "'$1' is not a valid file"
-     fi
+tmux_start() {
+    if [[ -n "$TMUX" ]];then
+        echo "error (1): the session is already started"
+        return 1
+    fi
+    tmux attach-session -t "home"
 }
 
 disable_inputs() {
@@ -185,7 +129,6 @@ load_startx() {
 
 load_config_hardware() {
     if [[ "$(tty)" == */pts/* && -z "$TMUX" ]];then
-        mybrightness update
         disable_inputs
     fi
 }
