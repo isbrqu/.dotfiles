@@ -1,9 +1,9 @@
 [submodule "tmux/plugins/tpm"]
-	path = tmux/plugins/tpm
+	path = src/tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
 [submodule "script"]
-	path = script
+	path = src/script
 	url = git@github.com:isbrqu/script.git
 [submodule "vim"]
-	path = vim
+	path = src/vim
 	url = git@github.com:isbrqu/vim.git
