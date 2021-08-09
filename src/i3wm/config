@@ -53,12 +53,11 @@ mode $mode_normal {
     bindsym equal       exec --no-startup-id pactl set-sink-mute   0 toggle
     
     # call script
-    bindsym grave       exec --no-startup-id mybrightness plus
-    bindsym Shift+grave exec --no-startup-id mybrightness minus
-    bindsym n           exec --no-startup-id mygamma
-    bindsym b           mode $mode_insert; exec --no-startup-id b
-    bindsym Shift+b     mode $mode_insert; exec --no-startup-id b out
-    bindsym Shift+e     mode $mode_insert; exec --no-startup-id i3wmshutdown
+    bindsym n           exec --no-startup-id my-screen nigth
+    bindsym Shift+n     exec --no-startup-id my-screen ligth
+    bindsym b           mode $mode_insert; exec --no-startup-id bookmarks
+    bindsym Shift+b     mode $mode_insert; exec --no-startup-id save-url
+    bindsym Shift+e     mode $mode_insert; exec --no-startup-id i3wm-shutdown
 
     # apps
     bindsym Print     mode $mode_insert; exec $app_screenshot
@@ -174,5 +173,4 @@ assign [title="(?i)^google chrome$"]      $ws2
 
 exec --no-startup-id st
 exec --no-startup-id google-chrome
-
 
