@@ -1,11 +1,13 @@
 # Este es el archivo de configuración de Git por usuario.
 [alias]
-	sts = status
 	cmt = commit
 	uns = reset HEAD --
 	unw = checkout --
 	lod = log --oneline --decorate
 	co = checkout
+	ups = add --update .
+	alias-list = config --get-regexp alias
+	ss = status
 [core]
 	excludesfile = ~/.config/dot/git/ignore-global
 
