@@ -68,14 +68,6 @@ v() {
     fi
 }
 
-tmux_start() {
-    if [[ -n "$TMUX" ]];then
-        echo "error (1): the session is already started"
-        return 1
-    fi
-    tmux attach-session -t "home"
-}
-
 disable_inputs() {
     declare name="ILITEK ILITEK Multi-Touch"
     declare state
@@ -133,10 +125,25 @@ load_config_hardware() {
     fi
 }
 
+tmux_start() {
+    if [[ -n "$TMUX" ]];then
+        echo "error (1): the session is already started"
+        return 1
+    fi
+    tmux attach-session -t "home"
+}
+
 load_tmux() {
     if [[ "$(tty)" == */pts/* ]];then
         if [[ -z "$TMUX" ]];then
-            . "$BASH_PATH/tmux-session"
+            for folder in "$HOME"/w/*/;do
+                name="${folder%%/}"
+                name="${name##*/}"
+                tmux has-session -t "$name-" &> /dev/null
+                if (( $? != 0 ));then
+                    tmux new-session -d -c "$folder" -t "$name"
+                fi
+            done
             tmux_start
         fi
     fi
