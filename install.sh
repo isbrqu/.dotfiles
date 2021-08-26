@@ -16,5 +16,4 @@ ln  --symbolic  $dest/tmux                 $conf/tmux
 ln  --symbolic  $dest/misc/user-dirs.dirs  $conf/user-dirs.dirs
 ln  --symbolic  $dest/i3wm                 $conf/i3
 ln  --symbolic  $dest/git                  $conf/git
-ln  --symbolic  $dest/misc/mimeapp.list     $conf/mimeapp.list
-
+ln  --symbolic  $dest/misc/mimeapp.list    $conf/mimeapp.list
