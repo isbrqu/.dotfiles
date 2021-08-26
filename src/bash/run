@@ -38,7 +38,7 @@ export PATH="$PATH:$HOME/.local/bin"
 . "$CMD_PATH/python"
 . "$CMD_PATH/alias"
 . "$CMD_PATH/functions"
-export WGETRC="$DOT_PATH/wgetrc"
+export WGETRC="$DOT_PATH/misc/wgetrc"
 export XAUTHORITY="$XDG_RUNTIME_DIR/xauthority"
 export SSB_HOME="$XDG_DATA_HOME/zoom"
 export EDITOR=vim
