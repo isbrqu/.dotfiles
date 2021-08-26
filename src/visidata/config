@@ -1,7 +1,7 @@
 # -- options --
 options.disp_currency_fmt = '%0.2f'
 options.disp_float_fmt = '{:.02f}'
-options.disp_date_fmt = '%d/%m/%Y'
+# options.disp_date_fmt = '%d/%m/%Y'
 options.color_default = ''
 options.color_current_row = 'yellow'
 options.clipboard_copy_cmd = 'xclip -sel clip -in'
