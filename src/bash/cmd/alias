@@ -21,3 +21,5 @@ alias syncthing="docker run --rm --network=host --volume $HOME/s:/var/syncthing 
 alias c="pushd"
 alias p="popd"
 alias g="git"
+alias sg="googler"
+alias sd="ddgr"
