@@ -55,8 +55,8 @@ mode $mode_normal {
     # call script
     bindsym n           exec --no-startup-id my-screen nigth
     bindsym Shift+n     exec --no-startup-id my-screen ligth
-    bindsym b           mode $mode_insert; exec --no-startup-id bookmarks
-    bindsym Shift+b     mode $mode_insert; exec --no-startup-id save-url
+    bindsym b           mode $mode_insert; exec --no-startup-id bookmarks open
+    bindsym Shift+b     mode $mode_insert; exec --no-startup-id bookmarks write
     bindsym Shift+e     mode $mode_insert; exec --no-startup-id i3wm-shutdown
 
     # apps
