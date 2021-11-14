@@ -180,3 +180,16 @@ extract() {
     fi
 fi
 }
+
+rename_with_sha1sum() {
+    local filename="$1"
+    local hash_and_filename
+    local hash
+    local new_filename
+    hash_and_filename="$(sha1sum "$filename")"
+    hash="${hash_and_filename%% *}"
+    new_filename="sha1sum-${hash}.pdf"
+    mv --no-clobber "${filename}" "${new_filename}"
+    echo "${new_filename}"
+}
+
