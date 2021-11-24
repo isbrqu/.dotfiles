@@ -1,0 +1,11 @@
+export URL_GOOGLE_SEARCH="google.com/search"
+export URL_WIKIPEDIA_SEARCH="es.wikipedia.org/w/index.php"
+export URL_WOOLEDGE_SEARCH="mywiki.wooledge.org"
+export URL_GITHUB_SEARCH="github.com/search"
+export URL_YOUTUBE_SEARCH="youtube.com/results"
+export URL_RAE_SEARCH="dle.rae.es"
+export URL_WORDREFERENCE_SEARCH="wordreference.com/sinonimos"
+
+export URL_PYPI_SEARCH="pypi.org/search"
+export URL_NPMJS_SEARCH="npmjs.com/search"
+export URL_DOCKER_SEARCH="hub.docker.com/search"

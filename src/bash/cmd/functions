@@ -18,9 +18,10 @@ open() {
 }
 
 _docker_search() {
-    local -r URL_BASE='https://hub.docker.com/search'
+    local query="$1"
     local type="${2-image}"
-    local url="$URL_BASE?q=$1&type=$type"
+    local -r URL="$URL_DOCKER_SEARCH"
+    local url="$URL?q=$query&type=$type"
     open "$url"
 }
 
