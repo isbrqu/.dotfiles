@@ -194,3 +194,14 @@ rename_with_sha1sum() {
     echo "${new_filename}"
 }
 
+
+# util
+tldr() {
+    curl "tldr.monster/${1}"
+}
+
+cht() {
+    local lang="$1"
+    local help="$2"
+    curl "cht.sh/${lang}/${help}"
+}
