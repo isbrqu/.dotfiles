@@ -2,15 +2,14 @@
 alias clipc='xclip -selection clipboard -in'
 alias clipp='xclip -selection clipboard -out'
 alias path-get="find -type f | fzf | sed 's/^..//' | tr -d '\n' | clipc"
-# container
+# docker container
 alias d="docker"
 alias dc="docker-compose"
-# process
+# docker process
 alias node="docker run $DOCKER_NODE_OPTS node"
 alias npm="docker run $DOCKER_NODE_OPTS npm"
 alias spotify-dl="docker run $DOCKER_SPOTIFYDL_OPTS spotify-dl"
 alias youtube-dl="docker run $DOCKER_YOUTUBEDL_OPTS youtube-dl:0.0.1 --no-cache-dir"
-alias syncthing="docker run --rm --network=host --volume $HOME/s:/var/syncthing syncthing/syncthing:latest"
 # date
 alias date-now='date "+%T-%x" | tr ":/" "--"'
 # search
@@ -26,3 +25,5 @@ alias ll="ls -l "$LS_OPTS
 alias ..="prev_cd"
 alias c="pushd"
 alias p="popd"
+# information
+alias show-path='echo "$PATH" | tr -t : \\n'
