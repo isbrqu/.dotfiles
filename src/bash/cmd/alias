@@ -2,6 +2,7 @@
 alias clipc='xclip -selection clipboard -in'
 alias clipp='xclip -selection clipboard -out'
 alias path-get="find -type f | fzf | sed 's/^..//' | tr -d '\n' | clipc"
+alias copy-pwd='echo $PWD | xclip -selection clipboard -in'
 # docker container
 alias d="docker"
 alias dc="docker-compose"
