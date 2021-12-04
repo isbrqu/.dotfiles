@@ -153,7 +153,7 @@ renhash() {
         echo "error (1): ${new_filename} exists"
         return 1
     fi
-    mv --no-clobber ${filename} ${new_filename}
+    mv --no-clobber "${filename}" "${new_filename}"
 }
 
 # helpers
