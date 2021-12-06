@@ -9,6 +9,7 @@ alias dc="docker-compose"
 # docker process
 alias node="docker run $DOCKER_NODE_OPTS node"
 alias npm="docker run $DOCKER_NODE_OPTS npm"
+alias npx="docker run $DOCKER_NODE_OPTS npx"
 alias spotify-dl="docker run $DOCKER_SPOTIFYDL_OPTS spotify-dl:0.0.1"
 alias youtube-dl="docker run $DOCKER_YOUTUBEDL_OPTS youtube-dl:0.0.1 --no-cache-dir"
 # date
