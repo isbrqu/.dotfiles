@@ -1,0 +1,4 @@
+key	width	height	directory	script
+g	90%	80%	#{session_path}	git
+a	20%	50%	#{session_path}	session
+m	30%	50%	#{session_path}	man

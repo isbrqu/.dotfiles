@@ -1,18 +1,39 @@
-
 load_tmux() {
     if [[ "$(tty)" == */pts/* ]];then
         if [[ -z "$TMUX" ]];then
-            for folder in "$HOME"/w/*/;do
-                name="${folder%%/}"
-                name="${name##*/}"
-                tmux has-session -t "$name-" &> /dev/null
-                if (( $? != 0 ));then
-                    tmux new-session -d -c "$folder" -t "$name"
-                fi
-            done
+            tmux_sessions
+            tmux_bind_key
             tmux_start
         fi
     fi
+}
+
+tmux_sessions() {
+    local name
+    for folder in "$HOME"/w/*/;do
+        name="${folder%%/}"
+        name="${name##*/}"
+        tmux has-session -t "$name-" &> /dev/null
+        if (( $? != 0 ));then
+            tmux new-session -d -c "$folder" -t "$name"
+        fi
+    done
+}
+
+tmux_bind_key() {
+    local filepath="${TMUX_PATH}/bind-popup.tsv"
+    {
+    read
+    while IFS=$'\t' read -r key width height directory script;do
+        local shell_command="${TMUX_SCRIPT}/${script}"
+        echo "$key $height $width $directory $shell_command"
+        tmux bind-key "${key}" display-popup -EK\
+            -w "${width}"\
+            -h "${height}"\
+            -d "${directory}"\
+            -R "${shell_command}"
+    done
+    } < "${filepath}"
 }
 
 load_bash_completion() {

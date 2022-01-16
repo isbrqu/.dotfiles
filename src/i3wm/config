@@ -24,7 +24,7 @@ set  $mode_resize          "resize"
 set  $app_launcher         "dmenu_run"
 set  $app_terminal         "st"
 set  $app_browser          "google-chrome"
-set  $app_messenger        "telegram"
+set  $app_messenger        "Telegram"
 set  $app_screenshot       "flameshot gui"
 
 # -- other --
@@ -61,9 +61,11 @@ mode $mode_normal {
     bindsym Shift+e mode $mode_insert; exec --no-startup-id i3wm-shutdown
 
     # apps
-    bindsym Print     mode $mode_insert; exec $app_screenshot
-    bindsym Return                       exec $app_terminal
-    bindsym colon                        exec $app_launcher
+    bindsym  Print   mode  $mode_insert;   exec  $app_screenshot
+    bindsym  Return  exec  $app_terminal
+    bindsym  F9   exec  $app_messenger
+    bindsym  F10  exec  $app_browser
+    bindsym  F12  exec  $app_launcher
 
     # change focus
     bindsym $key_left  focus left

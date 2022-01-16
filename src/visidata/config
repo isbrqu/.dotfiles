@@ -9,42 +9,42 @@ options.clipboard_paste_cmd = 'xclip -sel clip -out'
 options.confirm_overwrite = False
 options.color_active_status = 'white'
 
-vd.allPrefixes = [' ', 'a', 'd', 'g', 'y', 'z', '^[']
+# vd.allPrefixes = [' ', 'a', 'd', 'g', 'y', 'z', '^[']
 
-# -- basesheet clear --
-BaseSheet.bindkey(' ', '')
-BaseSheet.bindkey('q', '')
-BaseSheet.bindkey('Q', '')
-# -- exit --
-BaseSheet.bindkey(' q', 'quit-sheet')
-# -- tablesheet clear --
-TableSheet.bindkey('a', '')
-TableSheet.bindkey('d', '')
-TableSheet.bindkey('y', '')
-# -- change --
-TableSheet.bindkey('u', 'undo-last')
-TableSheet.bindkey('^R', 'redo-last')
-# -- modes --
-TableSheet.bindkey(':', 'exec-longname')
-TableSheet.bindkey('i', 'edit-cell')
-# -- add row --
-TableSheet.bindkey('aa', 'add-row')
-TableSheet.bindkey('ar', 'add-row')
-TableSheet.bindkey('aR', 'add-rows')
-# -- add col --
-TableSheet.bindkey('ac', 'addcol-new')
-TableSheet.bindkey('aC', 'addcol-bulk')
-TableSheet.bindkey('ai', 'addcol-incr')
-TableSheet.bindkey('aI', 'addcol-incr-step')
-TableSheet.bindkey('a!', 'addcol-sh')
-# -- delete row --
-TableSheet.bindkey('dd', 'delete-row')
-TableSheet.bindkey('dr', 'delete-row')
-TableSheet.bindkey('dc', 'delete-cell')
-TableSheet.bindkey('dc', 'delete-cell')
-TableSheet.bindkey('dh', 'hide-col')
-# -- yank row --
-TableSheet.bindkey('yy', 'copy-row')
-TableSheet.bindkey('yr', 'copy-row')
-TableSheet.bindkey('yc', 'copy-cell')
-TableSheet.bindkey('ys', 'copy-cells')
+# # -- basesheet clear --
+# BaseSheet.bindkey(' ', '')
+# BaseSheet.bindkey('q', '')
+# BaseSheet.bindkey('Q', '')
+# # -- exit --
+# BaseSheet.bindkey(' q', 'quit-sheet')
+# # -- tablesheet clear --
+# TableSheet.bindkey('a', '')
+# TableSheet.bindkey('d', '')
+# TableSheet.bindkey('y', '')
+# # -- change --
+# TableSheet.bindkey('u', 'undo-last')
+# TableSheet.bindkey('^R', 'redo-last')
+# # -- modes --
+# TableSheet.bindkey(':', 'exec-longname')
+# TableSheet.bindkey('i', 'edit-cell')
+# # -- add row --
+# TableSheet.bindkey('aa', 'add-row')
+# TableSheet.bindkey('ar', 'add-row')
+# TableSheet.bindkey('aR', 'add-rows')
+# # -- add col --
+# TableSheet.bindkey('ac', 'addcol-new')
+# TableSheet.bindkey('aC', 'addcol-bulk')
+# TableSheet.bindkey('ai', 'addcol-incr')
+# TableSheet.bindkey('aI', 'addcol-incr-step')
+# TableSheet.bindkey('a!', 'addcol-sh')
+# # -- delete row --
+# TableSheet.bindkey('dd', 'delete-row')
+# TableSheet.bindkey('dr', 'delete-row')
+# TableSheet.bindkey('dc', 'delete-cell')
+# TableSheet.bindkey('dc', 'delete-cell')
+# TableSheet.bindkey('dh', 'hide-col')
+# # -- yank row --
+# TableSheet.bindkey('yy', 'copy-row')
+# TableSheet.bindkey('yr', 'copy-row')
+# TableSheet.bindkey('yc', 'copy-cell')
+# TableSheet.bindkey('ys', 'copy-cells')

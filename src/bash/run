@@ -72,9 +72,10 @@ RED="$(tput setaf 1)"
 GREEN="$(tput setaf 2)"
 CYAN="$(tput setaf 4)"
 RESET="$(tput sgr0)"
+
 if [[ "$color_prompt" = yes ]];then
     PS1='${debian_chroot:+($debian_chroot)}'
-    PS1="$PS1"'\[$GREEN\]\u@\h\[$RESET\]:\[$CYAN\]\w\[$RESET\]\n\$ '
+    PS1="${PS1}"'\[$GREEN\]\u@\h\[$RESET\]:\[$CYAN\]\w\[$RESET\]\n\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
 fi
