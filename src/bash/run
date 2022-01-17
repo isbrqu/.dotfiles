@@ -7,98 +7,27 @@ case $- in
 esac
 
 # -- env --
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-. "$XDG_CONFIG_HOME/user-dirs.dirs"
-export DOT_PATH="$XDG_CONFIG_HOME/d"
-export BASH_PATH="$DOT_PATH/bash"
-export TMUX_PATH="$DOT_PATH/tmux"
-export TMUX_SCRIPT="$HOME/.script/tmux"
-export CMD_PATH="$BASH_PATH/cmd"
-# INPUTRC="$DOT_PATH/bash/inputrc"
-export PATH="$PATH:$HOME/.local/bin"
-. "$CMD_PATH/ag"
-. "$CMD_PATH/ls"
-. "$CMD_PATH/bat"
-. "$CMD_PATH/docker"
-. "$CMD_PATH/history"
-. "$CMD_PATH/vim"
-. "$CMD_PATH/fzf"
-. "$CMD_PATH/python"
-. "$CMD_PATH/alias"
-. "$CMD_PATH/functions"
-. "$CMD_PATH/url"
-. "$BASH_PATH/load_functions.sh"
-export WGETRC="$DOT_PATH/misc/wgetrc"
-export XAUTHORITY="$XDG_RUNTIME_DIR/xauthority"
-export SSB_HOME="$XDG_DATA_HOME/zoom"
-export EDITOR=vim
-export LESSHISTFILE=-
-
-# -- startup --
-
-# make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [[ -z "${debian_chroot:-}" && -r /etc/debian_chroot ]];then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-# force_color_prompt=yes
-
-if [[ -n "$force_color_prompt" ]];then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    if [[ -x /usr/bin/tput ]];then
-        tput setaf 1 >& /dev/null
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
-fi
-
-RED="$(tput setaf 1)"
-GREEN="$(tput setaf 2)"
-CYAN="$(tput setaf 4)"
-RESET="$(tput sgr0)"
-
-if [[ "$color_prompt" = yes ]];then
-    PS1='${debian_chroot:+($debian_chroot)}'
-    PS1="${PS1}"'\[$GREEN\]\u@\h\[$RESET\]:\[$CYAN\]\w\[$RESET\]\n\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
-fi
-
-# unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-if [[ "$TERM" == xterm* || "$TERM" == rxvt* ]];then
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-fi
-
-load_bash_color
-load_bash_completion
-load_bash_key_bindings
-load_startx
-load_config_hardware
-load_tmux
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-setxkbmap -layout us -variant altgr-intl
+export PATH="${PATH}:${HOME}/.local/bin"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_DESKTOP_DIR="${HOME}/w"
+export XDG_DOCUMENTS_DIR="${HOME}/w"
+export XDG_DOWNLOAD_DIR="${HOME}/d"
+export XDG_MUSIC_DIR="${HOME}/m"
+export XDG_PICTURES_DIR="${HOME}/i"
+export XDG_PUBLICSHARE_DIR="${HOME}/p"
+export XDG_TEMPLATES_DIR="${HOME}/t"
+export XDG_VIDEOS_DIR="${HOME}/v"
+export DOT_PATH="${XDG_CONFIG_HOME}/d"
+export BASH_PATH="${DOT_PATH}/bash"
+. "${BASH_PATH}/startup/enviroments.bash"
+. "${BASH_PATH}/startup/alias.bash"
+. "${BASH_PATH}/startup/functions.bash"
+. "${BASH_PATH}/startup/completion.bash"
+. "${BASH_PATH}/startup/key-bindings.bash"
+. "${BASH_PATH}/startup/color_and_prompt.bash"
+. "${BASH_PATH}/startup/startx.bash"
+. "${BASH_PATH}/startup/options.bash"
+. "${BASH_PATH}/startup/tmux.bash"
 

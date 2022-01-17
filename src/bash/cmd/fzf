@@ -1,5 +1,0 @@
-export FZF_BIND="$FZF_BIND --bind ctrl-space:accept"
-export FZF_DEFAULT_COMMAND="ag $AG_OPTS"
-export FZF_DEFAULT_OPTS="--reverse $FZF_BIND"
-export FZF_PATH="$DOT_PATH/fzf"
-export FZF_PREVIEW="--preview 'bat {} $BAT_OPTS'"

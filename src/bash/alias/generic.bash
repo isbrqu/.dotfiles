@@ -20,7 +20,7 @@ alias sg="googler"
 alias goo="googler -n 3"
 alias docker-search="_docker_search"
 # download
-alias wget-clip='wget --tries=inf --continue "$(clipp)"'
+alias wget-clip='wget --tries=inf --continue "$(xclip -selection clipboard -in)"'
 # list file
 alias ll="ls -l "$LS_OPTS
 # navigation
