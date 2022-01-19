@@ -29,5 +29,6 @@ export BASH_PATH="${DOT_PATH}/bash"
 . "${BASH_PATH}/startup/color_and_prompt.bash"
 . "${BASH_PATH}/startup/startx.bash"
 . "${BASH_PATH}/startup/options.bash"
+. "${BASH_PATH}/startup/config_hardware.bash"
 . "${BASH_PATH}/startup/tmux.bash"
 
