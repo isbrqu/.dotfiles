@@ -1,7 +1,9 @@
-bind-key f12 send-prefix
 unbind-key C-b
+bind-key f12 send-prefix
 # reload tmux config
-bind-key f5 source-file "$TMUX_PATH/script/reload.tmux"
+bind-key -T prefix f5 source-file "${TMUX_PATH}/script/reload.tmux"
+bind-key -T prefix g source-file "${TMUX_PATH}/script/git.tmux"
+bind-key -T prefix a source-file "${TMUX_PATH}/script/session.tmux"
 # split
 bind-key -n M-v split-window -h 
 bind-key -n M-V split-window -h -c "#{pane_current_path}"
@@ -43,7 +45,6 @@ bind-key -n M-6 select-window -t 6
 bind-key -n M-7 select-window -t 7
 bind-key -n M-8 select-window -t 8
 bind-key -n M-9 select-window -t 9
-# bind-key -n > source-file ~/.config/tmux/test.tmux
 
 # -- session --
 bind-key f12 switch-client -l

@@ -2,8 +2,6 @@
 # set-option -g default-terminal tmux-256color
 # set-option -g default-terminal screen-256color
 set-option -g default-terminal xterm-256color 
-# automatically set-option window title
-set-window-option -g automatic-rename on
 set-option -g set-titles on
 # statusbar
 set-option -g status-position top
