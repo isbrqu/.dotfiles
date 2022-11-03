@@ -21,4 +21,4 @@
 	grep = always
 	decorate = always
 	showbranch = always
-        status = never
+        status = always
