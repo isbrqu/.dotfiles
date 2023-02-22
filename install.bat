@@ -10,5 +10,6 @@ mklink /d %LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalS
 
 mklink %USERPROFILE%\.gitconfig %USERPROFILE%\.dotfiles\git\config
 mklink %USERPROFILE%\.bash_profile %USERPROFILE%\.dotfiles\bash\profile
+mklink %USERPROFILE%\.bashrc %USERPROFILE%\.dotfiles\bash\run
 mklink %USERPROFILE%\.bash_history %USERPROFILE%\.dotfiles\bash\history
 mklink %USERPROFILE%\.lesshst %USERPROFILE%\.dotfiles\less\history
