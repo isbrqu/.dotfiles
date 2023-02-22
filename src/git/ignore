@@ -1,0 +1,8 @@
+*.pdf
+*.tmp
+*.log
+*.bck
+*.backup
+*.bk
+.env
+*.*.swp
