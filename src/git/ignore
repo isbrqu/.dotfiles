@@ -2,6 +2,7 @@
 *.tmp
 *.log
 *.bck
+*.bkp
 *.backup
 *.bk
 .env
