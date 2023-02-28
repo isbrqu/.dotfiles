@@ -7,3 +7,6 @@
 *.bk
 .env
 *.*.swp
+*.rar
+*.zip
+*.cab
