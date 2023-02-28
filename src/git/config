@@ -11,8 +11,5 @@
 [core]
 	autocrlf = false
 	excludesFile = ~/.dotfiles/git/ignore
-[user]
-	email = isbrqu@gmail.com
-	name = Isaac Bruno Quiroga
 [advice]
 	addIgnoredFile = false
