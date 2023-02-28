@@ -35,6 +35,6 @@ if [[ "$OS" != "Windows_NT" ]];then
 else
     export BASH_PATH="${HOME}/.dotfiles/bash"
     . "${BASH_PATH}/enviroments/misc.bash"
-    . "${BASH_PATH}/history/history.bash"
+    . "${BASH_PATH}/history/index.bash"
     export PATH="${PATH}:${HOME}/.script/java"
 fi
