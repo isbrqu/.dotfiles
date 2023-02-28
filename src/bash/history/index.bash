@@ -9,4 +9,13 @@ HISTCONTROL=ignorespace:ignoredups
 HISTTIMEFORMAT='%F, %T '
 HISTSIZE=100
 HISTFILESIZE=100
-HISTIGNORE=history:ls:pwd:vim:bash:man:python:node:npm:java:javac:cmd:powershell
+declare -a commands=(
+    history ls pwd vim bash man* python
+    node npm java javac cmd powershell
+    help dir ssh* scp* ftp*
+)
+for command in "${commands[@]}";do
+    HISTIGNORE="${HISTIGNORE}:*${command}"
+done
+unset command
+unset commands
